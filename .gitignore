@@ -1,0 +1,57 @@
+######################################################################
+# Build Tools
+
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+######################################################################
+# IDE
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### JRebel ###
+rebel.xml
+
+### NetBeans ###
+nbproject/private/
+build/*
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+######################################################################
+# Others
+*.log
+*.xml.versionsBackup
+*.swp
+
+!*/build/*.java
+!*/build/*.html
+!*/build/*.xml
+
+/.fastRequest/collections/Root/satoriviacafe-admin/ValorantSkinController/directory.json
+/.fastRequest/collections/Root/satoriviacafe-admin/directory.json
+/.fastRequest/config/fastRequestCurrentProjectEnvironment.json
+/.fastRequest/collections/Root/satoriviacafe-admin/ValorantSkinController/updateValorantSkinToDatabase.rapi
+/.fastRequest/
+/satoriviacafe-member/src/main/resources/satoriviacafe-service-account.json
+/satoriviacafe-member/src/main/resources/satoriviacafe-apple-key.p8
+/D:
+/qodana.yaml
