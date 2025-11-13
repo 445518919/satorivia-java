@@ -1,8 +1,8 @@
 {
-    "name": "ruoyi",
+    "name": "satoriviacafe",
     "version": "3.9.0",
-    "description": "若依管理系统",
-    "author": "若依",
+    "description": "星辰咖啡管理系统.",
+    "author": "星辰咖啡",
     "license": "MIT",
     "scripts": {
         "dev": "vue-cli-service serve",

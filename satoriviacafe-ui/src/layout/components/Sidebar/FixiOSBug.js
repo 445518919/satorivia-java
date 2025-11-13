@@ -1,7 +1,7 @@
 export default {
   computed: {
     device() {
-      return this.$store.state.com.device
+      return this.$store.state.app.device
     }
   },
   mounted() {

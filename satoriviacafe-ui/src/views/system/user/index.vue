@@ -94,7 +94,7 @@
                                              v-if="columns[1].visible" :show-overflow-tooltip="true"/>
                             <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName"
                                              v-if="columns[2].visible" :show-overflow-tooltip="true"/>
-                            <el-table-column label="郵箱" align="center" key="userName" prop="email"
+                            <el-table-column label="郵箱" align="center" key="email" prop="email"
                                              v-if="columns[3].visible" :show-overflow-tooltip="true"/>
                             <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber"
                                              v-if="columns[4].visible" width="120"/>

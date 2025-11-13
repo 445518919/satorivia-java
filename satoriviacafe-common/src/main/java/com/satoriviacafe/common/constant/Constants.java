@@ -100,13 +100,6 @@ public class Constants
      * 令牌
      */
     public static final String TOKEN = "token";
-    public static final String ACC_TOKEN = "accessToken";
-    public static final String REFRESH_TOKEN = "refreshToken";
-    public static final String RET_CODE = "retcode";
-    public static final String EXPIRE_AT = "expireAt";
-    public static final String EXPIRE_TIME = "expireTime";
-    public static final String VALKI_ID = "satoriviacafeID";
-    public static final String MESSAGE = "message";
 
     /**
      * 令牌前缀

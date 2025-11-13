@@ -37,8 +37,8 @@ export default {
     ...mapState({
       theme: state => state.settings.theme,
       sideTheme: state => state.settings.sideTheme,
-      sidebar: state => state.com.sidebar,
-      device: state => state.com.device,
+      sidebar: state => state.app.sidebar,
+      device: state => state.app.device,
       needTagsView: state => state.settings.tagsView,
       fixedHeader: state => state.settings.fixedHeader
     }),

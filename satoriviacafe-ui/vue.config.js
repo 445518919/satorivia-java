@@ -37,14 +37,14 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `https://prod.satoriviacafe.app`,
+        target: `http://localhost:18080`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
     },
-    disableHostCheck: true
+    // disableHostCheck: true
   },
   css: {
     loaderOptions: {
@@ -63,7 +63,7 @@ module.exports = {
     plugins: [
       // http://doc.satoriviacafe.app/satoriviacafe-vue/other/faq.html#使用gzip解压缩静态文件
       new CompressionPlugin({
-        cache: false,                                  // 不启用文件缓存
+        // cache: false,                                  // 不启用文件缓存
         test: /\.(js|css|html|jpe?g|png|gif|svg)?$/i,  // 压缩文件格式
         filename: '[path][base].gz[query]',            // 压缩后的文件名
         algorithm: 'gzip',                             // 使用gzip压缩
