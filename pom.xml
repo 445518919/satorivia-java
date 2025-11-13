@@ -353,6 +353,12 @@
                 <version>${satoriviacafe.version}</version>
             </dependency>
 
+            <!-- cafe-->
+            <dependency>
+                <groupId>com.satoriviacafe</groupId>
+                <artifactId>satoriviacafe-cafe</artifactId>
+                <version>${satoriviacafe.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -363,6 +369,7 @@
         <module>satoriviacafe-quartz</module>
         <module>satoriviacafe-generator</module>
         <module>satoriviacafe-common</module>
+        <module>satoriviacafe-cafe</module>
     </modules>
     <packaging>pom</packaging>
 

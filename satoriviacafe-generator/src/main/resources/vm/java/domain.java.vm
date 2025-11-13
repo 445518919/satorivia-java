@@ -9,6 +9,7 @@ import java.io.Serial;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.satoriviacafe.common.annotation.Excel;
+import com.satoriviacafe.common.core.domain.BaseEntity;
 #if($table.crud || $table.sub)
 #elseif($table.tree)
 #end

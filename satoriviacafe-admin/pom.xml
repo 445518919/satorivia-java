@@ -66,6 +66,11 @@
             <artifactId>satoriviacafe-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.satoriviacafe</groupId>
+            <artifactId>satoriviacafe-cafe</artifactId>
+        </dependency>
+
         <!--    测试     -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
