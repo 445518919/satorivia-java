@@ -1,0 +1,5 @@
+Application Version: ${satoriviacafe.version}
+Spring Boot Version: ${spring-boot.version}
+Satorivia Cafe 星辰咖啡
+世界精品 · 中国精制
+https://satoriviacafe.com

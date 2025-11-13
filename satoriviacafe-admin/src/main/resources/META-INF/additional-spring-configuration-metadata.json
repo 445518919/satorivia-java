@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "satoriviacafe.captchaType",
+      "type": "java.lang.String",
+      "description": "Description for satoriviacafe.captchaType."
+    },
+    {
+      "name": "satoriviacafe.addressEnabled",
+      "type": "java.lang.String",
+      "description": "Description for satoriviacafe.addressEnabled."
+    },
+    {
+      "name": "satoriviacafe.profile",
+      "type": "java.lang.String",
+      "description": "Description for satoriviacafe.profile."
+    },
+    {
+      "name": "pagehelper.helperDialect",
+      "type": "java.lang.String",
+      "description": "Description for pagehelper.helperDialect."
+    },
+    {
+      "name": "pagehelper.supportMethodsArguments",
+      "type": "java.lang.String",
+      "description": "Description for pagehelper.supportMethodsArguments."
+    },
+    {
+      "name": "pagehelper.params",
+      "type": "java.lang.String",
+      "description": "Description for pagehelper.params."
+    },
+    {
+      "name": "xss.enabled",
+      "type": "java.lang.String",
+      "description": "Description for xss.enabled."
+    }
+  ]
+}

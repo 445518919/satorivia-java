@@ -1,0 +1,6 @@
+# 告诉EditorConfig插件，这是根文件，不用继续往上查找
+root = true
+
+[*.yml]
+# 匹配yml结尾的文件
+indent_size = 2
