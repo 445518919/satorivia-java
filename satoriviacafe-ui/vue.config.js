@@ -10,7 +10,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const name = process.env.VUE_APP_TITLE || 'Satoriviacafe管理系统' // 网页标题
 
 // const port = process.env.port || process.env.npm_config_port || 80 // 端口
-const port = 88 // 端口
+const port = 881 // 端口
 
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
@@ -34,10 +34,14 @@ module.exports = {
     host: '0.0.0.0',
     port: port,
     open: true,
+    allowedHosts: [
+      'test.valki.app',
+      'localhost'
+    ],
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:18080`,
+        target: `http://localhost:17070`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
