@@ -16,5 +16,10 @@
             <groupId>com.satoriviacafe</groupId>
             <artifactId>satoriviacafe-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.alipay.mychain.taas</groupId>
+            <artifactId>tschain-sdk</artifactId>
+        </dependency>
     </dependencies>
 </project>

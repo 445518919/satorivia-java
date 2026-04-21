@@ -5,11 +5,18 @@ import com.satoriviacafe.common.constant.HttpStatus;
 import com.satoriviacafe.common.core.domain.entity.SysRole;
 import com.satoriviacafe.common.core.domain.satoriviacafe.LoginUser;
 import com.satoriviacafe.common.exception.ServiceException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.PatternMatchUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +27,7 @@ import java.util.stream.Collectors;
  * @author satoriviacafe
  */
 @SuppressWarnings("unused")
+@Slf4j
 public class SecurityUtils {
 
     /**
@@ -152,4 +160,14 @@ public class SecurityUtils {
                 .anyMatch(x -> Constants.SUPER_ADMIN.equals(x) || PatternMatchUtils.simpleMatch(x, role));
     }
 
+    public static @Nullable String sha256(@NotNull String rawData) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(rawData.getBytes(StandardCharsets.UTF_8));
+            return Hex.encodeHexString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("SHA-256计算失败", e);
+            return null;
+        }
+    }
 }

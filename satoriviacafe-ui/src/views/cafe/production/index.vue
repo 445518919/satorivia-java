@@ -41,13 +41,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="删除时间" prop="deleteAt">
-        <el-date-picker clearable
-          v-model="queryParams.deleteAt"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择删除时间">
-        </el-date-picker>
+        <el-form-item label="商品编码" prop="prodCode">
+            <el-input
+                v-model="queryParams.prodCode"
+                clearable
+                placeholder="请输入商品编码"
+                @keyup.enter.native="handleQuery"
+            />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -111,11 +111,7 @@
       <el-table-column label="产品详情" align="center" prop="prodText" />
       <el-table-column label="显示顺序" align="center" prop="orderNum" />
       <el-table-column label="产品状态" align="center" prop="prodStatus" />
-      <el-table-column label="删除时间" align="center" prop="deleteAt" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deleteAt, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
+        <el-table-column align="center" label="商品编码" prop="prodCode"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -173,6 +169,9 @@
             placeholder="请选择删除时间">
           </el-date-picker>
         </el-form-item>
+          <el-form-item label="商品编码" prop="prodCode">
+              <el-input v-model="form.prodCode" placeholder="请输入商品编码"/>
+          </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -183,7 +182,7 @@
 </template>
 
 <script>
-import { listProduction, getProduction, delProduction, addProduction, updateProduction } from "@/api/cafe/production"
+import {addProduction, delProduction, getProduction, listProduction, updateProduction} from "@/api/cafe/production"
 
 export default {
   name: "Production",
@@ -219,7 +218,7 @@ export default {
         prodText: null,
         orderNum: null,
         prodStatus: null,
-        deleteAt: null
+          prodCode: null
       },
       // 表单参数
       form: {},
@@ -261,7 +260,8 @@ export default {
         createTime: null,
         updateBy: null,
         updateTime: null,
-        deleteAt: null
+          deleteAt: null,
+          prodCode: null
       }
       this.resetForm("form")
     },

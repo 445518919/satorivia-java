@@ -17,10 +17,25 @@
         <result property="updateBy"    column="update_by"/>
         <result property="updateTime"    column="update_time"/>
         <result property="deleteAt"    column="delete_at"/>
+        <result property="prodCode" column="prod_code"/>
     </resultMap>
 
     <sql id="selectCafeProductionVo">
-        select prod_id, prod_name, prod_desc, prod_img, prod_price, prod_text, order_num, prod_status, create_by, create_time, update_by, update_time, delete_at from cafe_production
+        select prod_id,
+               prod_name,
+               prod_desc,
+               prod_img,
+               prod_price,
+               prod_text,
+               order_num,
+               prod_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at,
+               prod_code
+        from cafe_production
     </sql>
 
     <select id="selectCafeProductionList" parameterType="CafeProduction" resultMap="CafeProductionResult">
@@ -33,7 +48,9 @@
             <if test="prodText != null  and prodText != ''"> and prod_text = #{prodText}</if>
             <if test="orderNum != null "> and order_num = #{orderNum}</if>
             <if test="prodStatus != null  and prodStatus != ''"> and prod_status = #{prodStatus}</if>
-            <if test="deleteAt != null "> and delete_at = #{deleteAt}</if>
+            <if test="prodCode != null  and prodCode != ''">
+                and prod_code = #{prodCode}
+            </if>
         and delete_at IS NULL
 </where>
         </select>
@@ -59,6 +76,9 @@ insert into cafe_production
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="deleteAt != null">delete_at,</if>
+    <if test="prodCode != null">
+        prod_code,
+    </if>
 </trim>
 <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="prodName != null">#{prodName},</if>
@@ -73,6 +93,9 @@ insert into cafe_production
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="deleteAt != null">#{deleteAt},</if>
+    <if test="prodCode != null">
+        #{prodCode},
+    </if>
 </trim>
 </insert>
 
@@ -91,6 +114,7 @@ insert into cafe_production
             update_by,
             update_time,
             delete_at,
+    prod_code,
 </trim>
 values
 <foreach collection="list" item="item" separator=",">
@@ -108,6 +132,7 @@ values
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
+        #{item.prodCode},
     </trim>
     )
 </foreach>
@@ -128,6 +153,7 @@ insert ignore into cafe_production
             update_by,
             update_time,
             delete_at,
+    prod_code,
 </trim>
 values
 <foreach collection="list" item="item" separator=",">
@@ -145,6 +171,7 @@ values
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
+        #{item.prodCode},
     </trim>
     )
 </foreach>
@@ -165,6 +192,9 @@ update cafe_production
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="deleteAt != null">delete_at = #{deleteAt},</if>
+    <if test="prodCode != null">
+        prod_code = #{prodCode},
+    </if>
 </trim>
 where prod_id = #{prodId}
     and delete_at IS NULL
@@ -186,6 +216,9 @@ where prod_id = #{prodId}
                 <if test="item.updateBy != null">update_by = #{item.updateBy},</if>
                 <if test="item.updateTime != null">update_time = #{item.updateTime},</if>
                 <if test="item.deleteAt != null">delete_at = #{item.deleteAt},</if>
+        <if test="item.prodCode != null">
+            prod_code = #{item.prodCode},
+        </if>
     </trim>
     where prod_id = #{item.prodId}
         and delete_at IS NULL

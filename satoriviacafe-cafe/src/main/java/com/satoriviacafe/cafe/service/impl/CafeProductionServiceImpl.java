@@ -1,18 +1,19 @@
 package com.satoriviacafe.cafe.service.impl;
 
-import java.util.List;
+import com.satoriviacafe.cafe.domain.CafeProduction;
+import com.satoriviacafe.cafe.mapper.CafeProductionMapper;
+import com.satoriviacafe.cafe.service.ICafeProductionService;
 import com.satoriviacafe.common.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.satoriviacafe.cafe.mapper.CafeProductionMapper;
-import com.satoriviacafe.cafe.domain.CafeProduction;
-import com.satoriviacafe.cafe.service.ICafeProductionService;
+
+import java.util.List;
 
 /**
  * 产品Service业务层处理
  *
  * @author satoriviacafe
- * @since 2025-11-13
+ * @since 2026-04-21
  */
 @Service
 @RequiredArgsConstructor

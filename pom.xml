@@ -58,10 +58,17 @@
         <management.version>1.6.0</management.version>
         <commons-lang3.version>3.18.0</commons-lang3.version>
         <netty.version>4.2.6.Final</netty.version>
+        <tschain-sdk.version>3.27.0</tschain-sdk.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.alipay.mychain.taas</groupId>
+                <artifactId>tschain-sdk</artifactId>
+                <version>${tschain-sdk.version}</version>
+            </dependency>
 
             <!-- 覆盖Netty的依赖配置-->
             <dependency>

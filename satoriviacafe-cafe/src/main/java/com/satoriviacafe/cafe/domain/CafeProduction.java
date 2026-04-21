@@ -1,21 +1,19 @@
 package com.satoriviacafe.cafe.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serial;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import com.satoriviacafe.common.annotation.Excel;
 import com.satoriviacafe.common.core.domain.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 产品对象 cafe_production
  *
  * @author satoriviacafe
- * @since 2025-11-13
+ * @since 2026-04-21
  */
 
 @Data
@@ -48,7 +46,10 @@ public class CafeProduction extends BaseEntity {
 @Excel(name = "产品状态", readConverterExp = "0=正常,1=停用")
     private String prodStatus;
     /** 删除时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-@Excel(name = "删除时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date deleteAt;
+    /**
+     * 商品编码
+     */
+    @Excel(name = "商品编码")
+    private String prodCode;
 }
