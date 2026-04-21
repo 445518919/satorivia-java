@@ -2,6 +2,7 @@ package com.satoriviacafe.chain.config;
 
 import com.alipay.mychain.taas.api.common.VersionCode;
 import com.alipay.mychain.taas.api.enums.SystemCodeEnum;
+import com.alipay.mychain.taas.common.client.ClientOptions;
 import com.alipay.mychain.taas.common.client.TaasClient;
 import com.alipay.mychain.taas.common.factory.ServiceFactory;
 import com.alipay.mychain.taas.sdk.service.*;
@@ -33,7 +34,7 @@ public class TassConfig {
                 .versionCode(VersionCode.V_COMMON)
                 .systemCode(SystemCodeEnum.UNIVERSAL_SYSTEM.name())
                 // 可根据需要配置超时参数
-                //.options(ClientOptions.newBuilder().readTimeOut(10L).connectTimeOut(10L).build())
+                .options(ClientOptions.newBuilder().readTimeOut(10000L).connectTimeOut(10000L).build())
                 .build();
     }
 
