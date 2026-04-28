@@ -59,10 +59,28 @@
         <commons-lang3.version>3.18.0</commons-lang3.version>
         <netty.version>4.2.6.Final</netty.version>
         <tschain-sdk.version>3.27.0</tschain-sdk.version>
+        <ip2region.version>3.3.4</ip2region.version>
+        <jctools.version>4.0.5</jctools.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- jctools 高性能并发工具，提供了高效的队列、缓存等数据结构，适用于高并发场景 -->
+            <dependency>
+                <groupId>org.jctools</groupId>
+                <artifactId>jctools-core</artifactId>
+                <version>${jctools.version}</version>
+            </dependency>
+
+
+            <!-- ip2region IP地址查询工具 -->
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+                <scope>compile</scope>
+            </dependency>
 
             <dependency>
                 <groupId>com.alipay.mychain.taas</groupId>

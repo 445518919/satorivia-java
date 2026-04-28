@@ -41,3 +41,28 @@ create table cafe_brand_story
     primary key (story_id)
 ) engine = innodb
   auto_increment = 200 comment = '品牌故事表';
+
+DROP TABLE IF EXISTS cafe_track_log;
+CREATE TABLE cafe_track_log
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID',
+    prod_id      VARCHAR(64)  NOT NULL COMMENT '产品ID',
+    prod_code    VARCHAR(64)  NOT NULL COMMENT '商品编码',
+    prod_name    VARCHAR(255) NOT NULL COMMENT '产品名称 (如: 埃塞瑰夏精品咖啡豆)',
+    event_name   VARCHAR(100) NOT NULL COMMENT '事件类型 (如: page_view)',
+    ip           VARCHAR(45) COMMENT '访问者IP地址 (支持IPv6)',
+    location     VARCHAR(255) COMMENT '访问者地理位置',
+    user_agent   TEXT COMMENT '原始浏览器User-Agent字符串',
+    device_type  VARCHAR(50) COMMENT '设备类型 (如: Mobile, Desktop, Tablet)',
+    browser      VARCHAR(50) COMMENT '浏览器名称 (如: Chrome, WeChat, Safari)',
+    os           VARCHAR(50) COMMENT '操作系统 (如: iOS, Android, Windows)',
+    page_url     TEXT COMMENT '当前页面URL',
+    referrer_url TEXT COMMENT '来源页面URL',
+    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+    -- 为常用查询字段建立索引
+    INDEX `idx_prod_code` (`prod_code`),
+    INDEX `idx_event_name` (`event_name`),
+    INDEX `idx_created_at` (`created_at`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='咖啡产品访问跟踪日志表';

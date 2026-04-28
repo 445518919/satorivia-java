@@ -2,6 +2,7 @@ package com.satoriviacafe.common.utils.ip;
 
 import com.satoriviacafe.common.utils.ServletUtils;
 import com.satoriviacafe.common.utils.VStringUtils;
+import io.netty.util.NetUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.InetAddress;
@@ -10,7 +11,7 @@ import java.net.UnknownHostException;
 /**
  * 获取IP方法
  *
- * @author satoriviacafe
+ * @author valki
  */
 @SuppressWarnings("unused")
 public class IpUtils {
@@ -63,13 +64,27 @@ public class IpUtils {
 
     /**
      * 检查是否为内部IP地址
-     *
-     * @param ip IP地址
-     * @return 结果
      */
-    public static boolean internalIp(String ip) {
-        byte[] addr = textToNumericFormatV4(ip);
-        return internalIp(addr) || "127.0.0.1".equals(ip);
+    public static boolean isInternalIp(String ip) throws UnknownHostException {
+        if (!isIP(ip)) return true;
+
+        // 快速处理本地回环
+        if (NetUtil.LOCALHOST4.getHostAddress().equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
+            return true;
+        }
+        InetAddress addr = InetAddress.getByName(ip);
+        return addr.isSiteLocalAddress() || addr.isLoopbackAddress() || addr.isAnyLocalAddress();
+    }
+
+    /**
+     * 静默检查是否为内部IP地址
+     */
+    public static boolean isInternalIpQuietly(String ip) {
+        try {
+            return isInternalIp(ip);
+        } catch (UnknownHostException e) {
+            return true;
+        }
     }
 
     /**
@@ -78,7 +93,7 @@ public class IpUtils {
      * @param addr byte地址
      * @return 结果
      */
-    private static boolean internalIp(byte[] addr) {
+    private static boolean isInternalIp(byte[] addr) {
         if (VStringUtils.isNull(addr) || addr.length < 2) {
             return true;
         }
@@ -239,10 +254,11 @@ public class IpUtils {
     }
 
     /**
-     * 是否为IP
+     * 是否为IP地址
      */
     public static boolean isIP(String ip) {
-        return VStringUtils.isNotBlank(ip) && ip.matches(REGX_IP);
+        if (VStringUtils.isBlank(ip)) return false;
+        return NetUtil.isValidIpV4Address(ip) || NetUtil.isValidIpV6Address(ip);
     }
 
     /**

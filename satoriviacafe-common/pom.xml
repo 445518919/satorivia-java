@@ -16,6 +16,18 @@
     </description>
 
     <dependencies>
+        <!-- ip2region IP地址查询工具 -->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- jctools 高性能并发工具 -->
+        <dependency>
+            <groupId>org.jctools</groupId>
+            <artifactId>jctools-core</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>

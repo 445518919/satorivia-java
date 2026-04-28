@@ -109,8 +109,7 @@ public class SecurityConfig {
                         permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
                     }
                     // 对于登录login 注册register 验证码captchaImage 等特定路径允许匿名访问
-                    requests.requestMatchers("/satoriviacafe/version","/login", "/register", "/captchaImage", "/v1/auth/login", "/v1/auth/register", "/v2/auth/login", "/v2/auth/register",
-                                    "/v2/auth/emailCode", "/v2/auth/register", "/v2/auth/forgetPwd", "/v2/auth/verify", "/v2/auth/verify/image") // 注意移除了重复的 /v2/auth/verify
+                    requests.requestMatchers("/satoriviacafe/version", "/login", "/register", "/track/**") // 注意移除了重复的 /v2/auth/verify
                             .permitAll()
                             // 静态资源，可匿名访问
                             .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()

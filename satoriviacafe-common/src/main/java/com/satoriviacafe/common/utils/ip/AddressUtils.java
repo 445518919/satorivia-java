@@ -1,105 +1,100 @@
 package com.satoriviacafe.common.utils.ip;
 
-import lombok.extern.slf4j.Slf4j;
-import com.satoriviacafe.common.config.SatoriviacafeConfig;
-import com.satoriviacafe.common.constant.Constants;
 import com.satoriviacafe.common.utils.VStringUtils;
-import com.satoriviacafe.common.utils.http.HttpUtils;
-import com.satoriviacafe.common.utils.JSONUtil;  // 引入JsonUtils（假设工具类名为JSONUtil）
+import lombok.extern.slf4j.Slf4j;
+import org.lionsoul.ip2region.service.Config;
+import org.lionsoul.ip2region.service.ConfigBuilder;
+import org.lionsoul.ip2region.service.Ip2Region;
+import org.springframework.core.io.ClassPathResource;
 
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * 获取地址类（使用JsonUtils解析JSON）
+ * 获取地址类（离线 IP 库版）
  *
- * @author satoriviacafe
+ * @author valki
  */
+
+
 @Slf4j
+@SuppressWarnings("preview")
 public class AddressUtils {
 
-    // 固定 host，防止SSRF风险
-    private static final String SCHEME = "http";
-    private static final String HOST = "whois.pconline.com.cn";
-    private static final String PATH = "/ipJson.jsp";
     public static final String UNKNOWN = "XX XX";
+    private static final StableValue<Ip2Region> ip2Region = StableValue.of();
 
-    // IPv4格式校验正则
-    private static final Pattern IPV4_PATTERN = Pattern.compile(
-            "^(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)\\."
-                    + "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)\\."
-                    + "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)\\."
-                    + "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)$"
-    );
+    public static Ip2Region getIp2Region() {
+        return ip2Region.orElseSet(AddressUtils::initIp2Region);
+    }
 
     /**
-     * 通过IP获取真实地址（使用JsonUtils解析响应）
+     * 初始化 IP 库
+     */
+    private static Ip2Region initIp2Region() {
+        String v4Path = "data/ip2region_v4.xdb";
+        String v6Path = "data/ip2region_v6.xdb";
+
+        Config v4Config = buildConfigFromResource(v4Path, true);
+        Config v6Config = buildConfigFromResource(v6Path, false);
+
+        // 这里保留你的严格检查逻辑：如果两个库不全，则不启用
+        if (v4Config == null || v6Config == null) {
+            log.error("IP库加载不完整 -> v4: {}, v6: {}", v4Config != null, v6Config != null);
+            return null;
+        }
+        try {
+            log.info("Ip2Region (v4+v6) 离线库加载成功");
+            return Ip2Region.create(v4Config, v6Config);
+        } catch (IOException e) {
+            log.error("初始化 Ip2Region 失败: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 核心适配方法：从 classpath 读取流并配置
+     */
+    private static Config buildConfigFromResource(String path, boolean isV4) {
+        ClassPathResource resource = new ClassPathResource(path);
+        if (!resource.exists()) {
+            log.warn("IP库文件不存在: classpath:{}", path);
+            return null;
+        }
+
+        try (InputStream is = resource.getInputStream()) {
+            ConfigBuilder builder = Config.custom()
+                    .setXdbInputStream(is)
+                    .setCachePolicy(Config.BufferCache) // 必须全量缓存
+                    .setSearchers(15);
+            return isV4 ? builder.asV4() : builder.asV6();
+
+        } catch (Exception e) {
+            log.error("读取 IP 库文件失败 [{}]: {}", path, e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 通过IP获取真实地址
      */
     public static String getRealAddressByIP(String ip) {
-        // 1. 非空校验
-        if (ip == null) {
-            log.warn("IP 为空，不查地理位置");
-            return UNKNOWN;
-        }
-        // 2. IP格式校验
-        if (!IPV4_PATTERN.matcher(ip).matches()) {
-            log.warn("非法 IP 格式，不查地理位置: {}", ip);
-            return UNKNOWN;
-        }
-        // 3. 内网/本地地址判断
+        if (VStringUtils.isBlank(ip)) return UNKNOWN;
+        if (IpUtils.isInternalIpQuietly(ip)) return "内网IP";
         try {
-            InetAddress addr = InetAddress.getByName(ip);
-            if (addr.isAnyLocalAddress()
-                    || addr.isLoopbackAddress()
-                    || addr.isSiteLocalAddress()
-                    || addr.isLinkLocalAddress()
-                    || addr.isMulticastAddress()) {
-                log.warn("内网/本地地址不查询: {}", ip);
-                return "内网IP";
-            }
-        } catch (UnknownHostException e) {
-            log.warn("IP 解析失败，不查地理位置: {}", ip);
-            return UNKNOWN;
-        }
-        // 4. 全局开关判断
-        if (!SatoriviacafeConfig.isAddressEnabled()) {
-            return UNKNOWN;
-        }
-        // 5. 构造请求并解析响应（核心改造：使用JsonUtils替换fastJson）
-        try {
-            // 构造查询参数
-            String query = "ip="
-                    + URLEncoder.encode(ip, StandardCharsets.UTF_8)
-                    + "&json=true";
-            URI uri = new URI(SCHEME, HOST, PATH, query, null);
+            // 如果初始化失败，直接返回未知，不报错
+            Ip2Region ip2Region = getIp2Region();
+            if (ip2Region == null) return UNKNOWN;
+            String region = ip2Region.search(ip);
+            // 校验返回结果
+            if (VStringUtils.isBlank(region) || "0".equals(region)) return UNKNOWN;
+            return region;
 
-            // 发送请求
-            String rsp = HttpUtils.sendGet(uri.toASCIIString(), Constants.GBK);
-            if (VStringUtils.isEmpty(rsp)) {
-                log.error("获取地理位置异常: 返回空, {}", ip);
-                return UNKNOWN;
-            }
-
-            // 核心替换：使用JsonUtils解析JSON为Map（替代fastJson的JSONObject）
-            Map<String, Object> obj = JSONUtil.parseMap(rsp);
-
-            // 提取省份和城市（兼容null值处理）
-            String pro = obj.getOrDefault("pro", "").toString();
-            String city = obj.getOrDefault("city", "").toString();
-
-            // 处理空值场景
-            if (VStringUtils.isEmpty(pro) && VStringUtils.isEmpty(city)) {
-                return UNKNOWN;
-            }
-            return pro + " " + city;
         } catch (Exception e) {
-            log.error("获取地理位置异常: {}，{}", ip, e.getMessage(), e);
+            // 降低日志级别，防止恶意扫描导致日志爆炸
+            log.warn("解析IP异常 {} : {}", ip, e.getMessage());
         }
         return UNKNOWN;
     }
 }
+

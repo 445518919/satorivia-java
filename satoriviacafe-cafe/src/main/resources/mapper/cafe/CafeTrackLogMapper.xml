@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeTrackLogMapper">
+    <resultMap type="CafeTrackLog" id="CafeTrackLogResult">
+        <result property="id"    column="id"/>
+        <result property="prodId"    column="prod_id"/>
+        <result property="prodCode"    column="prod_code"/>
+        <result property="prodName"    column="prod_name"/>
+        <result property="eventName"    column="event_name"/>
+        <result property="ip"    column="ip"/>
+        <result property="location"    column="location"/>
+        <result property="userAgent"    column="user_agent"/>
+        <result property="deviceType"    column="device_type"/>
+        <result property="browser"    column="browser"/>
+        <result property="os"    column="os"/>
+        <result property="pageUrl"    column="page_url"/>
+        <result property="referrerUrl"    column="referrer_url"/>
+        <result property="createdAt"    column="created_at"/>
+    </resultMap>
+
+    <sql id="selectCafeTrackLogVo">
+        select id, prod_id, prod_code, prod_name, event_name, ip, location, user_agent, device_type, browser, os, page_url, referrer_url, created_at from cafe_track_log
+    </sql>
+
+    <select id="selectCafeTrackLogList" parameterType="CafeTrackLog" resultMap="CafeTrackLogResult">
+        <include refid="selectCafeTrackLogVo"/>
+        <where>
+            <if test="prodId != null  and prodId != ''"> and prod_id = #{prodId}</if>
+            <if test="prodCode != null  and prodCode != ''"> and prod_code = #{prodCode}</if>
+            <if test="prodName != null  and prodName != ''"> and prod_name like concat('%', #{prodName}, '%')</if>
+            <if test="eventName != null  and eventName != ''"> and event_name like concat('%', #{eventName}, '%')</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="userAgent != null  and userAgent != ''"> and user_agent = #{userAgent}</if>
+            <if test="deviceType != null  and deviceType != ''"> and device_type = #{deviceType}</if>
+            <if test="browser != null  and browser != ''"> and browser = #{browser}</if>
+            <if test="os != null  and os != ''"> and os = #{os}</if>
+            <if test="pageUrl != null  and pageUrl != ''"> and page_url = #{pageUrl}</if>
+            <if test="referrerUrl != null  and referrerUrl != ''"> and referrer_url = #{referrerUrl}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+</where>
+        </select>
+
+<select id="selectCafeTrackLogById" parameterType="Long" resultMap="CafeTrackLogResult">
+    <include refid="selectCafeTrackLogVo"/>
+    where id = #{id}
+</select>
+
+<insert id="insertCafeTrackLog" parameterType="CafeTrackLog" useGeneratedKeys="true" keyProperty="id">
+insert into cafe_track_log
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prodId != null and prodId != ''">prod_id,</if>
+            <if test="prodCode != null and prodCode != ''">prod_code,</if>
+            <if test="prodName != null and prodName != ''">prod_name,</if>
+            <if test="eventName != null and eventName != ''">event_name,</if>
+            <if test="ip != null">ip,</if>
+            <if test="location != null">location,</if>
+            <if test="userAgent != null">user_agent,</if>
+            <if test="deviceType != null">device_type,</if>
+            <if test="browser != null">browser,</if>
+            <if test="os != null">os,</if>
+            <if test="pageUrl != null">page_url,</if>
+            <if test="referrerUrl != null">referrer_url,</if>
+            <if test="createdAt != null">created_at,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="prodId != null and prodId != ''">#{prodId},</if>
+            <if test="prodCode != null and prodCode != ''">#{prodCode},</if>
+            <if test="prodName != null and prodName != ''">#{prodName},</if>
+            <if test="eventName != null and eventName != ''">#{eventName},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="location != null">#{location},</if>
+            <if test="userAgent != null">#{userAgent},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="browser != null">#{browser},</if>
+            <if test="os != null">#{os},</if>
+            <if test="pageUrl != null">#{pageUrl},</if>
+            <if test="referrerUrl != null">#{referrerUrl},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+</trim>
+</insert>
+
+<insert id="insertBatchCafeTrackLog"  useGeneratedKeys="true" keyProperty="id">
+insert into cafe_track_log
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            prod_id,
+            prod_code,
+            prod_name,
+            event_name,
+            ip,
+            location,
+            user_agent,
+            device_type,
+            browser,
+            os,
+            page_url,
+            referrer_url,
+            created_at,
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.prodId},
+                #{item.prodCode},
+                #{item.prodName},
+                #{item.eventName},
+                #{item.ip},
+                #{item.location},
+                #{item.userAgent},
+                #{item.deviceType},
+                #{item.browser},
+                #{item.os},
+                #{item.pageUrl},
+                #{item.referrerUrl},
+                #{item.createdAt},
+    </trim>
+    )
+</foreach>
+</insert>
+
+<insert id="insertBatchIgnoreCafeTrackLog"  useGeneratedKeys="true" keyProperty="id">
+insert ignore into cafe_track_log
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            prod_id,
+            prod_code,
+            prod_name,
+            event_name,
+            ip,
+            location,
+            user_agent,
+            device_type,
+            browser,
+            os,
+            page_url,
+            referrer_url,
+            created_at,
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.prodId},
+                #{item.prodCode},
+                #{item.prodName},
+                #{item.eventName},
+                #{item.ip},
+                #{item.location},
+                #{item.userAgent},
+                #{item.deviceType},
+                #{item.browser},
+                #{item.os},
+                #{item.pageUrl},
+                #{item.referrerUrl},
+                #{item.createdAt},
+    </trim>
+    )
+</foreach>
+</insert>
+
+<update id="updateCafeTrackLog" parameterType="CafeTrackLog">
+update cafe_track_log
+<trim prefix="SET" suffixOverrides=",">
+            <if test="prodId != null and prodId != ''">prod_id = #{prodId},</if>
+            <if test="prodCode != null and prodCode != ''">prod_code = #{prodCode},</if>
+            <if test="prodName != null and prodName != ''">prod_name = #{prodName},</if>
+            <if test="eventName != null and eventName != ''">event_name = #{eventName},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="userAgent != null">user_agent = #{userAgent},</if>
+            <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="browser != null">browser = #{browser},</if>
+            <if test="os != null">os = #{os},</if>
+            <if test="pageUrl != null">page_url = #{pageUrl},</if>
+            <if test="referrerUrl != null">referrer_url = #{referrerUrl},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+</trim>
+where id = #{id}
+</update>
+
+<update id="updateBatchCafeTrackLog" >
+<foreach collection="list" item="item" separator=";">
+    update cafe_track_log
+    <trim prefix="SET" suffixOverrides=",">
+                <if test="item.prodId != null and item.prodId != ''">prod_id = #{item.prodId},</if>
+                <if test="item.prodCode != null and item.prodCode != ''">prod_code = #{item.prodCode},</if>
+                <if test="item.prodName != null and item.prodName != ''">prod_name = #{item.prodName},</if>
+                <if test="item.eventName != null and item.eventName != ''">event_name = #{item.eventName},</if>
+                <if test="item.ip != null">ip = #{item.ip},</if>
+                <if test="item.location != null">location = #{item.location},</if>
+                <if test="item.userAgent != null">user_agent = #{item.userAgent},</if>
+                <if test="item.deviceType != null">device_type = #{item.deviceType},</if>
+                <if test="item.browser != null">browser = #{item.browser},</if>
+                <if test="item.os != null">os = #{item.os},</if>
+                <if test="item.pageUrl != null">page_url = #{item.pageUrl},</if>
+                <if test="item.referrerUrl != null">referrer_url = #{item.referrerUrl},</if>
+                <if test="item.createdAt != null">created_at = #{item.createdAt},</if>
+    </trim>
+    where id = #{item.id}
+</foreach>
+</update>
+
+<delete id="deleteCafeTrackLogById" parameterType="Long">
+delete from cafe_track_log where id = #{id}
+</delete>
+
+<delete id="deleteCafeTrackLogByIds" parameterType="String">
+delete from cafe_track_log where id in
+<foreach item="id" collection="array" open="(" separator="," close=")">
+    #{id}
+</foreach>
+</delete>
+
+</mapper>
