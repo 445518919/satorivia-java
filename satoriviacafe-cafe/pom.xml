@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.satoriviacafe</groupId>
-            <artifactId>satoriviacafe-common</artifactId>
+            <artifactId>satoriviacafe-framework</artifactId>
         </dependency>
 
         <dependency>

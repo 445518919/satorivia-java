@@ -4,13 +4,16 @@ import com.satoriviacafe.cafe.domain.CafeTrackLog
 import com.satoriviacafe.cafe.mapper.CafeTrackLogMapper
 import com.satoriviacafe.common.utils.ip.AddressUtils.getRealAddressByIP
 import com.satoriviacafe.common.utils.ip.IpUtils.getIpAddr
+import com.satoriviacafe.framework.manager.AsyncManager
 import jakarta.annotation.PreDestroy
 import jakarta.servlet.http.HttpServletRequest
 import org.jctools.queues.MpscLinkedQueue
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 
 /**
@@ -23,6 +26,7 @@ import kotlin.concurrent.withLock
 class TrackService(
     private val cafeTrackLogMapper: CafeTrackLogMapper,
     private val productService: ProductService,
+    private val asyncManager: AsyncManager,
 ) {
     companion object {
         private val trackLogQueue = MpscLinkedQueue<CafeTrackLog>()
@@ -42,6 +46,12 @@ class TrackService(
         }
     }
 
+    init {
+        asyncManager.scheduleAtFixedRate(0L, 5.seconds.toJavaDuration()) {
+            processTrackLogs()
+        }
+    }
+
 
     fun track(code: String, eventName: String, request: HttpServletRequest) {
         val dbInfo = productService.getByCode(code)
@@ -58,6 +68,7 @@ class TrackService(
             os = request.getHeader("OS") ?: getOs(userAgent)
             pageUrl = request.requestURL.toString()
             referrerUrl = request.getHeader("Referer")
+            createdAt = Date()
         }
         trackLogQueue.offer(cafeTrackLog)
     }
@@ -65,7 +76,6 @@ class TrackService(
     /**
      * 定时任务，每5秒处理一次队列中的日志
      */
-    @Scheduled(fixedDelay = 5000)
     fun processTrackLogs() {
         flushLock.withLock {
             val all = mutableListOf<CafeTrackLog>() // 临时存储所有日志
