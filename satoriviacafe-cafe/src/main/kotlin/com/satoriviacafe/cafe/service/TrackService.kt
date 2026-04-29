@@ -1,10 +1,9 @@
 package com.satoriviacafe.cafe.service
 
-import com.satoriviacafe.cafe.domain.CafeProduction
 import com.satoriviacafe.cafe.domain.CafeTrackLog
-import com.satoriviacafe.cafe.mapper.CafeProductionMapper
 import com.satoriviacafe.cafe.mapper.CafeTrackLogMapper
-import com.satoriviacafe.common.utils.ip.AddressUtils
+import com.satoriviacafe.common.utils.ip.AddressUtils.getRealAddressByIP
+import com.satoriviacafe.common.utils.ip.IpUtils.getIpAddr
 import jakarta.annotation.PreDestroy
 import jakarta.servlet.http.HttpServletRequest
 import org.jctools.queues.MpscLinkedQueue
@@ -23,28 +22,40 @@ import kotlin.concurrent.withLock
 @Service
 class TrackService(
     private val cafeTrackLogMapper: CafeTrackLogMapper,
-    private val cafeProductionMapper: CafeProductionMapper,
+    private val productService: ProductService,
 ) {
     companion object {
         private val trackLogQueue = MpscLinkedQueue<CafeTrackLog>()
         private val flushLock = ReentrantLock()
+
+        // Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+        private fun getDeviceType(userAgent: String?): String {
+            return userAgent?.substringBefore(";")?.substringBefore(")")?.trim() ?: ""
+        }
+
+        private fun getBrowser(userAgent: String?): String {
+            return userAgent?.substringAfter(")")?.trim() ?: ""
+        }
+
+        private fun getOs(userAgent: String?): String {
+            return userAgent?.substringBefore("(")?.trim() ?: ""
+        }
     }
 
 
     fun track(code: String, eventName: String, request: HttpServletRequest) {
-        val dbInfo =
-            cafeProductionMapper.selectCafeProductionList(CafeProduction().apply { prodCode = code }).firstOrNull()
+        val dbInfo = productService.getByCode(code)
         val cafeTrackLog = CafeTrackLog().apply {
             prodId = dbInfo?.prodId?.toString()
             prodCode = code
             prodName = dbInfo?.prodName ?: ""
             this.eventName = eventName
-            ip = request.remoteAddr
-            location = AddressUtils.getRealAddressByIP(request.remoteAddr)
+            ip = getIpAddr(request)
+            location = getRealAddressByIP(ip)
             userAgent = request.getHeader("User-Agent")
-            deviceType = request.getHeader("Device-Type")
-            browser = request.getHeader("Browser")
-            os = request.getHeader("OS")
+            deviceType = request.getHeader("Device-Type") ?: getDeviceType(userAgent)
+            browser = request.getHeader("Browser") ?: getBrowser(userAgent)
+            os = request.getHeader("OS") ?: getOs(userAgent)
             pageUrl = request.requestURL.toString()
             referrerUrl = request.getHeader("Referer")
         }
@@ -61,6 +72,7 @@ class TrackService(
             while (!trackLogQueue.isEmpty) { // 从队列中取出所有日志
                 all.add(trackLogQueue.poll()) // 添加到临时存储中
             }
+            if (all.isEmpty()) return
             all.chunked(500).forEach { // 每500条批量插入
                 cafeTrackLogMapper.insertBatchIgnoreCafeTrackLog(it) // 执行批量插入
             }
