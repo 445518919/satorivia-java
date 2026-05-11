@@ -16,6 +16,13 @@
     </description>
 
     <dependencies>
+        <!-- 解析客户端操作系统、浏览器等 -->
+        <dependency>
+            <groupId>nl.basjes.parse.useragent</groupId>
+            <artifactId>yauaa</artifactId>
+        </dependency>
+
+
         <!-- ip2region IP地址查询工具 -->
         <dependency>
             <groupId>org.lionsoul</groupId>

@@ -7,6 +7,7 @@ import com.satoriviacafe.common.utils.ip.IpUtils.getIpAddr
 import com.satoriviacafe.framework.manager.AsyncManager
 import jakarta.annotation.PreDestroy
 import jakarta.servlet.http.HttpServletRequest
+import nl.basjes.parse.useragent.UserAgentAnalyzer
 import org.jctools.queues.MpscLinkedQueue
 import org.springframework.stereotype.Service
 import java.util.*
@@ -26,24 +27,21 @@ import kotlin.time.toJavaDuration
 class TrackService(
     private val cafeTrackLogMapper: CafeTrackLogMapper,
     private val productService: ProductService,
-    private val asyncManager: AsyncManager,
+    private val uaa: UserAgentAnalyzer,
+    asyncManager: AsyncManager,
 ) {
     companion object {
         private val trackLogQueue = MpscLinkedQueue<CafeTrackLog>()
         private val flushLock = ReentrantLock()
+    }
 
-        // Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
-        private fun getDeviceType(userAgent: String?): String {
-            return userAgent?.substringBefore(";")?.substringBefore(")")?.trim() ?: ""
-        }
-
-        private fun getBrowser(userAgent: String?): String {
-            return userAgent?.substringAfter(")")?.trim() ?: ""
-        }
-
-        private fun getOs(userAgent: String?): String {
-            return userAgent?.substringBefore("(")?.trim() ?: ""
-        }
+    private fun parseUA(uaString: String?): Triple<String?, String?, String?> {
+        val agent = uaa.parse(uaString)
+        return Triple(
+            agent.getValue("OperatingSystemNameVersion"),
+            agent.getValue("DeviceClass"),
+            agent.getValue("AgentNameVersion")
+        )
     }
 
     init {
@@ -55,6 +53,7 @@ class TrackService(
 
     fun track(code: String, eventName: String, request: HttpServletRequest) {
         val dbInfo = productService.getByCode(code)
+        val (os, deviceType, browser) = parseUA(request.getHeader("User-Agent"))
         val cafeTrackLog = CafeTrackLog().apply {
             prodId = dbInfo?.prodId?.toString()
             prodCode = code
@@ -63,9 +62,9 @@ class TrackService(
             ip = getIpAddr(request)
             location = getRealAddressByIP(ip)
             userAgent = request.getHeader("User-Agent")
-            deviceType = request.getHeader("Device-Type") ?: getDeviceType(userAgent)
-            browser = request.getHeader("Browser") ?: getBrowser(userAgent)
-            os = request.getHeader("OS") ?: getOs(userAgent)
+            this.deviceType = request.getHeader("Device-Type") ?: deviceType
+            this.browser = request.getHeader("Browser") ?: browser
+            this.os = request.getHeader("OS") ?: os
             pageUrl = request.requestURL.toString()
             referrerUrl = request.getHeader("Referer")
             createdAt = Date()

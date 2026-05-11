@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 启动程序
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @RequiredArgsConstructor
+@EnableScheduling
 public class SatoriviacafeApplication {
 
     static void main(String[] args) {
