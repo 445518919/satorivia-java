@@ -35,7 +35,7 @@ module.exports = {
     port: port,
     open: true,
     allowedHosts: [
-      'test.valki.app',
+      'cafe-dash.justone.tw',
       'localhost'
     ],
     proxy: {

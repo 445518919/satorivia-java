@@ -20,8 +20,7 @@ create table cafe_production
     delete_at   datetime       default NULL comment '删除时间',
     primary key (prod_id),
     unique key (prod_code)
-) engine = innodb
-  auto_increment = 200 comment = '产品表';
+) engine = innodb comment = '产品表';
 
 -- ----------------------------
 -- 2、品牌故事表
@@ -39,9 +38,11 @@ create table cafe_brand_story
     update_time  datetime comment '更新时间',
     delete_at    datetime     default NULL comment '删除时间',
     primary key (story_id)
-) engine = innodb
-  auto_increment = 200 comment = '品牌故事表';
+) engine = innodb comment = '品牌故事表';
 
+-- ----------------------------
+-- 3、咖啡产品访问跟踪日志表
+-- ----------------------------
 DROP TABLE IF EXISTS cafe_track_log;
 CREATE TABLE cafe_track_log
 (
@@ -63,6 +64,4 @@ CREATE TABLE cafe_track_log
     INDEX `idx_prod_code` (`prod_code`),
     INDEX `idx_event_name` (`event_name`),
     INDEX `idx_created_at` (`created_at`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci COMMENT ='咖啡产品访问跟踪日志表';
+) ENGINE = InnoDB COMMENT ='咖啡产品访问跟踪日志表';
