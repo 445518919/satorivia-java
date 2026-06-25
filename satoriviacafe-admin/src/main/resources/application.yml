@@ -8,7 +8,7 @@ satoriviacafe:
   # 版权年份
   copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/satoriviacafe/uploadPath，Linux配置 /home/satoriviacafe/uploadPath）
-  profile: D:/satoriviacafe/uploadPath
+  profile: /home/satoriviacafe/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -49,12 +49,12 @@ spring:
       org.quartz.threadPool.threadCount: 1000  # 理论上虚拟线程可以很大，实际按需求设定
   data:
     redis:
-      host: 192.168.1.6
+      host: localhost
       # 端口，默认为6379
-      port: 16379
+      port: 6379
       # 数据库索引1
       # 密码
-      password: "lWT06)%t^j-[FzC@yXpk(Ubn:nz3djSm'T)h?GFKequ$pE(tiV:FpGG[{sM>CSQ^"
+      password:
       # 连接超时时间
       timeout: 10s
       database: 0
@@ -106,7 +106,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌密钥
-  secret: 4xV9APSi2tvUjGDBLoLlLsnmiunbcwOH,omxzGCYZenhkTxVZ,TPCUWErfeCT4pjmfOfLgP4kOE5W95Meu,shSaN33bSJfAK6c7Jh5tShaE6tNRMfHC,
+  secret: LF2gHJMevl7luqI74z0pW1QFnlum6LDw,6QHPQLIF2Z8x2Vzq60rqFXqFbv04oLhX,YFINrLy1Rm1Ei8ALU8QYsRA9ZOG7rFVo,tNRMfHC,
   # 令牌有效期（默认30分钟）
   expireTime: 43200
 
