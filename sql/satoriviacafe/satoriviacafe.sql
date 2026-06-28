@@ -213,16 +213,16 @@ CREATE TABLE cafe_banner
 (
     banner_id     BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '轮播图id',
     banner_title  VARCHAR(255) NOT NULL COMMENT '轮播图标题',
-    banner_image VARCHAR(255) NOT NULL COMMENT '轮播图图片',
+    banner_image  VARCHAR(255) NOT NULL COMMENT '轮播图图片',
     banner_link   VARCHAR(255) NOT NULL COMMENT '轮播图链接',
     banner_desc   VARCHAR(255) DEFAULT '' COMMENT '轮播图描述',
     banner_status CHAR(1)      DEFAULT '0' COMMENT '轮播图状态（0正常 1停用）',
-    product_id   BIGINT   DEFAULT NULL COMMENT '商品id',
+    product_id    BIGINT       DEFAULT NULL COMMENT '商品id',
     create_by     VARCHAR(64)  DEFAULT '' COMMENT '创建者',
-    create_time  DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    create_time   DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by     VARCHAR(64)  DEFAULT '' COMMENT '更新者',
-    update_time  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    delete_at    DATETIME DEFAULT NULL COMMENT '删除时间'
+    update_time   DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    delete_at     DATETIME     DEFAULT NULL COMMENT '删除时间'
 ) engine = innodb comment = '轮播图表';
 
 -- ----------------------------
@@ -235,7 +235,7 @@ CREATE TABLE cafe_beans_note
     note_title     VARCHAR(255) NOT NULL COMMENT '豆子笔记标题',
     note_sub_title VARCHAR(255) NOT NULL COMMENT '豆子笔记副标题',
     note_content   TEXT         NOT NULL COMMENT '豆子笔记内容',
-    note_image VARCHAR(255) NOT NULL COMMENT '豆子笔记图片',
+    note_image     VARCHAR(255) NOT NULL COMMENT '豆子笔记图片',
     brew_time      VARCHAR(255) NOT NULL COMMENT '冲泡时间',
     poder_quantity VARCHAR(255) NOT NULL COMMENT '粉量',
     water_volume   VARCHAR(255) NOT NULL COMMENT '水量',
@@ -260,7 +260,7 @@ CREATE TABLE cafe_product_nfc
 (
     nfc_id       BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '产品NFCid',
     nfc_code     VARCHAR(255) NOT NULL COMMENT 'NFC编码',
-    sku_code VARCHAR(100) NOT NULL COMMENT 'SKU编码',
+    sku_code     VARCHAR(100) NOT NULL COMMENT 'SKU编码',
     product_name VARCHAR(255) NOT NULL COMMENT '产品名称',
     batch_name   VARCHAR(255) NOT NULL COMMENT '批次名称',
     create_by    VARCHAR(64)  DEFAULT '' COMMENT '创建者',
