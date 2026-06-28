@@ -165,20 +165,6 @@
                 <el-form-item label="批次名称" prop="batchName">
                     <el-input v-model="form.batchName" placeholder="请输入批次名称"/>
                 </el-form-item>
-                <el-form-item label="删除时间" prop="deleteAt">
-                    <el-date-picker v-model="form.deleteAt"
-                                    clearable
-                                    placeholder="请选择删除时间"
-                                    type="date"
-                                    value-format="yyyy-MM-dd">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="NFC哈希值" prop="nfcHash">
-                    <el-input v-model="form.nfcHash" placeholder="请输入NFC哈希值"/>
-                </el-form-item>
-                <el-form-item label="NFC链接" prop="nfcUrl">
-                    <el-input v-model="form.nfcUrl" placeholder="请输入NFC链接"/>
-                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="submitForm">确 定</el-button>
