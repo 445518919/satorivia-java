@@ -2,11 +2,51 @@
     <div class="app-container">
         <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px"
                  size="small">
-            <el-form-item label="品牌故事标题" prop="storyTitle">
+            <el-form-item label="商品id" prop="productId">
                 <el-input
-                    v-model="queryParams.storyTitle"
+                    v-model="queryParams.productId"
                     clearable
-                    placeholder="请输入品牌故事标题"
+                    placeholder="请输入商品id"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="规格名称，例如227g、454g" prop="variantName">
+                <el-input
+                    v-model="queryParams.variantName"
+                    clearable
+                    placeholder="请输入规格名称，例如227g、454g"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="外部或内部SKU编码" prop="skuCode">
+                <el-input
+                    v-model="queryParams.skuCode"
+                    clearable
+                    placeholder="请输入外部或内部SKU编码"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="销售价格" prop="salePrice">
+                <el-input
+                    v-model="queryParams.salePrice"
+                    clearable
+                    placeholder="请输入销售价格"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="划线价" prop="marketPrice">
+                <el-input
+                    v-model="queryParams.marketPrice"
+                    clearable
+                    placeholder="请输入划线价"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="显示顺序" prop="variantSort">
+                <el-input
+                    v-model="queryParams.variantSort"
+                    clearable
+                    placeholder="请输入显示顺序"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
@@ -19,7 +59,7 @@
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:story:add']"
+                    v-hasPermi="['cafe:variant:add']"
                     icon="el-icon-plus"
                     plain
                     size="mini"
@@ -30,7 +70,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:story:edit']"
+                    v-hasPermi="['cafe:variant:edit']"
                     :disabled="single"
                     icon="el-icon-edit"
                     plain
@@ -42,7 +82,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:story:remove']"
+                    v-hasPermi="['cafe:variant:remove']"
                     :disabled="multiple"
                     icon="el-icon-delete"
                     plain
@@ -54,7 +94,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:story:export']"
+                    v-hasPermi="['cafe:variant:export']"
                     icon="el-icon-download"
                     plain
                     size="mini"
@@ -66,21 +106,23 @@
             <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
 
-        <el-table v-loading="loading" :data="storyList" @selection-change="handleSelectionChange">
+        <el-table v-loading="loading" :data="variantList" @selection-change="handleSelectionChange">
             <el-table-column align="center" type="selection" width="55"/>
-            <el-table-column align="center" label="品牌故事id" prop="storyId"/>
-            <el-table-column align="center" label="品牌故事标题" prop="storyTitle"/>
-            <el-table-column align="center" label="品牌故事图片" prop="storyImage" width="100">
-                <template slot-scope="scope">
-                    <image-preview :height="50" :src="scope.row.storyImage" :width="50"/>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="品牌故事详情" prop="storyText"/>
-            <el-table-column align="center" label="品牌故事状态" prop="storyStatus"/>
+            <el-table-column align="center" label="商品规格id" prop="variantId"/>
+            <el-table-column align="center" label="商品id" prop="productId"/>
+            <el-table-column align="center" label="规格名称，例如227g、454g" prop="variantName"/>
+            <el-table-column align="center" label="外部或内部SKU编码" prop="skuCode"/>
+            <el-table-column align="center" label="净含量" prop="netContent"/>
+            <el-table-column align="center" label="销售价格" prop="salePrice"/>
+            <el-table-column align="center" label="划线价" prop="marketPrice"/>
+            <el-table-column align="center" label="库存状态" prop="stockStatus"/>
+            <el-table-column align="center" label="该规格的外部购买链接" prop="purchaseUrl"/>
+            <el-table-column align="center" label="显示顺序" prop="variantSort"/>
+            <el-table-column align="center" label="状态" prop="variantStatus"/>
             <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
                 <template slot-scope="scope">
                     <el-button
-                        v-hasPermi="['cafe:story:edit']"
+                        v-hasPermi="['cafe:variant:edit']"
                         icon="el-icon-edit"
                         size="mini"
                         type="text"
@@ -88,7 +130,7 @@
                     >修改
                     </el-button>
                     <el-button
-                        v-hasPermi="['cafe:story:remove']"
+                        v-hasPermi="['cafe:variant:remove']"
                         icon="el-icon-delete"
                         size="mini"
                         type="text"
@@ -107,17 +149,32 @@
             @pagination="getList"
         />
 
-        <!-- 添加或修改品牌故事对话框 -->
+        <!-- 添加或修改咖啡商品规格对话框 -->
         <el-dialog :title="title" :visible.sync="open" append-to-body width="500px">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <el-form-item label="品牌故事标题" prop="storyTitle">
-                    <el-input v-model="form.storyTitle" placeholder="请输入品牌故事标题"/>
+                <el-form-item label="商品id" prop="productId">
+                    <el-input v-model="form.productId" placeholder="请输入商品id"/>
                 </el-form-item>
-                <el-form-item label="品牌故事图片" prop="storyImage">
-                    <image-upload v-model="form.storyImage"/>
+                <el-form-item label="规格名称，例如227g、454g" prop="variantName">
+                    <el-input v-model="form.variantName" placeholder="请输入规格名称，例如227g、454g"/>
                 </el-form-item>
-                <el-form-item label="品牌故事详情" prop="storyText">
-                    <el-input v-model="form.storyText" placeholder="请输入内容" type="textarea"/>
+                <el-form-item label="外部或内部SKU编码" prop="skuCode">
+                    <el-input v-model="form.skuCode" placeholder="请输入外部或内部SKU编码"/>
+                </el-form-item>
+                <el-form-item label="净含量">
+                    <editor v-model="form.netContent" :min-height="192"/>
+                </el-form-item>
+                <el-form-item label="销售价格" prop="salePrice">
+                    <el-input v-model="form.salePrice" placeholder="请输入销售价格"/>
+                </el-form-item>
+                <el-form-item label="划线价" prop="marketPrice">
+                    <el-input v-model="form.marketPrice" placeholder="请输入划线价"/>
+                </el-form-item>
+                <el-form-item label="该规格的外部购买链接" prop="purchaseUrl">
+                    <el-input v-model="form.purchaseUrl" placeholder="请输入内容" type="textarea"/>
+                </el-form-item>
+                <el-form-item label="显示顺序" prop="variantSort">
+                    <el-input v-model="form.variantSort" placeholder="请输入显示顺序"/>
                 </el-form-item>
                 <el-form-item label="删除时间" prop="deleteAt">
                     <el-date-picker v-model="form.deleteAt"
@@ -137,10 +194,10 @@
 </template>
 
 <script>
-import {addStory, delStory, getStory, listStory, updateStory} from "@/api/cafe/story"
+import {addVariant, delVariant, getVariant, listVariant, updateVariant} from "@/api/cafe/variant"
 
 export default {
-    name: "Story",
+    name: "Variant",
     dicts: [[],],
     data() {
         return {
@@ -156,8 +213,8 @@ export default {
             showSearch: true,
             // 总条数
             total: 0,
-            // 品牌故事表格数据
-            storyList: [],
+            // 咖啡商品规格表格数据
+            variantList: [],
             // 弹出层标题
             title: "",
             // 是否显示弹出层
@@ -166,17 +223,26 @@ export default {
             queryParams: {
                 pageNum: 1,
                 pageSize: 10,
-                storyTitle: null,
-                storyImage: null,
-                storyText: null,
-                storyStatus: null,
+                productId: null,
+                variantName: null,
+                skuCode: null,
+                netContent: null,
+                salePrice: null,
+                marketPrice: null,
+                stockStatus: null,
+                purchaseUrl: null,
+                variantSort: null,
+                variantStatus: null,
             },
             // 表单参数
             form: {},
             // 表单校验
             rules: {
-                storyTitle: [
-                    {required: true, message: "品牌故事标题不能为空", trigger: "blur"}
+                productId: [
+                    {required: true, message: "商品id不能为空", trigger: "blur"}
+                ],
+                variantName: [
+                    {required: true, message: "规格名称，例如227g、454g不能为空", trigger: "blur"}
                 ],
             }
         }
@@ -185,11 +251,11 @@ export default {
         this.getList()
     },
     methods: {
-        /** 查询品牌故事列表 */
+        /** 查询咖啡商品规格列表 */
         getList() {
             this.loading = true
-            listStory(this.queryParams).then(response => {
-                this.storyList = response.rows
+            listVariant(this.queryParams).then(response => {
+                this.variantList = response.rows
                 this.total = response.total
                 this.loading = false
             })
@@ -202,11 +268,17 @@ export default {
         // 表单重置
         reset() {
             this.form = {
-                storyId: null,
-                storyTitle: null,
-                storyImage: null,
-                storyText: null,
-                storyStatus: null,
+                variantId: null,
+                productId: null,
+                variantName: null,
+                skuCode: null,
+                netContent: null,
+                salePrice: null,
+                marketPrice: null,
+                stockStatus: null,
+                purchaseUrl: null,
+                variantSort: null,
+                variantStatus: null,
                 createBy: null,
                 createTime: null,
                 updateBy: null,
@@ -227,7 +299,7 @@ export default {
         },
         // 多选框选中数据
         handleSelectionChange(selection) {
-            this.ids = selection.map(item => item.storyId)
+            this.ids = selection.map(item => item.variantId)
             this.single = selection.length !== 1
             this.multiple = !selection.length
         },
@@ -235,30 +307,30 @@ export default {
         handleAdd() {
             this.reset()
             this.open = true
-            this.title = "添加品牌故事"
+            this.title = "添加咖啡商品规格"
         },
         /** 修改按钮操作 */
         handleUpdate(row) {
             this.reset()
-            const storyId = row.storyId || this.ids
-            getStory(storyId).then(response => {
+            const variantId = row.variantId || this.ids
+            getVariant(variantId).then(response => {
                 this.form = response.data
                 this.open = true
-                this.title = "修改品牌故事"
+                this.title = "修改咖啡商品规格"
             })
         },
         /** 提交按钮 */
         submitForm() {
             this.$refs["form"].validate(valid => {
                 if (valid) {
-                    if (this.form.storyId != null) {
-                        updateStory(this.form).then(response => {
+                    if (this.form.variantId != null) {
+                        updateVariant(this.form).then(response => {
                             this.$modal.msgSuccess("修改成功")
                             this.open = false
                             this.getList()
                         })
                     } else {
-                        addStory(this.form).then(response => {
+                        addVariant(this.form).then(response => {
                             this.$modal.msgSuccess("新增成功")
                             this.open = false
                             this.getList()
@@ -269,9 +341,9 @@ export default {
         },
         /** 删除按钮操作 */
         handleDelete(row) {
-            const storyIds = row.storyId || this.ids
-            this.$modal.confirm('是否确认删除品牌故事编号为"' + storyIds + '"的数据项？').then(function () {
-                return delStory(storyIds)
+            const variantIds = row.variantId || this.ids
+            this.$modal.confirm('是否确认删除咖啡商品规格编号为"' + variantIds + '"的数据项？').then(function () {
+                return delVariant(variantIds)
             }).then(() => {
                 this.getList()
                 this.$modal.msgSuccess("删除成功")
@@ -280,9 +352,9 @@ export default {
         },
         /** 导出按钮操作 */
         handleExport() {
-            this.download('cafe/story/export', {
+            this.download('cafe/variant/export', {
                 ...this.queryParams
-            }, `story_${new Date().getTime()}.xlsx`)
+            }, `variant_${new Date().getTime()}.xlsx`)
         }
     }
 }

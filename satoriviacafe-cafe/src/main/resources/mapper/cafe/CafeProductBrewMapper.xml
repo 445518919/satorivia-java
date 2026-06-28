@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductBrewMapper">
+    <resultMap type="CafeProductBrew" id="CafeProductBrewResult">
+        <result property="brewId" column="brew_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="brewName" column="brew_name"/>
+        <result property="brewMethod" column="brew_method"/>
+        <result property="powderQuantity" column="powder_quantity"/>
+        <result property="waterVolume" column="water_volume"/>
+        <result property="waterTemp" column="water_temp"/>
+        <result property="grindDegree" column="grind_degree"/>
+        <result property="powderWaterRatio" column="powder_water_ratio"/>
+        <result property="extractionTime" column="extraction_time"/>
+        <result property="targetTime" column="target_time"/>
+        <result property="preparations" column="preparations"/>
+        <result property="brewSteps" column="brew_steps"/>
+        <result property="brewSort" column="brew_sort"/>
+        <result property="brewStatus" column="brew_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeProductBrewVo">
+        select brew_id,
+               product_id,
+               brew_name,
+               brew_method,
+               powder_quantity,
+               water_volume,
+               water_temp,
+               grind_degree,
+               powder_water_ratio,
+               extraction_time,
+               target_time,
+               preparations,
+               brew_steps,
+               brew_sort,
+               brew_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_product_brew
+    </sql>
+
+    <select id="selectCafeProductBrewList" parameterType="CafeProductBrew" resultMap="CafeProductBrewResult">
+        <include refid="selectCafeProductBrewVo"/>
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="brewName != null  and brewName != ''">
+                and brew_name like concat('%', #{brewName}, '%')
+            </if>
+            <if test="brewMethod != null  and brewMethod != ''">
+                and brew_method = #{brewMethod}
+            </if>
+            <if test="powderQuantity != null  and powderQuantity != ''">
+                and powder_quantity = #{powderQuantity}
+            </if>
+            <if test="waterVolume != null  and waterVolume != ''">
+                and water_volume = #{waterVolume}
+            </if>
+            <if test="waterTemp != null  and waterTemp != ''">
+                and water_temp = #{waterTemp}
+            </if>
+            <if test="grindDegree != null  and grindDegree != ''">
+                and grind_degree = #{grindDegree}
+            </if>
+            <if test="powderWaterRatio != null  and powderWaterRatio != ''">
+                and powder_water_ratio = #{powderWaterRatio}
+            </if>
+            <if test="extractionTime != null  and extractionTime != ''">
+                and extraction_time = #{extractionTime}
+            </if>
+            <if test="targetTime != null  and targetTime != ''">
+                and target_time = #{targetTime}
+            </if>
+            <if test="preparations != null  and preparations != ''">
+                and preparations = #{preparations}
+            </if>
+            <if test="brewSteps != null  and brewSteps != ''">
+                and brew_steps = #{brewSteps}
+            </if>
+            <if test="brewSort != null">
+                and brew_sort = #{brewSort}
+            </if>
+            <if test="brewStatus != null  and brewStatus != ''">
+                and brew_status = #{brewStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeProductBrewByBrewId" parameterType="Long" resultMap="CafeProductBrewResult">
+        <include refid="selectCafeProductBrewVo"/>
+        where brew_id = #{brewId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeProductBrew" parameterType="CafeProductBrew" useGeneratedKeys="true" keyProperty="brewId">
+        insert into cafe_product_brew
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="brewName != null and brewName != ''">
+                brew_name,
+            </if>
+            <if test="brewMethod != null">
+                brew_method,
+            </if>
+            <if test="powderQuantity != null">
+                powder_quantity,
+            </if>
+            <if test="waterVolume != null">
+                water_volume,
+            </if>
+            <if test="waterTemp != null">
+                water_temp,
+            </if>
+            <if test="grindDegree != null">
+                grind_degree,
+            </if>
+            <if test="powderWaterRatio != null">
+                powder_water_ratio,
+            </if>
+            <if test="extractionTime != null">
+                extraction_time,
+            </if>
+            <if test="targetTime != null">
+                target_time,
+            </if>
+            <if test="preparations != null">
+                preparations,
+            </if>
+            <if test="brewSteps != null">
+                brew_steps,
+            </if>
+            <if test="brewSort != null">
+                brew_sort,
+            </if>
+            <if test="brewStatus != null">
+                brew_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="brewName != null and brewName != ''">
+                #{brewName},
+            </if>
+            <if test="brewMethod != null">
+                #{brewMethod},
+            </if>
+            <if test="powderQuantity != null">
+                #{powderQuantity},
+            </if>
+            <if test="waterVolume != null">
+                #{waterVolume},
+            </if>
+            <if test="waterTemp != null">
+                #{waterTemp},
+            </if>
+            <if test="grindDegree != null">
+                #{grindDegree},
+            </if>
+            <if test="powderWaterRatio != null">
+                #{powderWaterRatio},
+            </if>
+            <if test="extractionTime != null">
+                #{extractionTime},
+            </if>
+            <if test="targetTime != null">
+                #{targetTime},
+            </if>
+            <if test="preparations != null">
+                #{preparations},
+            </if>
+            <if test="brewSteps != null">
+                #{brewSteps},
+            </if>
+            <if test="brewSort != null">
+                #{brewSort},
+            </if>
+            <if test="brewStatus != null">
+                #{brewStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeProductBrew" useGeneratedKeys="true" keyProperty="brewId">
+        insert into cafe_product_brew
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            brew_name,
+            brew_method,
+            powder_quantity,
+            water_volume,
+            water_temp,
+            grind_degree,
+            powder_water_ratio,
+            extraction_time,
+            target_time,
+            preparations,
+            brew_steps,
+            brew_sort,
+            brew_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.brewName},
+                #{item.brewMethod},
+                #{item.powderQuantity},
+                #{item.waterVolume},
+                #{item.waterTemp},
+                #{item.grindDegree},
+                #{item.powderWaterRatio},
+                #{item.extractionTime},
+                #{item.targetTime},
+                #{item.preparations},
+                #{item.brewSteps},
+                #{item.brewSort},
+                #{item.brewStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeProductBrew" useGeneratedKeys="true" keyProperty="brewId">
+        insert ignore into cafe_product_brew
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            brew_name,
+            brew_method,
+            powder_quantity,
+            water_volume,
+            water_temp,
+            grind_degree,
+            powder_water_ratio,
+            extraction_time,
+            target_time,
+            preparations,
+            brew_steps,
+            brew_sort,
+            brew_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.brewName},
+                #{item.brewMethod},
+                #{item.powderQuantity},
+                #{item.waterVolume},
+                #{item.waterTemp},
+                #{item.grindDegree},
+                #{item.powderWaterRatio},
+                #{item.extractionTime},
+                #{item.targetTime},
+                #{item.preparations},
+                #{item.brewSteps},
+                #{item.brewSort},
+                #{item.brewStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeProductBrew" parameterType="CafeProductBrew">
+        update cafe_product_brew
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="brewName != null and brewName != ''">
+                brew_name = #{brewName},
+            </if>
+            <if test="brewMethod != null">
+                brew_method = #{brewMethod},
+            </if>
+            <if test="powderQuantity != null">
+                powder_quantity = #{powderQuantity},
+            </if>
+            <if test="waterVolume != null">
+                water_volume = #{waterVolume},
+            </if>
+            <if test="waterTemp != null">
+                water_temp = #{waterTemp},
+            </if>
+            <if test="grindDegree != null">
+                grind_degree = #{grindDegree},
+            </if>
+            <if test="powderWaterRatio != null">
+                powder_water_ratio = #{powderWaterRatio},
+            </if>
+            <if test="extractionTime != null">
+                extraction_time = #{extractionTime},
+            </if>
+            <if test="targetTime != null">
+                target_time = #{targetTime},
+            </if>
+            <if test="preparations != null">
+                preparations = #{preparations},
+            </if>
+            <if test="brewSteps != null">
+                brew_steps = #{brewSteps},
+            </if>
+            <if test="brewSort != null">
+                brew_sort = #{brewSort},
+            </if>
+            <if test="brewStatus != null">
+                brew_status = #{brewStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where brew_id = #{brewId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeProductBrew">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_product_brew
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.productId != null">
+                    product_id = #{item.productId},
+                </if>
+                <if test="item.brewName != null and item.brewName != ''">
+                    brew_name = #{item.brewName},
+                </if>
+                <if test="item.brewMethod != null">
+                    brew_method = #{item.brewMethod},
+                </if>
+                <if test="item.powderQuantity != null">
+                    powder_quantity = #{item.powderQuantity},
+                </if>
+                <if test="item.waterVolume != null">
+                    water_volume = #{item.waterVolume},
+                </if>
+                <if test="item.waterTemp != null">
+                    water_temp = #{item.waterTemp},
+                </if>
+                <if test="item.grindDegree != null">
+                    grind_degree = #{item.grindDegree},
+                </if>
+                <if test="item.powderWaterRatio != null">
+                    powder_water_ratio = #{item.powderWaterRatio},
+                </if>
+                <if test="item.extractionTime != null">
+                    extraction_time = #{item.extractionTime},
+                </if>
+                <if test="item.targetTime != null">
+                    target_time = #{item.targetTime},
+                </if>
+                <if test="item.preparations != null">
+                    preparations = #{item.preparations},
+                </if>
+                <if test="item.brewSteps != null">
+                    brew_steps = #{item.brewSteps},
+                </if>
+                <if test="item.brewSort != null">
+                    brew_sort = #{item.brewSort},
+                </if>
+                <if test="item.brewStatus != null">
+                    brew_status = #{item.brewStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where brew_id = #{item.brewId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeProductBrewByBrewId" parameterType="Long">
+        update cafe_product_brew
+        set delete_at = now()
+        where brew_id = #{brewId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeProductBrewByBrewIds" parameterType="String">
+        update cafe_product_brew
+        set delete_at = now()
+        where brew_id in
+        <foreach item="brewId" collection="array" open="(" separator="," close=")">
+            #{brewId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

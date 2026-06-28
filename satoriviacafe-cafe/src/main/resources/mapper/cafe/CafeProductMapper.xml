@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductMapper">
+    <resultMap type="CafeProduct" id="CafeProductResult">
+        <result property="productId" column="product_id"/>
+        <result property="lineId" column="line_id"/>
+        <result property="productSlug" column="product_slug"/>
+        <result property="productName" column="product_name"/>
+        <result property="productShortName" column="product_short_name"/>
+        <result property="productLabel" column="product_label"/>
+        <result property="productSummary" column="product_summary"/>
+        <result property="flavor" column="flavor"/>
+        <result property="origin" column="origin"/>
+        <result property="altitude" column="altitude"/>
+        <result property="variety" column="variety"/>
+        <result property="treatment" column="treatment"/>
+        <result property="roastDegree" column="roast_degree"/>
+        <result property="brewingMethod" column="brewing_method"/>
+        <result property="dosage" column="dosage"/>
+        <result property="extractionTime" column="extraction_time"/>
+        <result property="waterTemp" column="water_temp"/>
+        <result property="powderWaterRatio" column="powder_water_ratio"/>
+        <result property="specification" column="specification"/>
+        <result property="packageDesc" column="package_desc"/>
+        <result property="additives" column="additives"/>
+        <result property="productDescription" column="product_description"/>
+        <result property="productFeatures" column="product_features"/>
+        <result property="primaryImage" column="primary_image"/>
+        <result property="radarImage" column="radar_image"/>
+        <result property="purchaseUrl" column="purchase_url"/>
+        <result property="seoTitle" column="seo_title"/>
+        <result property="seoDescription" column="seo_description"/>
+        <result property="ogImage" column="og_image"/>
+        <result property="isFeatured" column="is_featured"/>
+        <result property="productSort" column="product_sort"/>
+        <result property="productStatus" column="product_status"/>
+        <result property="publishTime" column="publish_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeProductVo">
+        select product_id,
+               line_id,
+               product_slug,
+               product_name,
+               product_short_name,
+               product_label,
+               product_summary,
+               flavor,
+               origin,
+               altitude,
+               variety,
+               treatment,
+               roast_degree,
+               brewing_method,
+               dosage,
+               extraction_time,
+               water_temp,
+               powder_water_ratio,
+               specification,
+               package_desc,
+               additives,
+               product_description,
+               product_features,
+               primary_image,
+               radar_image,
+               purchase_url,
+               seo_title,
+               seo_description,
+               og_image,
+               is_featured,
+               product_sort,
+               product_status,
+               publish_time,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_product
+    </sql>
+
+    <select id="selectCafeProductList" parameterType="CafeProduct" resultMap="CafeProductResult">
+        <include refid="selectCafeProductVo"/>
+        <where>
+            <if test="lineId != null">
+                and line_id = #{lineId}
+            </if>
+            <if test="productSlug != null  and productSlug != ''">
+                and product_slug = #{productSlug}
+            </if>
+            <if test="productName != null  and productName != ''">
+                and product_name like concat('%', #{productName}, '%')
+            </if>
+            <if test="productShortName != null  and productShortName != ''">
+                and product_short_name like concat('%', #{productShortName}, '%')
+            </if>
+            <if test="productLabel != null  and productLabel != ''">
+                and product_label = #{productLabel}
+            </if>
+            <if test="productSummary != null  and productSummary != ''">
+                and product_summary = #{productSummary}
+            </if>
+            <if test="flavor != null  and flavor != ''">
+                and flavor = #{flavor}
+            </if>
+            <if test="origin != null  and origin != ''">
+                and origin = #{origin}
+            </if>
+            <if test="altitude != null  and altitude != ''">
+                and altitude = #{altitude}
+            </if>
+            <if test="variety != null  and variety != ''">
+                and variety = #{variety}
+            </if>
+            <if test="treatment != null  and treatment != ''">
+                and treatment = #{treatment}
+            </if>
+            <if test="roastDegree != null  and roastDegree != ''">
+                and roast_degree = #{roastDegree}
+            </if>
+            <if test="brewingMethod != null  and brewingMethod != ''">
+                and brewing_method = #{brewingMethod}
+            </if>
+            <if test="dosage != null  and dosage != ''">
+                and dosage = #{dosage}
+            </if>
+            <if test="extractionTime != null  and extractionTime != ''">
+                and extraction_time = #{extractionTime}
+            </if>
+            <if test="waterTemp != null  and waterTemp != ''">
+                and water_temp = #{waterTemp}
+            </if>
+            <if test="powderWaterRatio != null  and powderWaterRatio != ''">
+                and powder_water_ratio = #{powderWaterRatio}
+            </if>
+            <if test="specification != null  and specification != ''">
+                and specification = #{specification}
+            </if>
+            <if test="packageDesc != null  and packageDesc != ''">
+                and package_desc = #{packageDesc}
+            </if>
+            <if test="additives != null  and additives != ''">
+                and additives = #{additives}
+            </if>
+            <if test="productDescription != null  and productDescription != ''">
+                and product_description = #{productDescription}
+            </if>
+            <if test="productFeatures != null  and productFeatures != ''">
+                and product_features = #{productFeatures}
+            </if>
+            <if test="primaryImage != null  and primaryImage != ''">
+                and primary_image = #{primaryImage}
+            </if>
+            <if test="radarImage != null  and radarImage != ''">
+                and radar_image = #{radarImage}
+            </if>
+            <if test="purchaseUrl != null  and purchaseUrl != ''">
+                and purchase_url = #{purchaseUrl}
+            </if>
+            <if test="seoTitle != null  and seoTitle != ''">
+                and seo_title = #{seoTitle}
+            </if>
+            <if test="seoDescription != null  and seoDescription != ''">
+                and seo_description = #{seoDescription}
+            </if>
+            <if test="ogImage != null  and ogImage != ''">
+                and og_image = #{ogImage}
+            </if>
+            <if test="isFeatured != null  and isFeatured != ''">
+                and is_featured = #{isFeatured}
+            </if>
+            <if test="productSort != null">
+                and product_sort = #{productSort}
+            </if>
+            <if test="productStatus != null  and productStatus != ''">
+                and product_status = #{productStatus}
+            </if>
+            <if test="publishTime != null">
+                and publish_time = #{publishTime}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeProductByProductId" parameterType="Long" resultMap="CafeProductResult">
+        <include refid="selectCafeProductVo"/>
+        where product_id = #{productId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeProduct" parameterType="CafeProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into cafe_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="lineId != null">
+                line_id,
+            </if>
+            <if test="productSlug != null and productSlug != ''">
+                product_slug,
+            </if>
+            <if test="productName != null and productName != ''">
+                product_name,
+            </if>
+            <if test="productShortName != null">
+                product_short_name,
+            </if>
+            <if test="productLabel != null">
+                product_label,
+            </if>
+            <if test="productSummary != null">
+                product_summary,
+            </if>
+            <if test="flavor != null and flavor != ''">
+                flavor,
+            </if>
+            <if test="origin != null and origin != ''">
+                origin,
+            </if>
+            <if test="altitude != null and altitude != ''">
+                altitude,
+            </if>
+            <if test="variety != null and variety != ''">
+                variety,
+            </if>
+            <if test="treatment != null and treatment != ''">
+                treatment,
+            </if>
+            <if test="roastDegree != null">
+                roast_degree,
+            </if>
+            <if test="brewingMethod != null">
+                brewing_method,
+            </if>
+            <if test="dosage != null">
+                dosage,
+            </if>
+            <if test="extractionTime != null">
+                extraction_time,
+            </if>
+            <if test="waterTemp != null">
+                water_temp,
+            </if>
+            <if test="powderWaterRatio != null">
+                powder_water_ratio,
+            </if>
+            <if test="specification != null">
+                specification,
+            </if>
+            <if test="packageDesc != null">
+                package_desc,
+            </if>
+            <if test="additives != null">
+                additives,
+            </if>
+            <if test="productDescription != null">
+                product_description,
+            </if>
+            <if test="productFeatures != null">
+                product_features,
+            </if>
+            <if test="primaryImage != null and primaryImage != ''">
+                primary_image,
+            </if>
+            <if test="radarImage != null">
+                radar_image,
+            </if>
+            <if test="purchaseUrl != null">
+                purchase_url,
+            </if>
+            <if test="seoTitle != null">
+                seo_title,
+            </if>
+            <if test="seoDescription != null">
+                seo_description,
+            </if>
+            <if test="ogImage != null">
+                og_image,
+            </if>
+            <if test="isFeatured != null">
+                is_featured,
+            </if>
+            <if test="productSort != null">
+                product_sort,
+            </if>
+            <if test="productStatus != null">
+                product_status,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="lineId != null">
+                #{lineId},
+            </if>
+            <if test="productSlug != null and productSlug != ''">
+                #{productSlug},
+            </if>
+            <if test="productName != null and productName != ''">
+                #{productName},
+            </if>
+            <if test="productShortName != null">
+                #{productShortName},
+            </if>
+            <if test="productLabel != null">
+                #{productLabel},
+            </if>
+            <if test="productSummary != null">
+                #{productSummary},
+            </if>
+            <if test="flavor != null and flavor != ''">
+                #{flavor},
+            </if>
+            <if test="origin != null and origin != ''">
+                #{origin},
+            </if>
+            <if test="altitude != null and altitude != ''">
+                #{altitude},
+            </if>
+            <if test="variety != null and variety != ''">
+                #{variety},
+            </if>
+            <if test="treatment != null and treatment != ''">
+                #{treatment},
+            </if>
+            <if test="roastDegree != null">
+                #{roastDegree},
+            </if>
+            <if test="brewingMethod != null">
+                #{brewingMethod},
+            </if>
+            <if test="dosage != null">
+                #{dosage},
+            </if>
+            <if test="extractionTime != null">
+                #{extractionTime},
+            </if>
+            <if test="waterTemp != null">
+                #{waterTemp},
+            </if>
+            <if test="powderWaterRatio != null">
+                #{powderWaterRatio},
+            </if>
+            <if test="specification != null">
+                #{specification},
+            </if>
+            <if test="packageDesc != null">
+                #{packageDesc},
+            </if>
+            <if test="additives != null">
+                #{additives},
+            </if>
+            <if test="productDescription != null">
+                #{productDescription},
+            </if>
+            <if test="productFeatures != null">
+                #{productFeatures},
+            </if>
+            <if test="primaryImage != null and primaryImage != ''">
+                #{primaryImage},
+            </if>
+            <if test="radarImage != null">
+                #{radarImage},
+            </if>
+            <if test="purchaseUrl != null">
+                #{purchaseUrl},
+            </if>
+            <if test="seoTitle != null">
+                #{seoTitle},
+            </if>
+            <if test="seoDescription != null">
+                #{seoDescription},
+            </if>
+            <if test="ogImage != null">
+                #{ogImage},
+            </if>
+            <if test="isFeatured != null">
+                #{isFeatured},
+            </if>
+            <if test="productSort != null">
+                #{productSort},
+            </if>
+            <if test="productStatus != null">
+                #{productStatus},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into cafe_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            line_id,
+            product_slug,
+            product_name,
+            product_short_name,
+            product_label,
+            product_summary,
+            flavor,
+            origin,
+            altitude,
+            variety,
+            treatment,
+            roast_degree,
+            brewing_method,
+            dosage,
+            extraction_time,
+            water_temp,
+            powder_water_ratio,
+            specification,
+            package_desc,
+            additives,
+            product_description,
+            product_features,
+            primary_image,
+            radar_image,
+            purchase_url,
+            seo_title,
+            seo_description,
+            og_image,
+            is_featured,
+            product_sort,
+            product_status,
+            publish_time,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.lineId},
+                #{item.productSlug},
+                #{item.productName},
+                #{item.productShortName},
+                #{item.productLabel},
+                #{item.productSummary},
+                #{item.flavor},
+                #{item.origin},
+                #{item.altitude},
+                #{item.variety},
+                #{item.treatment},
+                #{item.roastDegree},
+                #{item.brewingMethod},
+                #{item.dosage},
+                #{item.extractionTime},
+                #{item.waterTemp},
+                #{item.powderWaterRatio},
+                #{item.specification},
+                #{item.packageDesc},
+                #{item.additives},
+                #{item.productDescription},
+                #{item.productFeatures},
+                #{item.primaryImage},
+                #{item.radarImage},
+                #{item.purchaseUrl},
+                #{item.seoTitle},
+                #{item.seoDescription},
+                #{item.ogImage},
+                #{item.isFeatured},
+                #{item.productSort},
+                #{item.productStatus},
+                #{item.publishTime},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert ignore into cafe_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            line_id,
+            product_slug,
+            product_name,
+            product_short_name,
+            product_label,
+            product_summary,
+            flavor,
+            origin,
+            altitude,
+            variety,
+            treatment,
+            roast_degree,
+            brewing_method,
+            dosage,
+            extraction_time,
+            water_temp,
+            powder_water_ratio,
+            specification,
+            package_desc,
+            additives,
+            product_description,
+            product_features,
+            primary_image,
+            radar_image,
+            purchase_url,
+            seo_title,
+            seo_description,
+            og_image,
+            is_featured,
+            product_sort,
+            product_status,
+            publish_time,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.lineId},
+                #{item.productSlug},
+                #{item.productName},
+                #{item.productShortName},
+                #{item.productLabel},
+                #{item.productSummary},
+                #{item.flavor},
+                #{item.origin},
+                #{item.altitude},
+                #{item.variety},
+                #{item.treatment},
+                #{item.roastDegree},
+                #{item.brewingMethod},
+                #{item.dosage},
+                #{item.extractionTime},
+                #{item.waterTemp},
+                #{item.powderWaterRatio},
+                #{item.specification},
+                #{item.packageDesc},
+                #{item.additives},
+                #{item.productDescription},
+                #{item.productFeatures},
+                #{item.primaryImage},
+                #{item.radarImage},
+                #{item.purchaseUrl},
+                #{item.seoTitle},
+                #{item.seoDescription},
+                #{item.ogImage},
+                #{item.isFeatured},
+                #{item.productSort},
+                #{item.productStatus},
+                #{item.publishTime},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeProduct" parameterType="CafeProduct">
+        update cafe_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lineId != null">
+                line_id = #{lineId},
+            </if>
+            <if test="productSlug != null and productSlug != ''">
+                product_slug = #{productSlug},
+            </if>
+            <if test="productName != null and productName != ''">
+                product_name = #{productName},
+            </if>
+            <if test="productShortName != null">
+                product_short_name = #{productShortName},
+            </if>
+            <if test="productLabel != null">
+                product_label = #{productLabel},
+            </if>
+            <if test="productSummary != null">
+                product_summary = #{productSummary},
+            </if>
+            <if test="flavor != null and flavor != ''">
+                flavor = #{flavor},
+            </if>
+            <if test="origin != null and origin != ''">
+                origin = #{origin},
+            </if>
+            <if test="altitude != null and altitude != ''">
+                altitude = #{altitude},
+            </if>
+            <if test="variety != null and variety != ''">
+                variety = #{variety},
+            </if>
+            <if test="treatment != null and treatment != ''">
+                treatment = #{treatment},
+            </if>
+            <if test="roastDegree != null">
+                roast_degree = #{roastDegree},
+            </if>
+            <if test="brewingMethod != null">
+                brewing_method = #{brewingMethod},
+            </if>
+            <if test="dosage != null">
+                dosage = #{dosage},
+            </if>
+            <if test="extractionTime != null">
+                extraction_time = #{extractionTime},
+            </if>
+            <if test="waterTemp != null">
+                water_temp = #{waterTemp},
+            </if>
+            <if test="powderWaterRatio != null">
+                powder_water_ratio = #{powderWaterRatio},
+            </if>
+            <if test="specification != null">
+                specification = #{specification},
+            </if>
+            <if test="packageDesc != null">
+                package_desc = #{packageDesc},
+            </if>
+            <if test="additives != null">
+                additives = #{additives},
+            </if>
+            <if test="productDescription != null">
+                product_description = #{productDescription},
+            </if>
+            <if test="productFeatures != null">
+                product_features = #{productFeatures},
+            </if>
+            <if test="primaryImage != null and primaryImage != ''">
+                primary_image = #{primaryImage},
+            </if>
+            <if test="radarImage != null">
+                radar_image = #{radarImage},
+            </if>
+            <if test="purchaseUrl != null">
+                purchase_url = #{purchaseUrl},
+            </if>
+            <if test="seoTitle != null">
+                seo_title = #{seoTitle},
+            </if>
+            <if test="seoDescription != null">
+                seo_description = #{seoDescription},
+            </if>
+            <if test="ogImage != null">
+                og_image = #{ogImage},
+            </if>
+            <if test="isFeatured != null">
+                is_featured = #{isFeatured},
+            </if>
+            <if test="productSort != null">
+                product_sort = #{productSort},
+            </if>
+            <if test="productStatus != null">
+                product_status = #{productStatus},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where product_id = #{productId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeProduct">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_product
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.lineId != null">
+                    line_id = #{item.lineId},
+                </if>
+                <if test="item.productSlug != null and item.productSlug != ''">
+                    product_slug = #{item.productSlug},
+                </if>
+                <if test="item.productName != null and item.productName != ''">
+                    product_name = #{item.productName},
+                </if>
+                <if test="item.productShortName != null">
+                    product_short_name = #{item.productShortName},
+                </if>
+                <if test="item.productLabel != null">
+                    product_label = #{item.productLabel},
+                </if>
+                <if test="item.productSummary != null">
+                    product_summary = #{item.productSummary},
+                </if>
+                <if test="item.flavor != null and item.flavor != ''">
+                    flavor = #{item.flavor},
+                </if>
+                <if test="item.origin != null and item.origin != ''">
+                    origin = #{item.origin},
+                </if>
+                <if test="item.altitude != null and item.altitude != ''">
+                    altitude = #{item.altitude},
+                </if>
+                <if test="item.variety != null and item.variety != ''">
+                    variety = #{item.variety},
+                </if>
+                <if test="item.treatment != null and item.treatment != ''">
+                    treatment = #{item.treatment},
+                </if>
+                <if test="item.roastDegree != null">
+                    roast_degree = #{item.roastDegree},
+                </if>
+                <if test="item.brewingMethod != null">
+                    brewing_method = #{item.brewingMethod},
+                </if>
+                <if test="item.dosage != null">
+                    dosage = #{item.dosage},
+                </if>
+                <if test="item.extractionTime != null">
+                    extraction_time = #{item.extractionTime},
+                </if>
+                <if test="item.waterTemp != null">
+                    water_temp = #{item.waterTemp},
+                </if>
+                <if test="item.powderWaterRatio != null">
+                    powder_water_ratio = #{item.powderWaterRatio},
+                </if>
+                <if test="item.specification != null">
+                    specification = #{item.specification},
+                </if>
+                <if test="item.packageDesc != null">
+                    package_desc = #{item.packageDesc},
+                </if>
+                <if test="item.additives != null">
+                    additives = #{item.additives},
+                </if>
+                <if test="item.productDescription != null">
+                    product_description = #{item.productDescription},
+                </if>
+                <if test="item.productFeatures != null">
+                    product_features = #{item.productFeatures},
+                </if>
+                <if test="item.primaryImage != null and item.primaryImage != ''">
+                    primary_image = #{item.primaryImage},
+                </if>
+                <if test="item.radarImage != null">
+                    radar_image = #{item.radarImage},
+                </if>
+                <if test="item.purchaseUrl != null">
+                    purchase_url = #{item.purchaseUrl},
+                </if>
+                <if test="item.seoTitle != null">
+                    seo_title = #{item.seoTitle},
+                </if>
+                <if test="item.seoDescription != null">
+                    seo_description = #{item.seoDescription},
+                </if>
+                <if test="item.ogImage != null">
+                    og_image = #{item.ogImage},
+                </if>
+                <if test="item.isFeatured != null">
+                    is_featured = #{item.isFeatured},
+                </if>
+                <if test="item.productSort != null">
+                    product_sort = #{item.productSort},
+                </if>
+                <if test="item.productStatus != null">
+                    product_status = #{item.productStatus},
+                </if>
+                <if test="item.publishTime != null">
+                    publish_time = #{item.publishTime},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where product_id = #{item.productId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeProductByProductId" parameterType="Long">
+        update cafe_product
+        set delete_at = now()
+        where product_id = #{productId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeProductByProductIds" parameterType="String">
+        update cafe_product
+        set delete_at = now()
+        where product_id in
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductVariantMapper">
+    <resultMap type="CafeProductVariant" id="CafeProductVariantResult">
+        <result property="variantId" column="variant_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="variantName" column="variant_name"/>
+        <result property="skuCode" column="sku_code"/>
+        <result property="netContent" column="net_content"/>
+        <result property="salePrice" column="sale_price"/>
+        <result property="marketPrice" column="market_price"/>
+        <result property="stockStatus" column="stock_status"/>
+        <result property="purchaseUrl" column="purchase_url"/>
+        <result property="variantSort" column="variant_sort"/>
+        <result property="variantStatus" column="variant_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeProductVariantVo">
+        select variant_id,
+               product_id,
+               variant_name,
+               sku_code,
+               net_content,
+               sale_price,
+               market_price,
+               stock_status,
+               purchase_url,
+               variant_sort,
+               variant_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_product_variant
+    </sql>
+
+    <select id="selectCafeProductVariantList" parameterType="CafeProductVariant" resultMap="CafeProductVariantResult">
+        <include refid="selectCafeProductVariantVo"/>
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="variantName != null  and variantName != ''">
+                and variant_name like concat('%', #{variantName}, '%')
+            </if>
+            <if test="skuCode != null  and skuCode != ''">
+                and sku_code = #{skuCode}
+            </if>
+            <if test="netContent != null  and netContent != ''">
+                and net_content = #{netContent}
+            </if>
+            <if test="salePrice != null">
+                and sale_price = #{salePrice}
+            </if>
+            <if test="marketPrice != null">
+                and market_price = #{marketPrice}
+            </if>
+            <if test="stockStatus != null  and stockStatus != ''">
+                and stock_status = #{stockStatus}
+            </if>
+            <if test="purchaseUrl != null  and purchaseUrl != ''">
+                and purchase_url = #{purchaseUrl}
+            </if>
+            <if test="variantSort != null">
+                and variant_sort = #{variantSort}
+            </if>
+            <if test="variantStatus != null  and variantStatus != ''">
+                and variant_status = #{variantStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeProductVariantByVariantId" parameterType="Long" resultMap="CafeProductVariantResult">
+        <include refid="selectCafeProductVariantVo"/>
+        where variant_id = #{variantId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeProductVariant" parameterType="CafeProductVariant" useGeneratedKeys="true"
+            keyProperty="variantId">
+        insert into cafe_product_variant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="variantName != null and variantName != ''">
+                variant_name,
+            </if>
+            <if test="skuCode != null">
+                sku_code,
+            </if>
+            <if test="netContent != null">
+                net_content,
+            </if>
+            <if test="salePrice != null">
+                sale_price,
+            </if>
+            <if test="marketPrice != null">
+                market_price,
+            </if>
+            <if test="stockStatus != null">
+                stock_status,
+            </if>
+            <if test="purchaseUrl != null">
+                purchase_url,
+            </if>
+            <if test="variantSort != null">
+                variant_sort,
+            </if>
+            <if test="variantStatus != null">
+                variant_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="variantName != null and variantName != ''">
+                #{variantName},
+            </if>
+            <if test="skuCode != null">
+                #{skuCode},
+            </if>
+            <if test="netContent != null">
+                #{netContent},
+            </if>
+            <if test="salePrice != null">
+                #{salePrice},
+            </if>
+            <if test="marketPrice != null">
+                #{marketPrice},
+            </if>
+            <if test="stockStatus != null">
+                #{stockStatus},
+            </if>
+            <if test="purchaseUrl != null">
+                #{purchaseUrl},
+            </if>
+            <if test="variantSort != null">
+                #{variantSort},
+            </if>
+            <if test="variantStatus != null">
+                #{variantStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeProductVariant" useGeneratedKeys="true" keyProperty="variantId">
+        insert into cafe_product_variant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            variant_name,
+            sku_code,
+            net_content,
+            sale_price,
+            market_price,
+            stock_status,
+            purchase_url,
+            variant_sort,
+            variant_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.variantName},
+                #{item.skuCode},
+                #{item.netContent},
+                #{item.salePrice},
+                #{item.marketPrice},
+                #{item.stockStatus},
+                #{item.purchaseUrl},
+                #{item.variantSort},
+                #{item.variantStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeProductVariant" useGeneratedKeys="true" keyProperty="variantId">
+        insert ignore into cafe_product_variant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            variant_name,
+            sku_code,
+            net_content,
+            sale_price,
+            market_price,
+            stock_status,
+            purchase_url,
+            variant_sort,
+            variant_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.variantName},
+                #{item.skuCode},
+                #{item.netContent},
+                #{item.salePrice},
+                #{item.marketPrice},
+                #{item.stockStatus},
+                #{item.purchaseUrl},
+                #{item.variantSort},
+                #{item.variantStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeProductVariant" parameterType="CafeProductVariant">
+        update cafe_product_variant
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="variantName != null and variantName != ''">
+                variant_name = #{variantName},
+            </if>
+            <if test="skuCode != null">
+                sku_code = #{skuCode},
+            </if>
+            <if test="netContent != null">
+                net_content = #{netContent},
+            </if>
+            <if test="salePrice != null">
+                sale_price = #{salePrice},
+            </if>
+            <if test="marketPrice != null">
+                market_price = #{marketPrice},
+            </if>
+            <if test="stockStatus != null">
+                stock_status = #{stockStatus},
+            </if>
+            <if test="purchaseUrl != null">
+                purchase_url = #{purchaseUrl},
+            </if>
+            <if test="variantSort != null">
+                variant_sort = #{variantSort},
+            </if>
+            <if test="variantStatus != null">
+                variant_status = #{variantStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where variant_id = #{variantId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeProductVariant">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_product_variant
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.productId != null">
+                    product_id = #{item.productId},
+                </if>
+                <if test="item.variantName != null and item.variantName != ''">
+                    variant_name = #{item.variantName},
+                </if>
+                <if test="item.skuCode != null">
+                    sku_code = #{item.skuCode},
+                </if>
+                <if test="item.netContent != null">
+                    net_content = #{item.netContent},
+                </if>
+                <if test="item.salePrice != null">
+                    sale_price = #{item.salePrice},
+                </if>
+                <if test="item.marketPrice != null">
+                    market_price = #{item.marketPrice},
+                </if>
+                <if test="item.stockStatus != null">
+                    stock_status = #{item.stockStatus},
+                </if>
+                <if test="item.purchaseUrl != null">
+                    purchase_url = #{item.purchaseUrl},
+                </if>
+                <if test="item.variantSort != null">
+                    variant_sort = #{item.variantSort},
+                </if>
+                <if test="item.variantStatus != null">
+                    variant_status = #{item.variantStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where variant_id = #{item.variantId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeProductVariantByVariantId" parameterType="Long">
+        update cafe_product_variant
+        set delete_at = now()
+        where variant_id = #{variantId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeProductVariantByVariantIds" parameterType="String">
+        update cafe_product_variant
+        set delete_at = now()
+        where variant_id in
+        <foreach item="variantId" collection="array" open="(" separator="," close=")">
+            #{variantId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

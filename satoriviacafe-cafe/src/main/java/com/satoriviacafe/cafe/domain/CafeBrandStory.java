@@ -26,6 +26,11 @@ public class CafeBrandStory extends BaseEntity {
      */
     private Long storyId;
     /**
+     * 品牌故事标题
+     */
+    @Excel(name = "品牌故事标题")
+    private String storyTitle;
+    /**
      * 品牌故事图片
      */
     @Excel(name = "品牌故事图片")

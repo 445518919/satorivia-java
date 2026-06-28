@@ -2,41 +2,25 @@
     <div class="app-container">
         <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px"
                  size="small">
-            <el-form-item label="产品名称" prop="prodName">
+            <el-form-item label="商品id" prop="productId">
                 <el-input
-                    v-model="queryParams.prodName"
+                    v-model="queryParams.productId"
                     clearable
-                    placeholder="请输入产品名称"
+                    placeholder="请输入商品id"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
-            <el-form-item label="产品描述" prop="prodDesc">
+            <el-form-item label="图片替代文本" prop="imageAlt">
                 <el-input
-                    v-model="queryParams.prodDesc"
+                    v-model="queryParams.imageAlt"
                     clearable
-                    placeholder="请输入产品描述"
+                    placeholder="请输入图片替代文本"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
-            <el-form-item label="商品编码" prop="prodCode">
+            <el-form-item label="显示顺序" prop="imageSort">
                 <el-input
-                    v-model="queryParams.prodCode"
-                    clearable
-                    placeholder="请输入商品编码"
-                    @keyup.enter.native="handleQuery"
-                />
-            </el-form-item>
-            <el-form-item label="产品价格" prop="prodPrice">
-                <el-input
-                    v-model="queryParams.prodPrice"
-                    clearable
-                    placeholder="请输入产品价格"
-                    @keyup.enter.native="handleQuery"
-                />
-            </el-form-item>
-            <el-form-item label="显示顺序" prop="orderNum">
-                <el-input
-                    v-model="queryParams.orderNum"
+                    v-model="queryParams.imageSort"
                     clearable
                     placeholder="请输入显示顺序"
                     @keyup.enter.native="handleQuery"
@@ -51,7 +35,7 @@
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:production:add']"
+                    v-hasPermi="['cafe:image:add']"
                     icon="el-icon-plus"
                     plain
                     size="mini"
@@ -62,7 +46,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:production:edit']"
+                    v-hasPermi="['cafe:image:edit']"
                     :disabled="single"
                     icon="el-icon-edit"
                     plain
@@ -74,7 +58,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:production:remove']"
+                    v-hasPermi="['cafe:image:remove']"
                     :disabled="multiple"
                     icon="el-icon-delete"
                     plain
@@ -86,7 +70,7 @@
             </el-col>
             <el-col :span="1.5">
                 <el-button
-                    v-hasPermi="['cafe:production:export']"
+                    v-hasPermi="['cafe:image:export']"
                     icon="el-icon-download"
                     plain
                     size="mini"
@@ -98,25 +82,19 @@
             <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
 
-        <el-table v-loading="loading" :data="productionList" @selection-change="handleSelectionChange">
+        <el-table v-loading="loading" :data="imageList" @selection-change="handleSelectionChange">
             <el-table-column align="center" type="selection" width="55"/>
-            <el-table-column align="center" label="产品id" prop="prodId"/>
-            <el-table-column align="center" label="产品名称" prop="prodName"/>
-            <el-table-column align="center" label="产品描述" prop="prodDesc"/>
-            <el-table-column align="center" label="产品图片" prop="prodImage" width="100">
-                <template slot-scope="scope">
-                    <image-preview :height="50" :src="scope.row.prodImage" :width="50"/>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="商品编码" prop="prodCode"/>
-            <el-table-column align="center" label="产品价格" prop="prodPrice"/>
-            <el-table-column align="center" label="产品详情" prop="prodText"/>
-            <el-table-column align="center" label="显示顺序" prop="orderNum"/>
-            <el-table-column align="center" label="产品状态" prop="prodStatus"/>
+            <el-table-column align="center" label="商品图片id" prop="imageId"/>
+            <el-table-column align="center" label="商品id" prop="productId"/>
+            <el-table-column align="center" label="图片地址" prop="imageUrl"/>
+            <el-table-column align="center" label="图片替代文本" prop="imageAlt"/>
+            <el-table-column align="center" label="图片类型：gallery/detail/og" prop="imageType"/>
+            <el-table-column align="center" label="显示顺序" prop="imageSort"/>
+            <el-table-column align="center" label="状态" prop="imageStatus"/>
             <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
                 <template slot-scope="scope">
                     <el-button
-                        v-hasPermi="['cafe:production:edit']"
+                        v-hasPermi="['cafe:image:edit']"
                         icon="el-icon-edit"
                         size="mini"
                         type="text"
@@ -124,7 +102,7 @@
                     >修改
                     </el-button>
                     <el-button
-                        v-hasPermi="['cafe:production:remove']"
+                        v-hasPermi="['cafe:image:remove']"
                         icon="el-icon-delete"
                         size="mini"
                         type="text"
@@ -143,29 +121,20 @@
             @pagination="getList"
         />
 
-        <!-- 添加或修改产品对话框 -->
+        <!-- 添加或修改咖啡商品图库对话框 -->
         <el-dialog :title="title" :visible.sync="open" append-to-body width="500px">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <el-form-item label="产品名称" prop="prodName">
-                    <el-input v-model="form.prodName" placeholder="请输入产品名称"/>
+                <el-form-item label="商品id" prop="productId">
+                    <el-input v-model="form.productId" placeholder="请输入商品id"/>
                 </el-form-item>
-                <el-form-item label="产品描述" prop="prodDesc">
-                    <el-input v-model="form.prodDesc" placeholder="请输入产品描述"/>
+                <el-form-item label="图片地址" prop="imageUrl">
+                    <el-input v-model="form.imageUrl" placeholder="请输入内容" type="textarea"/>
                 </el-form-item>
-                <el-form-item label="产品图片" prop="prodImage">
-                    <image-upload v-model="form.prodImage"/>
+                <el-form-item label="图片替代文本" prop="imageAlt">
+                    <el-input v-model="form.imageAlt" placeholder="请输入图片替代文本"/>
                 </el-form-item>
-                <el-form-item label="商品编码" prop="prodCode">
-                    <el-input v-model="form.prodCode" placeholder="请输入商品编码"/>
-                </el-form-item>
-                <el-form-item label="产品价格" prop="prodPrice">
-                    <el-input v-model="form.prodPrice" placeholder="请输入产品价格"/>
-                </el-form-item>
-                <el-form-item label="产品详情" prop="prodText">
-                    <el-input v-model="form.prodText" placeholder="请输入内容" type="textarea"/>
-                </el-form-item>
-                <el-form-item label="显示顺序" prop="orderNum">
-                    <el-input v-model="form.orderNum" placeholder="请输入显示顺序"/>
+                <el-form-item label="显示顺序" prop="imageSort">
+                    <el-input v-model="form.imageSort" placeholder="请输入显示顺序"/>
                 </el-form-item>
                 <el-form-item label="删除时间" prop="deleteAt">
                     <el-date-picker v-model="form.deleteAt"
@@ -185,10 +154,10 @@
 </template>
 
 <script>
-import {addProduction, delProduction, getProduction, listProduction, updateProduction} from "@/api/cafe/production"
+import {addImage, delImage, getImage, listImage, updateImage} from "@/api/cafe/image"
 
 export default {
-    name: "Production",
+    name: "Image",
     dicts: [[],],
     data() {
         return {
@@ -204,8 +173,8 @@ export default {
             showSearch: true,
             // 总条数
             total: 0,
-            // 产品表格数据
-            productionList: [],
+            // 咖啡商品图库表格数据
+            imageList: [],
             // 弹出层标题
             title: "",
             // 是否显示弹出层
@@ -214,21 +183,22 @@ export default {
             queryParams: {
                 pageNum: 1,
                 pageSize: 10,
-                prodName: null,
-                prodDesc: null,
-                prodImage: null,
-                prodCode: null,
-                prodPrice: null,
-                prodText: null,
-                orderNum: null,
-                prodStatus: null,
+                productId: null,
+                imageUrl: null,
+                imageAlt: null,
+                imageType: null,
+                imageSort: null,
+                imageStatus: null,
             },
             // 表单参数
             form: {},
             // 表单校验
             rules: {
-                prodCode: [
-                    {required: true, message: "商品编码不能为空", trigger: "blur"}
+                productId: [
+                    {required: true, message: "商品id不能为空", trigger: "blur"}
+                ],
+                imageUrl: [
+                    {required: true, message: "图片地址不能为空", trigger: "blur"}
                 ],
             }
         }
@@ -237,11 +207,11 @@ export default {
         this.getList()
     },
     methods: {
-        /** 查询产品列表 */
+        /** 查询咖啡商品图库列表 */
         getList() {
             this.loading = true
-            listProduction(this.queryParams).then(response => {
-                this.productionList = response.rows
+            listImage(this.queryParams).then(response => {
+                this.imageList = response.rows
                 this.total = response.total
                 this.loading = false
             })
@@ -254,15 +224,13 @@ export default {
         // 表单重置
         reset() {
             this.form = {
-                prodId: null,
-                prodName: null,
-                prodDesc: null,
-                prodImage: null,
-                prodCode: null,
-                prodPrice: null,
-                prodText: null,
-                orderNum: null,
-                prodStatus: null,
+                imageId: null,
+                productId: null,
+                imageUrl: null,
+                imageAlt: null,
+                imageType: null,
+                imageSort: null,
+                imageStatus: null,
                 createBy: null,
                 createTime: null,
                 updateBy: null,
@@ -283,7 +251,7 @@ export default {
         },
         // 多选框选中数据
         handleSelectionChange(selection) {
-            this.ids = selection.map(item => item.prodId)
+            this.ids = selection.map(item => item.imageId)
             this.single = selection.length !== 1
             this.multiple = !selection.length
         },
@@ -291,30 +259,30 @@ export default {
         handleAdd() {
             this.reset()
             this.open = true
-            this.title = "添加产品"
+            this.title = "添加咖啡商品图库"
         },
         /** 修改按钮操作 */
         handleUpdate(row) {
             this.reset()
-            const prodId = row.prodId || this.ids
-            getProduction(prodId).then(response => {
+            const imageId = row.imageId || this.ids
+            getImage(imageId).then(response => {
                 this.form = response.data
                 this.open = true
-                this.title = "修改产品"
+                this.title = "修改咖啡商品图库"
             })
         },
         /** 提交按钮 */
         submitForm() {
             this.$refs["form"].validate(valid => {
                 if (valid) {
-                    if (this.form.prodId != null) {
-                        updateProduction(this.form).then(response => {
+                    if (this.form.imageId != null) {
+                        updateImage(this.form).then(response => {
                             this.$modal.msgSuccess("修改成功")
                             this.open = false
                             this.getList()
                         })
                     } else {
-                        addProduction(this.form).then(response => {
+                        addImage(this.form).then(response => {
                             this.$modal.msgSuccess("新增成功")
                             this.open = false
                             this.getList()
@@ -325,9 +293,9 @@ export default {
         },
         /** 删除按钮操作 */
         handleDelete(row) {
-            const prodIds = row.prodId || this.ids
-            this.$modal.confirm('是否确认删除产品编号为"' + prodIds + '"的数据项？').then(function () {
-                return delProduction(prodIds)
+            const imageIds = row.imageId || this.ids
+            this.$modal.confirm('是否确认删除咖啡商品图库编号为"' + imageIds + '"的数据项？').then(function () {
+                return delImage(imageIds)
             }).then(() => {
                 this.getList()
                 this.$modal.msgSuccess("删除成功")
@@ -336,9 +304,9 @@ export default {
         },
         /** 导出按钮操作 */
         handleExport() {
-            this.download('cafe/production/export', {
+            this.download('cafe/image/export', {
                 ...this.queryParams
-            }, `production_${new Date().getTime()}.xlsx`)
+            }, `image_${new Date().getTime()}.xlsx`)
         }
     }
 }

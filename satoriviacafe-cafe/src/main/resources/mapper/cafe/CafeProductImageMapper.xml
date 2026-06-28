@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductImageMapper">
+    <resultMap type="CafeProductImage" id="CafeProductImageResult">
+        <result property="imageId" column="image_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="imageAlt" column="image_alt"/>
+        <result property="imageType" column="image_type"/>
+        <result property="imageSort" column="image_sort"/>
+        <result property="imageStatus" column="image_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeProductImageVo">
+        select image_id,
+               product_id,
+               image_url,
+               image_alt,
+               image_type,
+               image_sort,
+               image_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_product_image
+    </sql>
+
+    <select id="selectCafeProductImageList" parameterType="CafeProductImage" resultMap="CafeProductImageResult">
+        <include refid="selectCafeProductImageVo"/>
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="imageUrl != null  and imageUrl != ''">
+                and image_url = #{imageUrl}
+            </if>
+            <if test="imageAlt != null  and imageAlt != ''">
+                and image_alt = #{imageAlt}
+            </if>
+            <if test="imageType != null  and imageType != ''">
+                and image_type = #{imageType}
+            </if>
+            <if test="imageSort != null">
+                and image_sort = #{imageSort}
+            </if>
+            <if test="imageStatus != null  and imageStatus != ''">
+                and image_status = #{imageStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeProductImageByImageId" parameterType="Long" resultMap="CafeProductImageResult">
+        <include refid="selectCafeProductImageVo"/>
+        where image_id = #{imageId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeProductImage" parameterType="CafeProductImage" useGeneratedKeys="true" keyProperty="imageId">
+        insert into cafe_product_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url,
+            </if>
+            <if test="imageAlt != null">
+                image_alt,
+            </if>
+            <if test="imageType != null">
+                image_type,
+            </if>
+            <if test="imageSort != null">
+                image_sort,
+            </if>
+            <if test="imageStatus != null">
+                image_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                #{imageUrl},
+            </if>
+            <if test="imageAlt != null">
+                #{imageAlt},
+            </if>
+            <if test="imageType != null">
+                #{imageType},
+            </if>
+            <if test="imageSort != null">
+                #{imageSort},
+            </if>
+            <if test="imageStatus != null">
+                #{imageStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeProductImage" useGeneratedKeys="true" keyProperty="imageId">
+        insert into cafe_product_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            image_url,
+            image_alt,
+            image_type,
+            image_sort,
+            image_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.imageUrl},
+                #{item.imageAlt},
+                #{item.imageType},
+                #{item.imageSort},
+                #{item.imageStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeProductImage" useGeneratedKeys="true" keyProperty="imageId">
+        insert ignore into cafe_product_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            product_id,
+            image_url,
+            image_alt,
+            image_type,
+            image_sort,
+            image_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.productId},
+                #{item.imageUrl},
+                #{item.imageAlt},
+                #{item.imageType},
+                #{item.imageSort},
+                #{item.imageStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeProductImage" parameterType="CafeProductImage">
+        update cafe_product_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url = #{imageUrl},
+            </if>
+            <if test="imageAlt != null">
+                image_alt = #{imageAlt},
+            </if>
+            <if test="imageType != null">
+                image_type = #{imageType},
+            </if>
+            <if test="imageSort != null">
+                image_sort = #{imageSort},
+            </if>
+            <if test="imageStatus != null">
+                image_status = #{imageStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where image_id = #{imageId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeProductImage">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_product_image
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.productId != null">
+                    product_id = #{item.productId},
+                </if>
+                <if test="item.imageUrl != null and item.imageUrl != ''">
+                    image_url = #{item.imageUrl},
+                </if>
+                <if test="item.imageAlt != null">
+                    image_alt = #{item.imageAlt},
+                </if>
+                <if test="item.imageType != null">
+                    image_type = #{item.imageType},
+                </if>
+                <if test="item.imageSort != null">
+                    image_sort = #{item.imageSort},
+                </if>
+                <if test="item.imageStatus != null">
+                    image_status = #{item.imageStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where image_id = #{item.imageId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeProductImageByImageId" parameterType="Long">
+        update cafe_product_image
+        set delete_at = now()
+        where image_id = #{imageId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeProductImageByImageIds" parameterType="String">
+        update cafe_product_image
+        set delete_at = now()
+        where image_id in
+        <foreach item="imageId" collection="array" open="(" separator="," close=")">
+            #{imageId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

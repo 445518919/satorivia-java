@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductLineMapper">
+    <resultMap type="CafeProductLine" id="CafeProductLineResult">
+        <result property="lineId" column="line_id"/>
+        <result property="lineCode" column="line_code"/>
+        <result property="seriesCode" column="series_code"/>
+        <result property="lineName" column="line_name"/>
+        <result property="lineSubTitle" column="line_sub_title"/>
+        <result property="lineDescription" column="line_description"/>
+        <result property="coverImage" column="cover_image"/>
+        <result property="mobileCoverImage" column="mobile_cover_image"/>
+        <result property="seoTitle" column="seo_title"/>
+        <result property="seoDescription" column="seo_description"/>
+        <result property="lineSort" column="line_sort"/>
+        <result property="lineStatus" column="line_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeProductLineVo">
+        select line_id,
+               line_code,
+               series_code,
+               line_name,
+               line_sub_title,
+               line_description,
+               cover_image,
+               mobile_cover_image,
+               seo_title,
+               seo_description,
+               line_sort,
+               line_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_product_line
+    </sql>
+
+    <select id="selectCafeProductLineList" parameterType="CafeProductLine" resultMap="CafeProductLineResult">
+        <include refid="selectCafeProductLineVo"/>
+        <where>
+            <if test="lineCode != null  and lineCode != ''">
+                and line_code = #{lineCode}
+            </if>
+            <if test="seriesCode != null  and seriesCode != ''">
+                and series_code = #{seriesCode}
+            </if>
+            <if test="lineName != null  and lineName != ''">
+                and line_name like concat('%', #{lineName}, '%')
+            </if>
+            <if test="lineSubTitle != null  and lineSubTitle != ''">
+                and line_sub_title = #{lineSubTitle}
+            </if>
+            <if test="lineDescription != null  and lineDescription != ''">
+                and line_description = #{lineDescription}
+            </if>
+            <if test="coverImage != null  and coverImage != ''">
+                and cover_image = #{coverImage}
+            </if>
+            <if test="mobileCoverImage != null  and mobileCoverImage != ''">
+                and mobile_cover_image = #{mobileCoverImage}
+            </if>
+            <if test="seoTitle != null  and seoTitle != ''">
+                and seo_title = #{seoTitle}
+            </if>
+            <if test="seoDescription != null  and seoDescription != ''">
+                and seo_description = #{seoDescription}
+            </if>
+            <if test="lineSort != null">
+                and line_sort = #{lineSort}
+            </if>
+            <if test="lineStatus != null  and lineStatus != ''">
+                and line_status = #{lineStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeProductLineByLineId" parameterType="Long" resultMap="CafeProductLineResult">
+        <include refid="selectCafeProductLineVo"/>
+        where line_id = #{lineId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeProductLine" parameterType="CafeProductLine" useGeneratedKeys="true" keyProperty="lineId">
+        insert into cafe_product_line
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="lineCode != null and lineCode != ''">
+                line_code,
+            </if>
+            <if test="seriesCode != null and seriesCode != ''">
+                series_code,
+            </if>
+            <if test="lineName != null and lineName != ''">
+                line_name,
+            </if>
+            <if test="lineSubTitle != null">
+                line_sub_title,
+            </if>
+            <if test="lineDescription != null">
+                line_description,
+            </if>
+            <if test="coverImage != null and coverImage != ''">
+                cover_image,
+            </if>
+            <if test="mobileCoverImage != null">
+                mobile_cover_image,
+            </if>
+            <if test="seoTitle != null">
+                seo_title,
+            </if>
+            <if test="seoDescription != null">
+                seo_description,
+            </if>
+            <if test="lineSort != null">
+                line_sort,
+            </if>
+            <if test="lineStatus != null">
+                line_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="lineCode != null and lineCode != ''">
+                #{lineCode},
+            </if>
+            <if test="seriesCode != null and seriesCode != ''">
+                #{seriesCode},
+            </if>
+            <if test="lineName != null and lineName != ''">
+                #{lineName},
+            </if>
+            <if test="lineSubTitle != null">
+                #{lineSubTitle},
+            </if>
+            <if test="lineDescription != null">
+                #{lineDescription},
+            </if>
+            <if test="coverImage != null and coverImage != ''">
+                #{coverImage},
+            </if>
+            <if test="mobileCoverImage != null">
+                #{mobileCoverImage},
+            </if>
+            <if test="seoTitle != null">
+                #{seoTitle},
+            </if>
+            <if test="seoDescription != null">
+                #{seoDescription},
+            </if>
+            <if test="lineSort != null">
+                #{lineSort},
+            </if>
+            <if test="lineStatus != null">
+                #{lineStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeProductLine" useGeneratedKeys="true" keyProperty="lineId">
+        insert into cafe_product_line
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            line_code,
+            series_code,
+            line_name,
+            line_sub_title,
+            line_description,
+            cover_image,
+            mobile_cover_image,
+            seo_title,
+            seo_description,
+            line_sort,
+            line_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.lineCode},
+                #{item.seriesCode},
+                #{item.lineName},
+                #{item.lineSubTitle},
+                #{item.lineDescription},
+                #{item.coverImage},
+                #{item.mobileCoverImage},
+                #{item.seoTitle},
+                #{item.seoDescription},
+                #{item.lineSort},
+                #{item.lineStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeProductLine" useGeneratedKeys="true" keyProperty="lineId">
+        insert ignore into cafe_product_line
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            line_code,
+            series_code,
+            line_name,
+            line_sub_title,
+            line_description,
+            cover_image,
+            mobile_cover_image,
+            seo_title,
+            seo_description,
+            line_sort,
+            line_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.lineCode},
+                #{item.seriesCode},
+                #{item.lineName},
+                #{item.lineSubTitle},
+                #{item.lineDescription},
+                #{item.coverImage},
+                #{item.mobileCoverImage},
+                #{item.seoTitle},
+                #{item.seoDescription},
+                #{item.lineSort},
+                #{item.lineStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeProductLine" parameterType="CafeProductLine">
+        update cafe_product_line
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lineCode != null and lineCode != ''">
+                line_code = #{lineCode},
+            </if>
+            <if test="seriesCode != null and seriesCode != ''">
+                series_code = #{seriesCode},
+            </if>
+            <if test="lineName != null and lineName != ''">
+                line_name = #{lineName},
+            </if>
+            <if test="lineSubTitle != null">
+                line_sub_title = #{lineSubTitle},
+            </if>
+            <if test="lineDescription != null">
+                line_description = #{lineDescription},
+            </if>
+            <if test="coverImage != null and coverImage != ''">
+                cover_image = #{coverImage},
+            </if>
+            <if test="mobileCoverImage != null">
+                mobile_cover_image = #{mobileCoverImage},
+            </if>
+            <if test="seoTitle != null">
+                seo_title = #{seoTitle},
+            </if>
+            <if test="seoDescription != null">
+                seo_description = #{seoDescription},
+            </if>
+            <if test="lineSort != null">
+                line_sort = #{lineSort},
+            </if>
+            <if test="lineStatus != null">
+                line_status = #{lineStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where line_id = #{lineId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeProductLine">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_product_line
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.lineCode != null and item.lineCode != ''">
+                    line_code = #{item.lineCode},
+                </if>
+                <if test="item.seriesCode != null and item.seriesCode != ''">
+                    series_code = #{item.seriesCode},
+                </if>
+                <if test="item.lineName != null and item.lineName != ''">
+                    line_name = #{item.lineName},
+                </if>
+                <if test="item.lineSubTitle != null">
+                    line_sub_title = #{item.lineSubTitle},
+                </if>
+                <if test="item.lineDescription != null">
+                    line_description = #{item.lineDescription},
+                </if>
+                <if test="item.coverImage != null and item.coverImage != ''">
+                    cover_image = #{item.coverImage},
+                </if>
+                <if test="item.mobileCoverImage != null">
+                    mobile_cover_image = #{item.mobileCoverImage},
+                </if>
+                <if test="item.seoTitle != null">
+                    seo_title = #{item.seoTitle},
+                </if>
+                <if test="item.seoDescription != null">
+                    seo_description = #{item.seoDescription},
+                </if>
+                <if test="item.lineSort != null">
+                    line_sort = #{item.lineSort},
+                </if>
+                <if test="item.lineStatus != null">
+                    line_status = #{item.lineStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where line_id = #{item.lineId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeProductLineByLineId" parameterType="Long">
+        update cafe_product_line
+        set delete_at = now()
+        where line_id = #{lineId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeProductLineByLineIds" parameterType="String">
+        update cafe_product_line
+        set delete_at = now()
+        where line_id in
+        <foreach item="lineId" collection="array" open="(" separator="," close=")">
+            #{lineId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

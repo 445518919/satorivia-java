@@ -4,36 +4,6 @@ INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`
 VALUES (1100, 'CAFE管理', 0, 1, 'cafe', NULL, '', '', 1, 0, 'M', '0', '0', '', 'build', 'admin', '2025-11-13 16:54:58',
         'admin', '2025-11-13 20:37:15', '系统管理目录');
 
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2018, '产品', 1100, 1, 'production', 'cafe/production/index', NULL, '', 1, 0, 'C', '0', '0',
-        'cafe:production:list', 'shopping', 'admin', '2025-11-13 20:20:59', 'admin', '2025-11-13 20:38:09', '产品菜单');
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2019, '产品查询', 2018, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'cafe:production:query', '#', 'admin',
-        '2025-11-13 20:20:59', '', NULL, '');
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2020, '产品新增', 2018, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'cafe:production:add', '#', 'admin',
-        '2025-11-13 20:20:59', '', NULL, '');
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2021, '产品修改', 2018, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'cafe:production:edit', '#', 'admin',
-        '2025-11-13 20:20:59', '', NULL, '');
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2022, '产品删除', 2018, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'cafe:production:remove', '#', 'admin',
-        '2025-11-13 20:20:59', '', NULL, '');
-INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
-                        `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
-                        `create_time`, `update_by`, `update_time`, `remark`)
-VALUES (2023, '产品导出', 2018, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'cafe:production:export', '#', 'admin',
-        '2025-11-13 20:20:59', '', NULL, '');
 
 INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`,
                         `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`,
@@ -167,3 +137,219 @@ insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame
                       perms, icon, create_by, create_time, update_by, update_time, remark)
 values ('豆子笔记导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:export', '#', 'admin', sysdate(), '',
         null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案', '1100', '1', 'brew', 'cafe/brew/index', 1, 0, 'C', '0', '0', 'cafe:brew:list', '#', 'admin',
+        sysdate(), '', null, '咖啡商品冲煮方案菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:brew:query', '#', 'admin',
+        sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:brew:add', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:brew:edit', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:brew:remove', '#', 'admin',
+        sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品冲煮方案导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:brew:export', '#', 'admin',
+        sysdate(), '', null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库', '1100', '1', 'image', 'cafe/image/index', 1, 0, 'C', '0', '0', 'cafe:image:list', '#', 'admin',
+        sysdate(), '', null, '咖啡商品图库菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:image:query', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:image:add', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:image:edit', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:image:remove', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品图库导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:image:export', '#', 'admin', sysdate(),
+        '', null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主', '1100', '1', 'product', 'cafe/product/index', 1, 0, 'C', '0', '0', 'cafe:product:list', '#',
+        'admin', sysdate(), '', null, '咖啡商品主菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:product:query', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:product:add', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:product:edit', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:product:remove', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品主导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:product:export', '#', 'admin', sysdate(),
+        '', null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线', '1100', '1', 'line', 'cafe/line/index', 1, 0, 'C', '0', '0', 'cafe:line:list', '#', 'admin',
+        sysdate(), '', null, '咖啡产品线菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:line:query', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:line:add', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:line:edit', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:line:remove', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡产品线导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:line:export', '#', 'admin', sysdate(), '',
+        null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事', '1100', '1', 'story', 'cafe/story/index', 1, 0, 'C', '0', '0', 'cafe:story:list', '#', 'admin',
+        sysdate(), '', null, '品牌故事菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:story:query', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:story:add', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:story:edit', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:story:remove', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('品牌故事导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:story:export', '#', 'admin', sysdate(), '',
+        null, '');
+
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格', '1100', '1', 'variant', 'cafe/variant/index', 1, 0, 'C', '0', '0', 'cafe:variant:list', '#',
+        'admin', sysdate(), '', null, '咖啡商品规格菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:variant:query', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:variant:add', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:variant:edit', '#', 'admin', sysdate(),
+        '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:variant:remove', '#', 'admin',
+        sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('咖啡商品规格导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:variant:export', '#', 'admin',
+        sysdate(), '', null, '');
