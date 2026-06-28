@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 跟踪信息控制器
+ * 跟踪信息端点
  *
  * @author shy
  * @since 2026年04月21日

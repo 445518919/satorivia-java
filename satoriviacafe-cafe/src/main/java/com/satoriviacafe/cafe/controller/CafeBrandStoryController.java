@@ -1,30 +1,22 @@
 package com.satoriviacafe.cafe.controller;
 
-import java.util.List;
-
-import jakarta.servlet.http.HttpServletResponse;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.satoriviacafe.cafe.domain.CafeBrandStory;
+import com.satoriviacafe.cafe.service.ICafeBrandStoryService;
 import com.satoriviacafe.common.annotation.Log;
 import com.satoriviacafe.common.core.controller.BaseController;
 import com.satoriviacafe.common.core.domain.AjaxResult;
-import com.satoriviacafe.common.enums.BusinessType;
-import com.satoriviacafe.cafe.domain.CafeBrandStory;
-import com.satoriviacafe.cafe.service.ICafeBrandStoryService;
-import com.satoriviacafe.common.utils.poi.ExcelUtil;
 import com.satoriviacafe.common.core.page.TableDataInfo;
+import com.satoriviacafe.common.enums.BusinessType;
+import com.satoriviacafe.common.utils.poi.ExcelUtil;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
- * 品牌故事Controller
+ * 品牌故事端点
  *
  * @author satoriviacafe
  * @since 2025-11-13

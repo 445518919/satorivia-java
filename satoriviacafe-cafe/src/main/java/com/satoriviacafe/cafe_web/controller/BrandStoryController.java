@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 品牌故事Controller
+ * 品牌故事端点
  *
  * @author satoriviacafe
  * @since 2025-11-13
