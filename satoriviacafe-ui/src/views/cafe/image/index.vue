@@ -86,7 +86,11 @@
             <el-table-column align="center" type="selection" width="55"/>
             <el-table-column align="center" label="商品图片id" prop="imageId"/>
             <el-table-column align="center" label="商品id" prop="productId"/>
-            <el-table-column align="center" label="图片地址" prop="imageUrl"/>
+            <el-table-column align="center" label="图片地址" prop="productImage" width="100">
+                <template slot-scope="scope">
+                    <image-preview :height="50" :src="scope.row.productImage" :width="50"/>
+                </template>
+            </el-table-column>
             <el-table-column align="center" label="图片替代文本" prop="imageAlt"/>
             <el-table-column align="center" label="图片类型：gallery/detail/og" prop="imageType"/>
             <el-table-column align="center" label="显示顺序" prop="imageSort"/>
@@ -127,8 +131,8 @@
                 <el-form-item label="商品id" prop="productId">
                     <el-input v-model="form.productId" placeholder="请输入商品id"/>
                 </el-form-item>
-                <el-form-item label="图片地址" prop="imageUrl">
-                    <el-input v-model="form.imageUrl" placeholder="请输入内容" type="textarea"/>
+                <el-form-item label="图片地址" prop="productImage">
+                    <image-upload v-model="form.productImage"/>
                 </el-form-item>
                 <el-form-item label="图片替代文本" prop="imageAlt">
                     <el-input v-model="form.imageAlt" placeholder="请输入图片替代文本"/>
@@ -184,7 +188,7 @@ export default {
                 pageNum: 1,
                 pageSize: 10,
                 productId: null,
-                imageUrl: null,
+                productImage: null,
                 imageAlt: null,
                 imageType: null,
                 imageSort: null,
@@ -197,7 +201,7 @@ export default {
                 productId: [
                     {required: true, message: "商品id不能为空", trigger: "blur"}
                 ],
-                imageUrl: [
+                productImage: [
                     {required: true, message: "图片地址不能为空", trigger: "blur"}
                 ],
             }
@@ -226,7 +230,7 @@ export default {
             this.form = {
                 imageId: null,
                 productId: null,
-                imageUrl: null,
+                productImage: null,
                 imageAlt: null,
                 imageType: null,
                 imageSort: null,

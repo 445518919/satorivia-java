@@ -6,7 +6,7 @@
     <resultMap type="CafeProductImage" id="CafeProductImageResult">
         <result property="imageId" column="image_id"/>
         <result property="productId" column="product_id"/>
-        <result property="imageUrl" column="image_url"/>
+        <result property="productImage" column="product_image"/>
         <result property="imageAlt" column="image_alt"/>
         <result property="imageType" column="image_type"/>
         <result property="imageSort" column="image_sort"/>
@@ -21,7 +21,7 @@
     <sql id="selectCafeProductImageVo">
         select image_id,
                product_id,
-               image_url,
+               product_image,
                image_alt,
                image_type,
                image_sort,
@@ -40,8 +40,8 @@
             <if test="productId != null">
                 and product_id = #{productId}
             </if>
-            <if test="imageUrl != null  and imageUrl != ''">
-                and image_url = #{imageUrl}
+            <if test="productImage != null  and productImage != ''">
+                and product_image = #{productImage}
             </if>
             <if test="imageAlt != null  and imageAlt != ''">
                 and image_alt = #{imageAlt}
@@ -71,8 +71,8 @@
             <if test="productId != null">
                 product_id,
             </if>
-            <if test="imageUrl != null and imageUrl != ''">
-                image_url,
+            <if test="productImage != null and productImage != ''">
+                product_image,
             </if>
             <if test="imageAlt != null">
                 image_alt,
@@ -106,8 +106,8 @@
             <if test="productId != null">
                 #{productId},
             </if>
-            <if test="imageUrl != null and imageUrl != ''">
-                #{imageUrl},
+            <if test="productImage != null and productImage != ''">
+                #{productImage},
             </if>
             <if test="imageAlt != null">
                 #{imageAlt},
@@ -143,7 +143,7 @@
         insert into cafe_product_image
         <trim prefix="(" suffix=")" suffixOverrides=",">
             product_id,
-            image_url,
+            product_image,
             image_alt,
             image_type,
             image_sort,
@@ -159,7 +159,7 @@
             (
             <trim suffixOverrides=",">
                 #{item.productId},
-                #{item.imageUrl},
+                #{item.productImage},
                 #{item.imageAlt},
                 #{item.imageType},
                 #{item.imageSort},
@@ -178,7 +178,7 @@
         insert ignore into cafe_product_image
         <trim prefix="(" suffix=")" suffixOverrides=",">
             product_id,
-            image_url,
+            product_image,
             image_alt,
             image_type,
             image_sort,
@@ -194,7 +194,7 @@
             (
             <trim suffixOverrides=",">
                 #{item.productId},
-                #{item.imageUrl},
+                #{item.productImage},
                 #{item.imageAlt},
                 #{item.imageType},
                 #{item.imageSort},
@@ -215,8 +215,8 @@
             <if test="productId != null">
                 product_id = #{productId},
             </if>
-            <if test="imageUrl != null and imageUrl != ''">
-                image_url = #{imageUrl},
+            <if test="productImage != null and productImage != ''">
+                product_image = #{productImage},
             </if>
             <if test="imageAlt != null">
                 image_alt = #{imageAlt},
@@ -257,8 +257,8 @@
                 <if test="item.productId != null">
                     product_id = #{item.productId},
                 </if>
-                <if test="item.imageUrl != null and item.imageUrl != ''">
-                    image_url = #{item.imageUrl},
+                <if test="item.productImage != null and item.productImage != ''">
+                    product_image = #{item.productImage},
                 </if>
                 <if test="item.imageAlt != null">
                     image_alt = #{item.imageAlt},

@@ -34,7 +34,7 @@ public class CafeProductImage extends BaseEntity {
      * 图片地址
      */
     @Excel(name = "图片地址")
-    private String imageUrl;
+    private String productImage;
     /**
      * 图片替代文本
      */

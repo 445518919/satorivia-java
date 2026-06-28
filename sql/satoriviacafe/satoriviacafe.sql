@@ -133,18 +133,18 @@ CREATE TABLE cafe_product_variant
 DROP TABLE IF EXISTS cafe_product_image;
 CREATE TABLE cafe_product_image
 (
-    image_id     BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '商品图片id',
-    product_id   BIGINT       NOT NULL COMMENT '商品id',
-    image_url    VARCHAR(500) NOT NULL COMMENT '图片地址',
-    image_alt    VARCHAR(255) DEFAULT '' COMMENT '图片替代文本',
-    image_type   VARCHAR(20)  DEFAULT 'gallery' COMMENT '图片类型：gallery/detail/og',
-    image_sort   INT          DEFAULT 0 COMMENT '显示顺序',
-    image_status CHAR(1)      DEFAULT '0' COMMENT '状态（0正常 1停用）',
-    create_by    VARCHAR(64)  DEFAULT '' COMMENT '创建者',
-    create_time  DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    update_by    VARCHAR(64)  DEFAULT '' COMMENT '更新者',
-    update_time  DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    delete_at    DATETIME     DEFAULT NULL COMMENT '删除时间',
+    image_id      BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '商品图片id',
+    product_id    BIGINT       NOT NULL COMMENT '商品id',
+    product_image VARCHAR(500) NOT NULL COMMENT '图片地址',
+    image_alt     VARCHAR(255) DEFAULT '' COMMENT '图片替代文本',
+    image_type    VARCHAR(20)  DEFAULT 'gallery' COMMENT '图片类型：gallery/detail/og',
+    image_sort    INT          DEFAULT 0 COMMENT '显示顺序',
+    image_status  CHAR(1)      DEFAULT '0' COMMENT '状态（0正常 1停用）',
+    create_by     VARCHAR(64)  DEFAULT '' COMMENT '创建者',
+    create_time   DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by     VARCHAR(64)  DEFAULT '' COMMENT '更新者',
+    update_time   DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    delete_at     DATETIME     DEFAULT NULL COMMENT '删除时间',
     KEY idx_image_product (product_id, image_type, image_status, image_sort)
 ) ENGINE = InnoDB COMMENT = '咖啡商品图库表';
 
