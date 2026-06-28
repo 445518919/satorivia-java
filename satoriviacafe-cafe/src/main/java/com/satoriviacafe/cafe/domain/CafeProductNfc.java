@@ -34,7 +34,7 @@ public class CafeProductNfc extends BaseEntity {
      * SKU编码
      */
     @Excel(name = "SKU编码")
-    private Long skuCode;
+    private String skuCode;
     /**
      * 产品名称
      */

@@ -1,21 +1,18 @@
 package com.satoriviacafe.common.utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.satoriviacafe.common.constant.Constants;
+import com.satoriviacafe.common.core.text.StrFormatter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.springframework.util.AntPathMatcher;
-import com.satoriviacafe.common.constant.Constants;
-import com.satoriviacafe.common.core.text.StrFormatter;
+import org.springframework.util.DigestUtils;
 
-import static org.apache.commons.lang3.StringUtils.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.INDEX_NOT_FOUND;
 import static org.apache.commons.lang3.Strings.CI;
 import static org.apache.commons.lang3.Strings.CS;
 
@@ -960,5 +957,9 @@ public class VStringUtils {
 
     public static String removeStartIgnoreCase(final String str, final CharSequence remove) {
         return CI.removeStart(str, remove);
+    }
+
+    public static String md5(String text) {
+        return DigestUtils.md5DigestAsHex(text.getBytes(StandardCharsets.UTF_8));
     }
 }

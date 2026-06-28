@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe_web.mapper.ProductNfcMapper">
+    <select id="selectByNfcCode" resultMap="com.satoriviacafe.cafe.mapper.CafeProductNfcMapper.CafeProductNfcResult">
+        <include refid="com.satoriviacafe.cafe.mapper.CafeProductNfcMapper.selectCafeProductNfcVo"/>
+        where nfc_code = #{nfcCode} and delete_at is null
+    </select>
+</mapper>

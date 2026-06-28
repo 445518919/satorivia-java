@@ -87,4 +87,8 @@ public interface ICafeProductNfcService {
      * @return 结果
      */
     int deleteCafeProductNfcByNfcId(Long nfcId);
+
+    default String importCafeProductNfc(List<CafeProductNfc> userList, boolean updateSupport, String operName) {
+        return "NOT IMPLEMENTED";
+    }
 }

@@ -259,7 +259,7 @@ CREATE TABLE cafe_product_nfc
 (
     nfc_id       BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '产品NFCid',
     nfc_code     VARCHAR(255) NOT NULL COMMENT 'NFC编码',
-    sku_code     BIGINT       NOT NULL COMMENT 'SKU编码',
+    sku_code VARCHAR(100) NOT NULL COMMENT 'SKU编码',
     product_name VARCHAR(255) NOT NULL COMMENT '产品名称',
     batch_name   VARCHAR(255) NOT NULL COMMENT '批次名称',
     create_by    VARCHAR(64)  DEFAULT '' COMMENT '创建者',
