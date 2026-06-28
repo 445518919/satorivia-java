@@ -21,9 +21,9 @@ public class TrackController extends BaseController {
 
     private final TrackService trackService;
 
-    @PostMapping("/{code}/{eventName}")
-    public R<Void> detail(@PathVariable String code, @PathVariable String eventName, HttpServletRequest request) {
-        trackService.track(code, eventName, request);
+    @PostMapping("/{productId}/{eventName}")
+    public R<Void> detail(@PathVariable Long productId, @PathVariable String eventName, HttpServletRequest request) {
+        trackService.track(productId, eventName, request);
         return R.ok();
     }
 }

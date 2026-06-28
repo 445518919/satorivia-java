@@ -51,13 +51,12 @@ class TrackService(
     }
 
 
-    fun track(code: String, eventName: String, request: HttpServletRequest) {
-        val dbInfo = productService.getByCode(code)
+    fun track(productId: Long, eventName: String, request: HttpServletRequest) {
+        val dbInfo = productService.getById(productId)
         val (os, deviceType, browser) = parseUA(request.getHeader("User-Agent"))
         val cafeTrackLog = CafeTrackLog().apply {
-            prodId = dbInfo?.prodId?.toString()
-            prodCode = code
-            prodName = dbInfo?.prodName ?: ""
+            prodId = productId.toString()
+            prodName = dbInfo?.productName ?: ""
             this.eventName = eventName
             ip = getIpAddr(request)
             location = getRealAddressByIP(ip)
