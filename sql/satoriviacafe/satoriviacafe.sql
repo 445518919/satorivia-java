@@ -60,7 +60,7 @@ CREATE TABLE cafe_product
 (
     product_id          BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '商品id',
     line_id             BIGINT       NOT NULL COMMENT '产品线id，关联cafe_product_line.line_id',
-    product_slug        VARCHAR(128) NOT NULL COMMENT 'URL商品编码，对应前端id',
+    product_slug VARCHAR(128) NOT NULL COMMENT '商品slug',
     product_name        VARCHAR(255) NOT NULL COMMENT '商品完整名称',
     product_short_name  VARCHAR(100)  DEFAULT '' COMMENT '商品短名称',
     product_label       VARCHAR(64)   DEFAULT '精品咖啡' COMMENT '商品标签',
