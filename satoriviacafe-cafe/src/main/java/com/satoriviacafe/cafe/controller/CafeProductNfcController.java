@@ -63,6 +63,12 @@ public class CafeProductNfcController extends BaseController {
         return success(message);
     }
 
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<CafeProductNfc> util = new ExcelUtil<>(CafeProductNfc.class);
+        util.importTemplateExcel(response, "产品NFC数据");
+    }
+
     /**
      * 获取产品NFC详细信息
      */
