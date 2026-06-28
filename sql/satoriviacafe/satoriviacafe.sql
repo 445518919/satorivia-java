@@ -65,3 +65,25 @@ CREATE TABLE cafe_track_log
     INDEX `idx_event_name` (`event_name`),
     INDEX `idx_created_at` (`created_at`)
 ) ENGINE = InnoDB COMMENT ='咖啡产品访问跟踪日志表';
+
+-- ----------------------------
+-- 4、轮播图
+-- ----------------------------
+drop table if exists cafe_banner;
+create table cafe_banner
+(
+    banner_id     bigint(20)   not null auto_increment comment '轮播图id',
+    banner_title  varchar(255) not null comment '轮播图标题',
+    banner_img    varchar(255) not null comment '轮播图图片',
+    banner_link   varchar(255) not null comment '轮播图链接',
+    banner_desc   varchar(255) default '' comment '轮播图描述',
+    banner_status char(1)      default '0' comment '轮播图状态（0正常 1停用）',
+    create_by     varchar(64)  default '' comment '创建者',
+    create_time   datetime comment '创建时间',
+    update_by     varchar(64)  default '' comment '更新者',
+    update_time   datetime comment '更新时间',
+    delete_at     datetime     default NULL comment '删除时间',
+    primary key (banner_id)
+) engine = innodb comment = '轮播图表';
+
+
