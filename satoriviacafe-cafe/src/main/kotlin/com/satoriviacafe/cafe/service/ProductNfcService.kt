@@ -40,8 +40,6 @@ class ProductNfcService(
                 if (nfc.skuCode.isNullOrEmpty()) throw RuntimeException("skuCode 不能为空")
                 if (nfc.productName.isNullOrEmpty()) throw RuntimeException("productName 不能为空")
 
-                nfc.nfcHash = secure().nextAlphanumeric(32)
-                nfc.nfcUrl = "$NFC_URL/${nfc.nfcCode}?k=${nfc.nfcHash}"
                 // 验证是否存在这个
                 val n = nfcMapper.selectByNfcCode(nfc.nfcCode)
                 if (n == null) {
@@ -61,7 +59,7 @@ class ProductNfcService(
                 }
             } catch (e: Exception) {
                 failureNum++
-                val msg: String = "<br/>${failureNum}、NFC ${nfc.nfcCode} 导入失败："
+                val msg = "<br/>${failureNum}、NFC ${nfc.nfcCode} 导入失败："
                 failureMsg.append(msg).append(e.message)
                 log.error(msg, e)
             }
@@ -73,6 +71,50 @@ class ProductNfcService(
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 $successNum 条，数据如下：")
         }
         return successMsg.toString()
+    }
+
+    override fun insertCafeProductNfc(nfc: CafeProductNfc?): Int {
+        if (nfc == null) return 0
+        nfc.nfcHash = secure().nextAlphanumeric(32)
+        nfc.nfcUrl = "$NFC_URL/${nfc.nfcCode}?k=${nfc.nfcHash}"
+        return super.insertCafeProductNfc(nfc)
+    }
+
+    override fun insertBatchCafeProductNfc(nfcs: List<CafeProductNfc?>?): Int {
+        if (nfcs.isNullOrEmpty()) return 0
+        val notNull = nfcs.filterNotNull()
+        notNull.forEach { nfc ->
+            nfc.nfcHash = secure().nextAlphanumeric(32)
+            nfc.nfcUrl = "$NFC_URL/${nfc.nfcCode}?k=${nfc.nfcHash}"
+        }
+        return super<CafeProductNfcServiceImpl>.insertBatchCafeProductNfc(notNull)
+    }
+
+    override fun insertBatchCafeProductNfc(nfcs: List<CafeProductNfc?>?, ignorePk: Boolean): Int {
+        if (nfcs.isNullOrEmpty()) return 0
+        val notNull = nfcs.filterNotNull()
+        notNull.forEach { nfc ->
+            nfc.nfcHash = secure().nextAlphanumeric(32)
+            nfc.nfcUrl = "$NFC_URL/${nfc.nfcCode}?k=${nfc.nfcHash}"
+        }
+        return super<CafeProductNfcServiceImpl>.insertBatchCafeProductNfc(notNull, ignorePk)
+    }
+
+    override fun updateCafeProductNfc(nfcs: CafeProductNfc?): Int {
+        if (nfcs == null) return 0
+        nfcs.nfcHash = secure().nextAlphanumeric(32)
+        nfcs.nfcUrl = "$NFC_URL/${nfcs.nfcCode}?k=${nfcs.nfcHash}"
+        return super.updateCafeProductNfc(nfcs)
+    }
+
+    override fun updateBatchCafeProductNfc(nfcs: List<CafeProductNfc?>?): Int {
+        if (nfcs.isNullOrEmpty()) return 0
+        val notNull = nfcs.filterNotNull()
+        notNull.forEach { nfc ->
+            nfc.nfcHash = secure().nextAlphanumeric(32)
+            nfc.nfcUrl = "$NFC_URL/${nfc.nfcCode}?k=${nfc.nfcHash}"
+        }
+        return super.updateBatchCafeProductNfc(notNull)
     }
 
 }
