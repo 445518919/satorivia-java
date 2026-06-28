@@ -35,6 +35,7 @@ module.exports = {
     port: port,
     open: true,
     allowedHosts: [
+      'admin.satoriviacafe.com',
       'cafe-dash.justone.tw',
       'localhost'
     ],
