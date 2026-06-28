@@ -10,14 +10,6 @@
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
-            <el-form-item label="轮播图图片" prop="bannerImg">
-                <el-input
-                    v-model="queryParams.bannerImg"
-                    clearable
-                    placeholder="请输入轮播图图片"
-                    @keyup.enter.native="handleQuery"
-                />
-            </el-form-item>
             <el-form-item label="轮播图链接" prop="bannerLink">
                 <el-input
                     v-model="queryParams.bannerLink"
@@ -94,7 +86,11 @@
             <el-table-column align="center" type="selection" width="55"/>
             <el-table-column align="center" label="轮播图id" prop="bannerId"/>
             <el-table-column align="center" label="轮播图标题" prop="bannerTitle"/>
-            <el-table-column align="center" label="轮播图图片" prop="bannerImg"/>
+            <el-table-column align="center" label="轮播图图片" prop="bannerImage" width="100">
+                <template slot-scope="scope">
+                    <image-preview :height="50" :src="scope.row.bannerImage" :width="50"/>
+                </template>
+            </el-table-column>
             <el-table-column align="center" label="轮播图链接" prop="bannerLink"/>
             <el-table-column align="center" label="轮播图描述" prop="bannerDesc"/>
             <el-table-column align="center" label="轮播图状态" prop="bannerStatus"/>
@@ -134,8 +130,8 @@
                 <el-form-item label="轮播图标题" prop="bannerTitle">
                     <el-input v-model="form.bannerTitle" placeholder="请输入轮播图标题"/>
                 </el-form-item>
-                <el-form-item label="轮播图图片" prop="bannerImg">
-                    <el-input v-model="form.bannerImg" placeholder="请输入轮播图图片"/>
+                <el-form-item label="轮播图图片" prop="bannerImage">
+                    <image-upload v-model="form.bannerImage"/>
                 </el-form-item>
                 <el-form-item label="轮播图链接" prop="bannerLink">
                     <el-input v-model="form.bannerLink" placeholder="请输入轮播图链接"/>
@@ -191,7 +187,7 @@ export default {
                 pageNum: 1,
                 pageSize: 10,
                 bannerTitle: null,
-                bannerImg: null,
+                bannerImage: null,
                 bannerLink: null,
                 bannerDesc: null,
                 bannerStatus: null,
@@ -203,7 +199,7 @@ export default {
                 bannerTitle: [
                     {required: true, message: "轮播图标题不能为空", trigger: "blur"}
                 ],
-                bannerImg: [
+                bannerImage: [
                     {required: true, message: "轮播图图片不能为空", trigger: "blur"}
                 ],
                 bannerLink: [
@@ -235,7 +231,7 @@ export default {
             this.form = {
                 bannerId: null,
                 bannerTitle: null,
-                bannerImg: null,
+                bannerImage: null,
                 bannerLink: null,
                 bannerDesc: null,
                 bannerStatus: null,

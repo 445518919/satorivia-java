@@ -13,7 +13,7 @@ import java.util.Date;
  * 产品对象 cafe_production
  *
  * @author satoriviacafe
- * @since 2026-04-21
+ * @since 2026-06-28
  */
 
 @Data
@@ -40,7 +40,12 @@ public class CafeProduction extends BaseEntity {
      * 产品图片
      */
     @Excel(name = "产品图片")
-    private String prodImg;
+    private String prodImage;
+    /**
+     * 商品编码
+     */
+    @Excel(name = "商品编码")
+    private String prodCode;
     /**
      * 产品价格
      */
@@ -65,9 +70,4 @@ public class CafeProduction extends BaseEntity {
      * 删除时间
      */
     private Date deleteAt;
-    /**
-     * 商品编码
-     */
-    @Excel(name = "商品编码")
-    private String prodCode;
 }

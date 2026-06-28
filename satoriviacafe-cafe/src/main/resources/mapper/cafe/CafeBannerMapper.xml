@@ -6,7 +6,7 @@
     <resultMap type="CafeBanner" id="CafeBannerResult">
         <result property="bannerId" column="banner_id"/>
         <result property="bannerTitle" column="banner_title"/>
-        <result property="bannerImg" column="banner_img"/>
+        <result property="bannerImage" column="banner_image"/>
         <result property="bannerLink" column="banner_link"/>
         <result property="bannerDesc" column="banner_desc"/>
         <result property="bannerStatus" column="banner_status"/>
@@ -20,7 +20,7 @@
     <sql id="selectCafeBannerVo">
         select banner_id,
                banner_title,
-               banner_img,
+               banner_image,
                banner_link,
                banner_desc,
                banner_status,
@@ -38,8 +38,8 @@
             <if test="bannerTitle != null  and bannerTitle != ''">
                 and banner_title = #{bannerTitle}
             </if>
-            <if test="bannerImg != null  and bannerImg != ''">
-                and banner_img = #{bannerImg}
+            <if test="bannerImage != null  and bannerImage != ''">
+                and banner_image = #{bannerImage}
             </if>
             <if test="bannerLink != null  and bannerLink != ''">
                 and banner_link = #{bannerLink}
@@ -66,8 +66,8 @@
             <if test="bannerTitle != null and bannerTitle != ''">
                 banner_title,
             </if>
-            <if test="bannerImg != null and bannerImg != ''">
-                banner_img,
+            <if test="bannerImage != null and bannerImage != ''">
+                banner_image,
             </if>
             <if test="bannerLink != null and bannerLink != ''">
                 banner_link,
@@ -98,8 +98,8 @@
             <if test="bannerTitle != null and bannerTitle != ''">
                 #{bannerTitle},
             </if>
-            <if test="bannerImg != null and bannerImg != ''">
-                #{bannerImg},
+            <if test="bannerImage != null and bannerImage != ''">
+                #{bannerImage},
             </if>
             <if test="bannerLink != null and bannerLink != ''">
                 #{bannerLink},
@@ -132,7 +132,7 @@
         insert into cafe_banner
         <trim prefix="(" suffix=")" suffixOverrides=",">
             banner_title,
-            banner_img,
+            banner_image,
             banner_link,
             banner_desc,
             banner_status,
@@ -147,7 +147,7 @@
             (
             <trim suffixOverrides=",">
                 #{item.bannerTitle},
-                #{item.bannerImg},
+                #{item.bannerImage},
                 #{item.bannerLink},
                 #{item.bannerDesc},
                 #{item.bannerStatus},
@@ -165,7 +165,7 @@
         insert ignore into cafe_banner
         <trim prefix="(" suffix=")" suffixOverrides=",">
             banner_title,
-            banner_img,
+            banner_image,
             banner_link,
             banner_desc,
             banner_status,
@@ -180,7 +180,7 @@
             (
             <trim suffixOverrides=",">
                 #{item.bannerTitle},
-                #{item.bannerImg},
+                #{item.bannerImage},
                 #{item.bannerLink},
                 #{item.bannerDesc},
                 #{item.bannerStatus},
@@ -200,8 +200,8 @@
             <if test="bannerTitle != null and bannerTitle != ''">
                 banner_title = #{bannerTitle},
             </if>
-            <if test="bannerImg != null and bannerImg != ''">
-                banner_img = #{bannerImg},
+            <if test="bannerImage != null and bannerImage != ''">
+                banner_image = #{bannerImage},
             </if>
             <if test="bannerLink != null and bannerLink != ''">
                 banner_link = #{bannerLink},
@@ -239,8 +239,8 @@
                 <if test="item.bannerTitle != null and item.bannerTitle != ''">
                     banner_title = #{item.bannerTitle},
                 </if>
-                <if test="item.bannerImg != null and item.bannerImg != ''">
-                    banner_img = #{item.bannerImg},
+                <if test="item.bannerImage != null and item.bannerImage != ''">
+                    banner_image = #{item.bannerImage},
                 </if>
                 <if test="item.bannerLink != null and item.bannerLink != ''">
                     banner_link = #{item.bannerLink},

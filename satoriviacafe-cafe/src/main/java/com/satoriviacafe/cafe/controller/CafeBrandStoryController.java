@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 品牌故事端点
+ * 品牌故事Controller
  *
  * @author satoriviacafe
- * @since 2025-11-13
+ * @since 2026-06-28
  */
 @RestController
 @RequestMapping("/cafe/story")

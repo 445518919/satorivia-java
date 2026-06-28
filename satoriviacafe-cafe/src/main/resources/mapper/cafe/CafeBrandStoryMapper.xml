@@ -5,7 +5,7 @@
 <mapper namespace="com.satoriviacafe.cafe.mapper.CafeBrandStoryMapper">
     <resultMap type="CafeBrandStory" id="CafeBrandStoryResult">
         <result property="storyId" column="story_id"/>
-        <result property="storyImg" column="story_img"/>
+        <result property="storyImage" column="story_image"/>
         <result property="storyText" column="story_text"/>
         <result property="storyStatus" column="story_status"/>
         <result property="createBy" column="create_by"/>
@@ -17,7 +17,7 @@
 
     <sql id="selectCafeBrandStoryVo">
         select story_id,
-               story_img,
+               story_image,
                story_text,
                story_status,
                create_by,
@@ -31,17 +31,14 @@
     <select id="selectCafeBrandStoryList" parameterType="CafeBrandStory" resultMap="CafeBrandStoryResult">
         <include refid="selectCafeBrandStoryVo"/>
         <where>
-            <if test="storyImg != null  and storyImg != ''">
-                and story_img = #{storyImg}
+            <if test="storyImage != null  and storyImage != ''">
+                and story_image = #{storyImage}
             </if>
             <if test="storyText != null  and storyText != ''">
                 and story_text = #{storyText}
             </if>
             <if test="storyStatus != null  and storyStatus != ''">
                 and story_status = #{storyStatus}
-            </if>
-            <if test="deleteAt != null">
-                and delete_at = #{deleteAt}
             </if>
             and delete_at IS NULL
         </where>
@@ -56,8 +53,8 @@
     <insert id="insertCafeBrandStory" parameterType="CafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
         insert into cafe_brand_story
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="storyImg != null">
-                story_img,
+            <if test="storyImage != null">
+                story_image,
             </if>
             <if test="storyText != null">
                 story_text,
@@ -82,8 +79,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="storyImg != null">
-                #{storyImg},
+            <if test="storyImage != null">
+                #{storyImage},
             </if>
             <if test="storyText != null">
                 #{storyText},
@@ -112,7 +109,7 @@
     <insert id="insertBatchCafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
         insert into cafe_brand_story
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            story_img,
+            story_image,
             story_text,
             story_status,
             create_by,
@@ -125,7 +122,7 @@
         <foreach collection="list" item="item" separator=",">
             (
             <trim suffixOverrides=",">
-                #{item.storyImg},
+                #{item.storyImage},
                 #{item.storyText},
                 #{item.storyStatus},
                 #{item.createBy},
@@ -141,7 +138,7 @@
     <insert id="insertBatchIgnoreCafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
         insert ignore into cafe_brand_story
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            story_img,
+            story_image,
             story_text,
             story_status,
             create_by,
@@ -154,7 +151,7 @@
         <foreach collection="list" item="item" separator=",">
             (
             <trim suffixOverrides=",">
-                #{item.storyImg},
+                #{item.storyImage},
                 #{item.storyText},
                 #{item.storyStatus},
                 #{item.createBy},
@@ -170,8 +167,8 @@
     <update id="updateCafeBrandStory" parameterType="CafeBrandStory">
         update cafe_brand_story
         <trim prefix="SET" suffixOverrides=",">
-            <if test="storyImg != null">
-                story_img = #{storyImg},
+            <if test="storyImage != null">
+                story_image = #{storyImage},
             </if>
             <if test="storyText != null">
                 story_text = #{storyText},
@@ -203,8 +200,8 @@
         <foreach collection="list" item="item" separator=";">
             update cafe_brand_story
             <trim prefix="SET" suffixOverrides=",">
-                <if test="item.storyImg != null">
-                    story_img = #{item.storyImg},
+                <if test="item.storyImage != null">
+                    story_image = #{item.storyImage},
                 </if>
                 <if test="item.storyText != null">
                     story_text = #{item.storyText},

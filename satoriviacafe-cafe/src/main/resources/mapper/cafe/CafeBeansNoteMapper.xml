@@ -8,6 +8,7 @@
         <result property="noteTitle" column="note_title"/>
         <result property="noteSubTitle" column="note_sub_title"/>
         <result property="noteContent" column="note_content"/>
+        <result property="noteImage" column="note_image"/>
         <result property="brewTime" column="brew_time"/>
         <result property="poderQuantity" column="poder_quantity"/>
         <result property="waterVolume" column="water_volume"/>
@@ -29,6 +30,7 @@
                note_title,
                note_sub_title,
                note_content,
+               note_image,
                brew_time,
                poder_quantity,
                water_volume,
@@ -57,6 +59,9 @@
             </if>
             <if test="noteContent != null  and noteContent != ''">
                 and note_content = #{noteContent}
+            </if>
+            <if test="noteImage != null  and noteImage != ''">
+                and note_image = #{noteImage}
             </if>
             <if test="brewTime != null  and brewTime != ''">
                 and brew_time = #{brewTime}
@@ -106,6 +111,9 @@
             </if>
             <if test="noteContent != null and noteContent != ''">
                 note_content,
+            </if>
+            <if test="noteImage != null and noteImage != ''">
+                note_image,
             </if>
             <if test="brewTime != null and brewTime != ''">
                 brew_time,
@@ -160,6 +168,9 @@
             <if test="noteContent != null and noteContent != ''">
                 #{noteContent},
             </if>
+            <if test="noteImage != null and noteImage != ''">
+                #{noteImage},
+            </if>
             <if test="brewTime != null and brewTime != ''">
                 #{brewTime},
             </if>
@@ -211,6 +222,7 @@
             note_title,
             note_sub_title,
             note_content,
+            note_image,
             brew_time,
             poder_quantity,
             water_volume,
@@ -233,6 +245,7 @@
                 #{item.noteTitle},
                 #{item.noteSubTitle},
                 #{item.noteContent},
+                #{item.noteImage},
                 #{item.brewTime},
                 #{item.poderQuantity},
                 #{item.waterVolume},
@@ -258,6 +271,7 @@
             note_title,
             note_sub_title,
             note_content,
+            note_image,
             brew_time,
             poder_quantity,
             water_volume,
@@ -280,6 +294,7 @@
                 #{item.noteTitle},
                 #{item.noteSubTitle},
                 #{item.noteContent},
+                #{item.noteImage},
                 #{item.brewTime},
                 #{item.poderQuantity},
                 #{item.waterVolume},
@@ -310,6 +325,9 @@
             </if>
             <if test="noteContent != null and noteContent != ''">
                 note_content = #{noteContent},
+            </if>
+            <if test="noteImage != null and noteImage != ''">
+                note_image = #{noteImage},
             </if>
             <if test="brewTime != null and brewTime != ''">
                 brew_time = #{brewTime},
@@ -370,6 +388,9 @@
                 </if>
                 <if test="item.noteContent != null and item.noteContent != ''">
                     note_content = #{item.noteContent},
+                </if>
+                <if test="item.noteImage != null and item.noteImage != ''">
+                    note_image = #{item.noteImage},
                 </if>
                 <if test="item.brewTime != null and item.brewTime != ''">
                     brew_time = #{item.brewTime},

@@ -8,7 +8,7 @@ import java.util.List;
  * 品牌故事Mapper接口
  *
  * @author satoriviacafe
- * @since 2025-11-13
+ * @since 2026-06-28
  */
 public interface CafeBrandStoryMapper {
     /**

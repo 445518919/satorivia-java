@@ -128,6 +128,11 @@
             <el-table-column align="center" label="豆子笔记标题" prop="noteTitle"/>
             <el-table-column align="center" label="豆子笔记副标题" prop="noteSubTitle"/>
             <el-table-column align="center" label="豆子笔记内容" prop="noteContent"/>
+            <el-table-column align="center" label="豆子笔记图片" prop="noteImage" width="100">
+                <template slot-scope="scope">
+                    <image-preview :height="50" :src="scope.row.noteImage" :width="50"/>
+                </template>
+            </el-table-column>
             <el-table-column align="center" label="冲泡时间" prop="brewTime"/>
             <el-table-column align="center" label="粉量" prop="poderQuantity"/>
             <el-table-column align="center" label="水量" prop="waterVolume"/>
@@ -178,6 +183,9 @@
                 </el-form-item>
                 <el-form-item label="豆子笔记内容">
                     <editor v-model="form.noteContent" :min-height="192"/>
+                </el-form-item>
+                <el-form-item label="豆子笔记图片" prop="noteImage">
+                    <image-upload v-model="form.noteImage"/>
                 </el-form-item>
                 <el-form-item label="冲泡时间" prop="brewTime">
                     <el-input v-model="form.brewTime" placeholder="请输入冲泡时间"/>
@@ -253,6 +261,7 @@ export default {
                 noteTitle: null,
                 noteSubTitle: null,
                 noteContent: null,
+                noteImage: null,
                 brewTime: null,
                 poderQuantity: null,
                 waterVolume: null,
@@ -275,6 +284,9 @@ export default {
                 ],
                 noteContent: [
                     {required: true, message: "豆子笔记内容不能为空", trigger: "blur"}
+                ],
+                noteImage: [
+                    {required: true, message: "豆子笔记图片不能为空", trigger: "blur"}
                 ],
                 brewTime: [
                     {required: true, message: "冲泡时间不能为空", trigger: "blur"}
@@ -328,6 +340,7 @@ export default {
                 noteTitle: null,
                 noteSubTitle: null,
                 noteContent: null,
+                noteImage: null,
                 brewTime: null,
                 poderQuantity: null,
                 waterVolume: null,

@@ -19,7 +19,7 @@ import java.util.List;
  * 产品Controller
  *
  * @author satoriviacafe
- * @since 2026-04-21
+ * @since 2026-06-28
  */
 @RestController
 @RequestMapping("/cafe/production")

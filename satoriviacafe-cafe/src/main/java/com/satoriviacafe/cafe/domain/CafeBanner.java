@@ -34,7 +34,7 @@ public class CafeBanner extends BaseEntity {
      * 轮播图图片
      */
     @Excel(name = "轮播图图片")
-    private String bannerImg;
+    private String bannerImage;
     /**
      * 轮播图链接
      */

@@ -1,6 +1,5 @@
 package com.satoriviacafe.cafe.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.satoriviacafe.common.annotation.Excel;
 import com.satoriviacafe.common.core.domain.BaseEntity;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.util.Date;
  * 品牌故事对象 cafe_brand_story
  *
  * @author satoriviacafe
- * @since 2025-11-13
+ * @since 2026-06-28
  */
 
 @Data
@@ -30,7 +29,7 @@ public class CafeBrandStory extends BaseEntity {
      * 品牌故事图片
      */
     @Excel(name = "品牌故事图片")
-    private String storyImg;
+    private String storyImage;
     /**
      * 品牌故事详情
      */
@@ -44,7 +43,5 @@ public class CafeBrandStory extends BaseEntity {
     /**
      * 删除时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "删除时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date deleteAt;
 }

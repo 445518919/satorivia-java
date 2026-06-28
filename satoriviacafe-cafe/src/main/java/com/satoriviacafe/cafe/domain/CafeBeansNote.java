@@ -41,6 +41,11 @@ public class CafeBeansNote extends BaseEntity {
     @Excel(name = "豆子笔记内容")
     private String noteContent;
     /**
+     * 豆子笔记图片
+     */
+    @Excel(name = "豆子笔记图片")
+    private String noteImage;
+    /**
      * 冲泡时间
      */
     @Excel(name = "冲泡时间")

@@ -1,47 +1,5 @@
 -- ----------------------------
--- 1、产品表
--- ----------------------------
-drop table if exists cafe_production;
-create table cafe_production
-(
-    prod_id   bigint(20)  not null auto_increment comment '产品id',
-    prod_name   varchar(30)    default '' comment '产品名称',
-    prod_desc   varchar(255)   default '' comment '产品描述',
-    prod_img    varchar(255)   default '' comment '产品图片',
-    prod_code varchar(64) not null comment '商品编码',
-    prod_price  decimal(10, 2) default 0.00 comment '产品价格',
-    prod_text   text comment '产品详情',
-    order_num   int(4)         default 0 comment '显示顺序',
-    prod_status char(1)        default '0' comment '产品状态（0正常 1停用）',
-    create_by   varchar(64)    default '' comment '创建者',
-    create_time datetime comment '创建时间',
-    update_by   varchar(64)    default '' comment '更新者',
-    update_time datetime comment '更新时间',
-    delete_at   datetime       default NULL comment '删除时间',
-    primary key (prod_id),
-    unique key (prod_code)
-) engine = innodb comment = '产品表';
-
--- ----------------------------
--- 2、品牌故事表
--- ----------------------------
-drop table if exists cafe_brand_story;
-create table cafe_brand_story
-(
-    story_id     bigint(20) not null auto_increment comment '品牌故事id',
-    story_img    varchar(255) default '' comment '品牌故事图片',
-    story_text   text comment '品牌故事详情',
-    story_status char(1)      default '0' comment '品牌故事状态（0正常 1停用）',
-    create_by    varchar(64)  default '' comment '创建者',
-    create_time  datetime comment '创建时间',
-    update_by    varchar(64)  default '' comment '更新者',
-    update_time  datetime comment '更新时间',
-    delete_at    datetime     default NULL comment '删除时间',
-    primary key (story_id)
-) engine = innodb comment = '品牌故事表';
-
--- ----------------------------
--- 3、咖啡产品访问跟踪日志表
+-- 0、咖啡产品访问跟踪日志表
 -- ----------------------------
 DROP TABLE IF EXISTS cafe_track_log;
 CREATE TABLE cafe_track_log
@@ -66,15 +24,58 @@ CREATE TABLE cafe_track_log
     INDEX `idx_created_at` (`created_at`)
 ) ENGINE = InnoDB COMMENT ='咖啡产品访问跟踪日志表';
 
+
 -- ----------------------------
--- 4、轮播图
+-- 1、产品表
+-- ----------------------------
+drop table if exists cafe_production;
+create table cafe_production
+(
+    prod_id    bigint(20)  not null auto_increment comment '产品id',
+    prod_name   varchar(30)    default '' comment '产品名称',
+    prod_desc   varchar(255)   default '' comment '产品描述',
+    prod_image varchar(255) default '' comment '产品图片',
+    prod_code  varchar(64) not null comment '商品编码',
+    prod_price  decimal(10, 2) default 0.00 comment '产品价格',
+    prod_text   text comment '产品详情',
+    order_num   int(4)         default 0 comment '显示顺序',
+    prod_status char(1)        default '0' comment '产品状态（0正常 1停用）',
+    create_by   varchar(64)    default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)    default '' comment '更新者',
+    update_time datetime comment '更新时间',
+    delete_at   datetime       default NULL comment '删除时间',
+    primary key (prod_id),
+    unique key (prod_code)
+) engine = innodb comment = '产品表';
+
+-- ----------------------------
+-- 2、品牌故事表
+-- ----------------------------
+drop table if exists cafe_brand_story;
+create table cafe_brand_story
+(
+    story_id     bigint(20) not null auto_increment comment '品牌故事id',
+    story_image varchar(255) default '' comment '品牌故事图片',
+    story_text   text comment '品牌故事详情',
+    story_status char(1)      default '0' comment '品牌故事状态（0正常 1停用）',
+    create_by    varchar(64)  default '' comment '创建者',
+    create_time  datetime comment '创建时间',
+    update_by    varchar(64)  default '' comment '更新者',
+    update_time  datetime comment '更新时间',
+    delete_at    datetime     default NULL comment '删除时间',
+    primary key (story_id)
+) engine = innodb comment = '品牌故事表';
+
+-- ----------------------------
+-- 3、轮播图
 -- ----------------------------
 DROP TABLE IF EXISTS cafe_banner;
 CREATE TABLE cafe_banner
 (
     banner_id     BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '轮播图id',
     banner_title  VARCHAR(255) NOT NULL COMMENT '轮播图标题',
-    banner_img    VARCHAR(255) NOT NULL COMMENT '轮播图图片',
+    banner_image VARCHAR(255) NOT NULL COMMENT '轮播图图片',
     banner_link   VARCHAR(255) NOT NULL COMMENT '轮播图链接',
     banner_desc   VARCHAR(255) DEFAULT '' COMMENT '轮播图描述',
     banner_status CHAR(1)      DEFAULT '0' COMMENT '轮播图状态（0正常 1停用）',
@@ -82,12 +83,11 @@ CREATE TABLE cafe_banner
     create_time   DATETIME COMMENT '创建时间',
     update_by     VARCHAR(64)  DEFAULT '' COMMENT '更新者',
     update_time   DATETIME COMMENT '更新时间',
-    delete_at     DATETIME     DEFAULT NULL COMMENT '删除时间',
-    primary key (banner_id)
+    delete_at    DATETIME DEFAULT NULL COMMENT '删除时间'
 ) engine = innodb comment = '轮播图表';
 
 -- ----------------------------
--- 5、豆子笔记
+-- 4、豆子笔记
 -- ----------------------------
 DROP TABLE IF EXISTS cafe_beans_note;
 CREATE TABLE cafe_beans_note
@@ -96,6 +96,7 @@ CREATE TABLE cafe_beans_note
     note_title     VARCHAR(255) NOT NULL COMMENT '豆子笔记标题',
     note_sub_title VARCHAR(255) NOT NULL COMMENT '豆子笔记副标题',
     note_content   TEXT         NOT NULL COMMENT '豆子笔记内容',
+    note_image VARCHAR(255) NOT NULL COMMENT '豆子笔记图片',
     brew_time      VARCHAR(255) NOT NULL COMMENT '冲泡时间',
     poder_quantity VARCHAR(255) NOT NULL COMMENT '粉量',
     water_volume   VARCHAR(255) NOT NULL COMMENT '水量',

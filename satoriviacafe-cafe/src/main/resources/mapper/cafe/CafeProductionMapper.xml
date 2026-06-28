@@ -7,7 +7,8 @@
         <result property="prodId" column="prod_id"/>
         <result property="prodName" column="prod_name"/>
         <result property="prodDesc" column="prod_desc"/>
-        <result property="prodImg" column="prod_img"/>
+        <result property="prodImage" column="prod_image"/>
+        <result property="prodCode" column="prod_code"/>
         <result property="prodPrice" column="prod_price"/>
         <result property="prodText" column="prod_text"/>
         <result property="orderNum" column="order_num"/>
@@ -17,14 +18,14 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="deleteAt" column="delete_at"/>
-        <result property="prodCode" column="prod_code"/>
     </resultMap>
 
     <sql id="selectCafeProductionVo">
         select prod_id,
                prod_name,
                prod_desc,
-               prod_img,
+               prod_image,
+               prod_code,
                prod_price,
                prod_text,
                order_num,
@@ -33,8 +34,7 @@
                create_time,
                update_by,
                update_time,
-               delete_at,
-               prod_code
+               delete_at
         from cafe_production
     </sql>
 
@@ -47,8 +47,11 @@
             <if test="prodDesc != null  and prodDesc != ''">
                 and prod_desc = #{prodDesc}
             </if>
-            <if test="prodImg != null  and prodImg != ''">
-                and prod_img = #{prodImg}
+            <if test="prodImage != null  and prodImage != ''">
+                and prod_image = #{prodImage}
+            </if>
+            <if test="prodCode != null  and prodCode != ''">
+                and prod_code = #{prodCode}
             </if>
             <if test="prodPrice != null">
                 and prod_price = #{prodPrice}
@@ -61,9 +64,6 @@
             </if>
             <if test="prodStatus != null  and prodStatus != ''">
                 and prod_status = #{prodStatus}
-            </if>
-            <if test="prodCode != null  and prodCode != ''">
-                and prod_code = #{prodCode}
             </if>
             and delete_at IS NULL
         </where>
@@ -84,8 +84,11 @@
             <if test="prodDesc != null">
                 prod_desc,
             </if>
-            <if test="prodImg != null">
-                prod_img,
+            <if test="prodImage != null">
+                prod_image,
+            </if>
+            <if test="prodCode != null and prodCode != ''">
+                prod_code,
             </if>
             <if test="prodPrice != null">
                 prod_price,
@@ -114,9 +117,6 @@
             <if test="deleteAt != null">
                 delete_at,
             </if>
-            <if test="prodCode != null">
-                prod_code,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="prodName != null">
@@ -125,8 +125,11 @@
             <if test="prodDesc != null">
                 #{prodDesc},
             </if>
-            <if test="prodImg != null">
-                #{prodImg},
+            <if test="prodImage != null">
+                #{prodImage},
+            </if>
+            <if test="prodCode != null and prodCode != ''">
+                #{prodCode},
             </if>
             <if test="prodPrice != null">
                 #{prodPrice},
@@ -155,9 +158,6 @@
             <if test="deleteAt != null">
                 #{deleteAt},
             </if>
-            <if test="prodCode != null">
-                #{prodCode},
-            </if>
         </trim>
     </insert>
 
@@ -166,7 +166,8 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             prod_name,
             prod_desc,
-            prod_img,
+            prod_image,
+            prod_code,
             prod_price,
             prod_text,
             order_num,
@@ -176,7 +177,6 @@
             update_by,
             update_time,
             delete_at,
-            prod_code,
         </trim>
         values
         <foreach collection="list" item="item" separator=",">
@@ -184,7 +184,8 @@
             <trim suffixOverrides=",">
                 #{item.prodName},
                 #{item.prodDesc},
-                #{item.prodImg},
+                #{item.prodImage},
+                #{item.prodCode},
                 #{item.prodPrice},
                 #{item.prodText},
                 #{item.orderNum},
@@ -194,7 +195,6 @@
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-                #{item.prodCode},
             </trim>
             )
         </foreach>
@@ -205,7 +205,8 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             prod_name,
             prod_desc,
-            prod_img,
+            prod_image,
+            prod_code,
             prod_price,
             prod_text,
             order_num,
@@ -215,7 +216,6 @@
             update_by,
             update_time,
             delete_at,
-            prod_code,
         </trim>
         values
         <foreach collection="list" item="item" separator=",">
@@ -223,7 +223,8 @@
             <trim suffixOverrides=",">
                 #{item.prodName},
                 #{item.prodDesc},
-                #{item.prodImg},
+                #{item.prodImage},
+                #{item.prodCode},
                 #{item.prodPrice},
                 #{item.prodText},
                 #{item.orderNum},
@@ -233,7 +234,6 @@
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-                #{item.prodCode},
             </trim>
             )
         </foreach>
@@ -248,8 +248,11 @@
             <if test="prodDesc != null">
                 prod_desc = #{prodDesc},
             </if>
-            <if test="prodImg != null">
-                prod_img = #{prodImg},
+            <if test="prodImage != null">
+                prod_image = #{prodImage},
+            </if>
+            <if test="prodCode != null and prodCode != ''">
+                prod_code = #{prodCode},
             </if>
             <if test="prodPrice != null">
                 prod_price = #{prodPrice},
@@ -278,9 +281,6 @@
             <if test="deleteAt != null">
                 delete_at = #{deleteAt},
             </if>
-            <if test="prodCode != null">
-                prod_code = #{prodCode},
-            </if>
         </trim>
         where prod_id = #{prodId}
         and delete_at IS NULL
@@ -296,8 +296,11 @@
                 <if test="item.prodDesc != null">
                     prod_desc = #{item.prodDesc},
                 </if>
-                <if test="item.prodImg != null">
-                    prod_img = #{item.prodImg},
+                <if test="item.prodImage != null">
+                    prod_image = #{item.prodImage},
+                </if>
+                <if test="item.prodCode != null and item.prodCode != ''">
+                    prod_code = #{item.prodCode},
                 </if>
                 <if test="item.prodPrice != null">
                     prod_price = #{item.prodPrice},
@@ -325,9 +328,6 @@
                 </if>
                 <if test="item.deleteAt != null">
                     delete_at = #{item.deleteAt},
-                </if>
-                <if test="item.prodCode != null">
-                    prod_code = #{item.prodCode},
                 </if>
             </trim>
             where prod_id = #{item.prodId}
