@@ -1,4 +1,4 @@
-package com.satoriviacafe.cafe_web.controller;
+package com.satoriviacafe.cafe_web.controller.admin;
 
 import com.satoriviacafe.cafe.domain.CafeProductNfc;
 import com.satoriviacafe.cafe_web.domain.NfcImportDTO;

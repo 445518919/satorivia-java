@@ -73,6 +73,10 @@ public class SecurityConfig {
         return new ProviderManager(daoAuthenticationProvider);
     }
 
+    static final String[] PERMIT_ALL_URL = {
+            "/v1/cafe/**"
+    };
+
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问
@@ -115,6 +119,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()
                             // Swagger 和 Druid 相关路径，可匿名访问
                             .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/*/api-docs/**", "/v3/api-docs/**", "/druid/**").permitAll() // 更新了swagger路径以兼容springdoc-openapi
+                            //
+                            .requestMatchers(PERMIT_ALL_URL).permitAll()
                             // 除上面外的所有请求全部需要鉴权认证
                             .anyRequest().authenticated();
                 })
