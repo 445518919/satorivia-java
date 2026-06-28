@@ -103,9 +103,9 @@ public class GenUtils {
             }
         }
 
-        // 插入字段（默认所有字段都需要插入）
-        column.setIsInsert(GenConstants.REQUIRE);
-
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_INSERT, columnName)) {
+            column.setIsInsert(GenConstants.REQUIRE);
+        }
         // 编辑字段
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && !column.isPk()) {
             column.setIsEdit(GenConstants.REQUIRE);

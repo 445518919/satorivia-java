@@ -53,7 +53,7 @@ CREATE TABLE cafe_product_line
 ) ENGINE = InnoDB COMMENT = '咖啡产品线表';
 
 -- ----------------------------
--- 2、商品主表
+-- 2、商品表
 -- ----------------------------
 DROP TABLE IF EXISTS cafe_product;
 CREATE TABLE cafe_product
@@ -99,7 +99,7 @@ CREATE TABLE cafe_product
     UNIQUE KEY uk_product_slug (line_id, product_slug),
     KEY idx_product_line_status_sort (line_id, product_status, product_sort),
     KEY idx_product_featured (is_featured, product_status)
-) ENGINE = InnoDB COMMENT = '咖啡商品主表';
+) ENGINE = InnoDB COMMENT = '咖啡商品表';
 
 -- ----------------------------
 -- 3、商品规格
@@ -203,7 +203,7 @@ CREATE TABLE cafe_brand_story
     delete_at       DATETIME     DEFAULT NULL COMMENT '删除时间',
     UNIQUE KEY uk_story_code (story_code),
     KEY idx_story_status (story_status, publish_status, story_sort)
-) ENGINE = InnoDB COMMENT ='品牌故事主表';
+) ENGINE = InnoDB COMMENT ='品牌故事表';
 
 -- ----------------------------
 -- 7、轮播图
