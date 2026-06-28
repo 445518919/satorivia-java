@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2026-06-28
  */
 @RestController
-@RequestMapping("/cafe/banner")
+@RequestMapping("/v1/cafe/banner")
 @RequiredArgsConstructor
 public class BannerController extends BaseController {
 
