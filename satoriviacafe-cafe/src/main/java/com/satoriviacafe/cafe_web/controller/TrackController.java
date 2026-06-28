@@ -1,4 +1,4 @@
-package com.satoriviacafe.chain.controller;
+package com.satoriviacafe.cafe_web.controller;
 
 import com.satoriviacafe.cafe.service.TrackService;
 import com.satoriviacafe.common.core.controller.BaseController;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2026年04月21日
  */
 @RestController
-@RequestMapping("/track")
+@RequestMapping("/v1/cafe/track")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TrackController extends BaseController {

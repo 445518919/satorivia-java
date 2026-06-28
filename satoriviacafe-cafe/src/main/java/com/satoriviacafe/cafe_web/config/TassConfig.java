@@ -1,4 +1,4 @@
-package com.satoriviacafe.chain.config;
+package com.satoriviacafe.cafe_web.config;
 
 import com.alipay.mychain.taas.api.common.VersionCode;
 import com.alipay.mychain.taas.api.enums.SystemCodeEnum;
@@ -9,7 +9,7 @@ import com.alipay.mychain.taas.sdk.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.satoriviacafe.chain.constants.Constants.*;
+import static com.satoriviacafe.cafe_web.constants.Constants.*;
 
 /**
  * @author demo

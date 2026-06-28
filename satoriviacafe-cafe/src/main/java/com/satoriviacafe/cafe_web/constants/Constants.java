@@ -1,4 +1,4 @@
-package com.satoriviacafe.chain.constants;
+package com.satoriviacafe.cafe_web.constants;
 
 /**
  *
