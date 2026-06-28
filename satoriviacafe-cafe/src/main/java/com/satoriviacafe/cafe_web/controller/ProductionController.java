@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 产品Controller
+ * 产品端点
  *
  * @author satoriviacafe
  * @since 2026-04-21
