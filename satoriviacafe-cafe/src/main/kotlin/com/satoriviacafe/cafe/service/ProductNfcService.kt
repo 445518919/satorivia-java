@@ -3,6 +3,7 @@ package com.satoriviacafe.cafe.service
 import com.satoriviacafe.cafe.domain.CafeProductNfc
 import com.satoriviacafe.cafe.service.impl.CafeProductNfcServiceImpl
 import com.satoriviacafe.cafe_web.mapper.ProductNfcMapper
+import com.satoriviacafe.cafe_web.service.IProductNfcService
 import com.satoriviacafe.common.exception.ServiceException
 import com.satoriviacafe.common.utils.VStringUtils
 import com.satoriviacafe.common.utils.logger
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service
 @Primary
 class ProductNfcService(
     private val nfcMapper: ProductNfcMapper,
-) : CafeProductNfcServiceImpl(nfcMapper), ICafeProductNfcService {
+) : CafeProductNfcServiceImpl(nfcMapper), IProductNfcService {
     private val log = logger
 
     companion object {

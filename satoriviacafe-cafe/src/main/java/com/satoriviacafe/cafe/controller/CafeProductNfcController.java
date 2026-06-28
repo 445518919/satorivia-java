@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -50,23 +49,6 @@ public class CafeProductNfcController extends BaseController {
         List<CafeProductNfc> list = cafeProductNfcService.selectCafeProductNfcList(cafeProductNfc);
         ExcelUtil<CafeProductNfc> util = new ExcelUtil<>(CafeProductNfc.class);
         util.exportExcel(response, list, "产品NFC数据");
-    }
-
-    @PreAuthorize("@ss.hasPermi('cafe:nfc:import')")
-    @Log(title = "产品NFC", businessType = BusinessType.IMPORT)
-    @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<CafeProductNfc> util = new ExcelUtil<>(CafeProductNfc.class);
-        List<CafeProductNfc> userList = util.importExcel(file.getInputStream());
-        String operName = getUsername();
-        String message = cafeProductNfcService.importCafeProductNfc(userList, updateSupport, operName);
-        return success(message);
-    }
-
-    @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response) {
-        ExcelUtil<CafeProductNfc> util = new ExcelUtil<>(CafeProductNfc.class);
-        util.importTemplateExcel(response, "产品NFC数据");
     }
 
     /**
