@@ -2,19 +2,19 @@
     <div class="app-container">
         <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px"
                  size="small">
-            <el-form-item label="URL产品类型：beans/drip，对应前端productsid" prop="lineCode">
+            <el-form-item label="产品线编码" prop="lineCode">
                 <el-input
                     v-model="queryParams.lineCode"
                     clearable
-                    placeholder="请输入URL产品类型：beans/drip，对应前端productsid"
+                    placeholder="请输入产品线编码"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
-            <el-form-item label="URL系列编码：asteroids/drip，对应前端series" prop="seriesCode">
+            <el-form-item label="系列编码" prop="seriesCode">
                 <el-input
                     v-model="queryParams.seriesCode"
                     clearable
-                    placeholder="请输入URL系列编码：asteroids/drip，对应前端series"
+                    placeholder="请输入系列编码"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
@@ -109,8 +109,8 @@
         <el-table v-loading="loading" :data="lineList" @selection-change="handleSelectionChange">
             <el-table-column align="center" type="selection" width="55"/>
             <el-table-column align="center" label="产品线id" prop="lineId"/>
-            <el-table-column align="center" label="URL产品类型：beans/drip，对应前端productsid" prop="lineCode"/>
-            <el-table-column align="center" label="URL系列编码：asteroids/drip，对应前端series" prop="seriesCode"/>
+            <el-table-column align="center" label="产品线编码" prop="lineCode"/>
+            <el-table-column align="center" label="系列编码" prop="seriesCode"/>
             <el-table-column align="center" label="产品线名称" prop="lineName"/>
             <el-table-column align="center" label="产品线副标题" prop="lineSubTitle"/>
             <el-table-column align="center" label="产品线说明" prop="lineDescription"/>
@@ -161,11 +161,11 @@
         <!-- 添加或修改咖啡产品线对话框 -->
         <el-dialog :title="title" :visible.sync="open" append-to-body width="500px">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <el-form-item label="URL产品类型：beans/drip，对应前端productsid" prop="lineCode">
-                    <el-input v-model="form.lineCode" placeholder="请输入URL产品类型：beans/drip，对应前端productsid"/>
+                <el-form-item label="产品线编码" prop="lineCode">
+                    <el-input v-model="form.lineCode" placeholder="请输入产品线编码"/>
                 </el-form-item>
-                <el-form-item label="URL系列编码：asteroids/drip，对应前端series" prop="seriesCode">
-                    <el-input v-model="form.seriesCode" placeholder="请输入URL系列编码：asteroids/drip，对应前端series"/>
+                <el-form-item label="系列编码" prop="seriesCode">
+                    <el-input v-model="form.seriesCode" placeholder="请输入系列编码"/>
                 </el-form-item>
                 <el-form-item label="产品线名称" prop="lineName">
                     <el-input v-model="form.lineName" placeholder="请输入产品线名称"/>
@@ -255,10 +255,10 @@ export default {
             // 表单校验
             rules: {
                 lineCode: [
-                    {required: true, message: "URL产品类型：beans/drip，对应前端productsid不能为空", trigger: "blur"}
+                    {required: true, message: "产品线编码不能为空", trigger: "blur"}
                 ],
                 seriesCode: [
-                    {required: true, message: "URL系列编码：asteroids/drip，对应前端series不能为空", trigger: "blur"}
+                    {required: true, message: "系列编码不能为空", trigger: "blur"}
                 ],
                 lineName: [
                     {required: true, message: "产品线名称不能为空", trigger: "blur"}

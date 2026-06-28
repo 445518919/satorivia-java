@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS cafe_product_line;
 CREATE TABLE cafe_product_line
 (
     line_id            BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '产品线id',
-    line_code          VARCHAR(32)  NOT NULL COMMENT 'URL产品类型：beans/drip，对应前端productsid',
-    series_code        VARCHAR(64)  NOT NULL COMMENT 'URL系列编码：asteroids/drip，对应前端series',
+    line_code   VARCHAR(32) NOT NULL COMMENT '产品线编码',
+    series_code VARCHAR(64) NOT NULL COMMENT '系列编码',
     line_name          VARCHAR(100) NOT NULL COMMENT '产品线名称',
     line_sub_title     VARCHAR(255)  DEFAULT '' COMMENT '产品线副标题',
     line_description   VARCHAR(1000) DEFAULT '' COMMENT '产品线说明',

@@ -26,14 +26,14 @@ public class CafeProductLine extends BaseEntity {
      */
     private Long lineId;
     /**
-     * URL产品类型：beans/drip，对应前端productsid
+     * 产品线编码
      */
-    @Excel(name = "URL产品类型：beans/drip，对应前端productsid")
+    @Excel(name = "产品线编码")
     private String lineCode;
     /**
-     * URL系列编码：asteroids/drip，对应前端series
+     * 系列编码
      */
-    @Excel(name = "URL系列编码：asteroids/drip，对应前端series")
+    @Excel(name = "系列编码")
     private String seriesCode;
     /**
      * 产品线名称
