@@ -2,7 +2,7 @@ package com.satoriviacafe.cafe_web.controller;
 
 import com.satoriviacafe.cafe.service.TrackService;
 import com.satoriviacafe.common.core.controller.BaseController;
-import com.satoriviacafe.common.core.domain.AjaxResult;
+import com.satoriviacafe.common.core.domain.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,8 @@ public class TrackController extends BaseController {
     private final TrackService trackService;
 
     @PostMapping("/{code}/{eventName}")
-    AjaxResult detail(@PathVariable String code, @PathVariable String eventName, HttpServletRequest request) {
+    public R<Void> detail(@PathVariable String code, @PathVariable String eventName, HttpServletRequest request) {
         trackService.track(code, eventName, request);
-        return success();
+        return R.ok();
     }
 }
