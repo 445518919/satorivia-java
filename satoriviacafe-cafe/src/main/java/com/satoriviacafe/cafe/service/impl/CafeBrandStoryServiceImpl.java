@@ -1,12 +1,13 @@
 package com.satoriviacafe.cafe.service.impl;
 
-import java.util.List;
+import com.satoriviacafe.cafe.domain.CafeBrandStory;
+import com.satoriviacafe.cafe.mapper.CafeBrandStoryMapper;
+import com.satoriviacafe.cafe.service.ICafeBrandStoryService;
 import com.satoriviacafe.common.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.satoriviacafe.cafe.mapper.CafeBrandStoryMapper;
-import com.satoriviacafe.cafe.domain.CafeBrandStory;
-import com.satoriviacafe.cafe.service.ICafeBrandStoryService;
+
+import java.util.List;
 
 /**
  * 品牌故事Service业务层处理
@@ -58,7 +59,7 @@ public class CafeBrandStoryServiceImpl implements ICafeBrandStoryService {
      * 批量新增品牌故事
      *
      * @param cafeBrandStorys 品牌故事
-     * @param ignorePk 是否忽略主键
+     * @param ignorePk        是否忽略主键
      * @return 结果
      */
     @Override
@@ -66,8 +67,8 @@ public class CafeBrandStoryServiceImpl implements ICafeBrandStoryService {
         for (CafeBrandStory cafeBrandStory : cafeBrandStorys) {
             cafeBrandStory.setCreateTime(DateUtils.getNowDate());
         }
-        if(ignorePk) {
-            return  cafeBrandStoryMapper.insertBatchIgnoreCafeBrandStory(cafeBrandStorys);
+        if (ignorePk) {
+            return cafeBrandStoryMapper.insertBatchIgnoreCafeBrandStory(cafeBrandStorys);
         }
         return cafeBrandStoryMapper.insertBatchCafeBrandStory(cafeBrandStorys);
     }
@@ -92,9 +93,9 @@ public class CafeBrandStoryServiceImpl implements ICafeBrandStoryService {
      */
     @Override
     public int updateBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys) {
-            for (CafeBrandStory cafeBrandStory : cafeBrandStorys) {
-                cafeBrandStory.setUpdateTime(DateUtils.getNowDate());
-            }
+        for (CafeBrandStory cafeBrandStory : cafeBrandStorys) {
+            cafeBrandStory.setUpdateTime(DateUtils.getNowDate());
+        }
         return cafeBrandStoryMapper.updateBatchCafeBrandStory(cafeBrandStorys);
     }
 

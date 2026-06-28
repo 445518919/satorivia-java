@@ -40,7 +40,7 @@ public interface ICafeProductionService {
      * 批量新增产品
      *
      * @param cafeProductions 产品
-     * @param ignorePk 是否忽略主键
+     * @param ignorePk        是否忽略主键
      * @return 结果
      */
     int insertBatchCafeProduction(List<CafeProduction> cafeProductions, boolean ignorePk);
@@ -51,7 +51,7 @@ public interface ICafeProductionService {
      * @param cafeProductions 产品
      * @return 结果
      */
-    default int insertBatchCafeProduction(List<CafeProduction> cafeProductions){
+    default int insertBatchCafeProduction(List<CafeProduction> cafeProductions) {
         return insertBatchCafeProduction(cafeProductions, false);
     }
 

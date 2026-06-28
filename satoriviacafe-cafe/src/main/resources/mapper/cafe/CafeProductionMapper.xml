@@ -72,7 +72,7 @@
     <select id="selectCafeProductionByProdId" parameterType="Long" resultMap="CafeProductionResult">
         <include refid="selectCafeProductionVo"/>
         where prod_id = #{prodId}
-          and delete_at IS NULL
+        and delete_at IS NULL
     </select>
 
     <insert id="insertCafeProduction" parameterType="CafeProduction" useGeneratedKeys="true" keyProperty="prodId">
@@ -283,7 +283,7 @@
             </if>
         </trim>
         where prod_id = #{prodId}
-          and delete_at IS NULL
+        and delete_at IS NULL
     </update>
 
     <update id="updateBatchCafeProduction">
@@ -331,7 +331,7 @@
                 </if>
             </trim>
             where prod_id = #{item.prodId}
-              and delete_at IS NULL
+            and delete_at IS NULL
         </foreach>
     </update>
 
@@ -339,7 +339,7 @@
         update cafe_production
         set delete_at = now()
         where prod_id = #{prodId}
-          and delete_at IS NULL
+        and delete_at IS NULL
     </update>
 
     <update id="deleteCafeProductionByProdIds" parameterType="String">

@@ -59,7 +59,7 @@ public class CafeProductionServiceImpl implements ICafeProductionService {
      * 批量新增产品
      *
      * @param cafeProductions 产品
-     * @param ignorePk 是否忽略主键
+     * @param ignorePk        是否忽略主键
      * @return 结果
      */
     @Override
@@ -67,8 +67,8 @@ public class CafeProductionServiceImpl implements ICafeProductionService {
         for (CafeProduction cafeProduction : cafeProductions) {
             cafeProduction.setCreateTime(DateUtils.getNowDate());
         }
-        if(ignorePk) {
-            return  cafeProductionMapper.insertBatchIgnoreCafeProduction(cafeProductions);
+        if (ignorePk) {
+            return cafeProductionMapper.insertBatchIgnoreCafeProduction(cafeProductions);
         }
         return cafeProductionMapper.insertBatchCafeProduction(cafeProductions);
     }
@@ -93,9 +93,9 @@ public class CafeProductionServiceImpl implements ICafeProductionService {
      */
     @Override
     public int updateBatchCafeProduction(List<CafeProduction> cafeProductions) {
-            for (CafeProduction cafeProduction : cafeProductions) {
-                cafeProduction.setUpdateTime(DateUtils.getNowDate());
-            }
+        for (CafeProduction cafeProduction : cafeProductions) {
+            cafeProduction.setUpdateTime(DateUtils.getNowDate());
+        }
         return cafeProductionMapper.updateBatchCafeProduction(cafeProductions);
     }
 

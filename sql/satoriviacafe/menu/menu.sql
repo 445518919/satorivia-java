@@ -133,3 +133,37 @@ values ('轮播图导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:b
         null, '');
 
 
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记', '1100', '1', 'note', 'cafe/note/index', 1, 0, 'C', '0', '0', 'cafe:note:list', '#', 'admin',
+        sysdate(), '', null, '豆子笔记菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记查询', @parentId, '1', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:query', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记新增', @parentId, '2', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:add', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记修改', @parentId, '3', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:edit', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记删除', @parentId, '4', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:remove', '#', 'admin', sysdate(), '',
+        null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('豆子笔记导出', @parentId, '5', '#', '', 1, 0, 'F', '0', '0', 'cafe:note:export', '#', 'admin', sysdate(), '',
+        null, '');

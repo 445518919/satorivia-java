@@ -1,7 +1,8 @@
 package com.satoriviacafe.cafe.service;
 
-import java.util.List;
 import com.satoriviacafe.cafe.domain.CafeBrandStory;
+
+import java.util.List;
 
 /**
  * 品牌故事Service接口
@@ -39,7 +40,7 @@ public interface ICafeBrandStoryService {
      * 批量新增品牌故事
      *
      * @param cafeBrandStorys 品牌故事
-     * @param ignorePk 是否忽略主键
+     * @param ignorePk        是否忽略主键
      * @return 结果
      */
     int insertBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys, boolean ignorePk);
@@ -50,7 +51,7 @@ public interface ICafeBrandStoryService {
      * @param cafeBrandStorys 品牌故事
      * @return 结果
      */
-    default int insertBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys){
+    default int insertBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys) {
         return insertBatchCafeBrandStory(cafeBrandStorys, false);
     }
 

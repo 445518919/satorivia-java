@@ -4,72 +4,133 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.satoriviacafe.cafe.mapper.CafeBannerMapper">
     <resultMap type="CafeBanner" id="CafeBannerResult">
-        <result property="bannerId"    column="banner_id"/>
-        <result property="bannerTitle"    column="banner_title"/>
-        <result property="bannerImg"    column="banner_img"/>
-        <result property="bannerLink"    column="banner_link"/>
-        <result property="bannerDesc"    column="banner_desc"/>
-        <result property="bannerStatus"    column="banner_status"/>
-        <result property="createBy"    column="create_by"/>
-        <result property="createTime"    column="create_time"/>
-        <result property="updateBy"    column="update_by"/>
-        <result property="updateTime"    column="update_time"/>
-        <result property="deleteAt"    column="delete_at"/>
+        <result property="bannerId" column="banner_id"/>
+        <result property="bannerTitle" column="banner_title"/>
+        <result property="bannerImg" column="banner_img"/>
+        <result property="bannerLink" column="banner_link"/>
+        <result property="bannerDesc" column="banner_desc"/>
+        <result property="bannerStatus" column="banner_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
     </resultMap>
 
     <sql id="selectCafeBannerVo">
-        select banner_id, banner_title, banner_img, banner_link, banner_desc, banner_status, create_by, create_time, update_by, update_time, delete_at from cafe_banner
+        select banner_id,
+               banner_title,
+               banner_img,
+               banner_link,
+               banner_desc,
+               banner_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_banner
     </sql>
 
     <select id="selectCafeBannerList" parameterType="CafeBanner" resultMap="CafeBannerResult">
         <include refid="selectCafeBannerVo"/>
         <where>
-            <if test="bannerTitle != null  and bannerTitle != ''"> and banner_title = #{bannerTitle}</if>
-            <if test="bannerImg != null  and bannerImg != ''"> and banner_img = #{bannerImg}</if>
-            <if test="bannerLink != null  and bannerLink != ''"> and banner_link = #{bannerLink}</if>
-            <if test="bannerDesc != null  and bannerDesc != ''"> and banner_desc = #{bannerDesc}</if>
-            <if test="bannerStatus != null  and bannerStatus != ''"> and banner_status = #{bannerStatus}</if>
+            <if test="bannerTitle != null  and bannerTitle != ''">
+                and banner_title = #{bannerTitle}
+            </if>
+            <if test="bannerImg != null  and bannerImg != ''">
+                and banner_img = #{bannerImg}
+            </if>
+            <if test="bannerLink != null  and bannerLink != ''">
+                and banner_link = #{bannerLink}
+            </if>
+            <if test="bannerDesc != null  and bannerDesc != ''">
+                and banner_desc = #{bannerDesc}
+            </if>
+            <if test="bannerStatus != null  and bannerStatus != ''">
+                and banner_status = #{bannerStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeBannerByBannerId" parameterType="Long" resultMap="CafeBannerResult">
+        <include refid="selectCafeBannerVo"/>
+        where banner_id = #{bannerId}
         and delete_at IS NULL
-</where>
-        </select>
+    </select>
 
-<select id="selectCafeBannerByBannerId" parameterType="Long" resultMap="CafeBannerResult">
-    <include refid="selectCafeBannerVo"/>
-    where banner_id = #{bannerId}
-    and delete_at IS NULL
-</select>
+    <insert id="insertCafeBanner" parameterType="CafeBanner" useGeneratedKeys="true" keyProperty="bannerId">
+        insert into cafe_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bannerTitle != null and bannerTitle != ''">
+                banner_title,
+            </if>
+            <if test="bannerImg != null and bannerImg != ''">
+                banner_img,
+            </if>
+            <if test="bannerLink != null and bannerLink != ''">
+                banner_link,
+            </if>
+            <if test="bannerDesc != null">
+                banner_desc,
+            </if>
+            <if test="bannerStatus != null">
+                banner_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bannerTitle != null and bannerTitle != ''">
+                #{bannerTitle},
+            </if>
+            <if test="bannerImg != null and bannerImg != ''">
+                #{bannerImg},
+            </if>
+            <if test="bannerLink != null and bannerLink != ''">
+                #{bannerLink},
+            </if>
+            <if test="bannerDesc != null">
+                #{bannerDesc},
+            </if>
+            <if test="bannerStatus != null">
+                #{bannerStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
 
-<insert id="insertCafeBanner" parameterType="CafeBanner" useGeneratedKeys="true" keyProperty="bannerId">
-insert into cafe_banner
-<trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="bannerTitle != null and bannerTitle != ''">banner_title,</if>
-            <if test="bannerImg != null and bannerImg != ''">banner_img,</if>
-            <if test="bannerLink != null and bannerLink != ''">banner_link,</if>
-            <if test="bannerDesc != null">banner_desc,</if>
-            <if test="bannerStatus != null">banner_status,</if>
-            <if test="createBy != null">create_by,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
-            <if test="deleteAt != null">delete_at,</if>
-</trim>
-<trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="bannerTitle != null and bannerTitle != ''">#{bannerTitle},</if>
-            <if test="bannerImg != null and bannerImg != ''">#{bannerImg},</if>
-            <if test="bannerLink != null and bannerLink != ''">#{bannerLink},</if>
-            <if test="bannerDesc != null">#{bannerDesc},</if>
-            <if test="bannerStatus != null">#{bannerStatus},</if>
-            <if test="createBy != null">#{createBy},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateBy != null">#{updateBy},</if>
-            <if test="updateTime != null">#{updateTime},</if>
-            <if test="deleteAt != null">#{deleteAt},</if>
-</trim>
-</insert>
-
-<insert id="insertBatchCafeBanner"  useGeneratedKeys="true" keyProperty="bannerId">
-insert into cafe_banner
-<trim prefix="(" suffix=")" suffixOverrides=",">
+    <insert id="insertBatchCafeBanner" useGeneratedKeys="true" keyProperty="bannerId">
+        insert into cafe_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             banner_title,
             banner_img,
             banner_link,
@@ -80,11 +141,11 @@ insert into cafe_banner
             update_by,
             update_time,
             delete_at,
-</trim>
-values
-<foreach collection="list" item="item" separator=",">
-    (
-    <trim suffixOverrides=",">
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
                 #{item.bannerTitle},
                 #{item.bannerImg},
                 #{item.bannerLink},
@@ -95,14 +156,14 @@ values
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-    </trim>
-    )
-</foreach>
-</insert>
+            </trim>
+            )
+        </foreach>
+    </insert>
 
-<insert id="insertBatchIgnoreCafeBanner"  useGeneratedKeys="true" keyProperty="bannerId">
-insert ignore into cafe_banner
-<trim prefix="(" suffix=")" suffixOverrides=",">
+    <insert id="insertBatchIgnoreCafeBanner" useGeneratedKeys="true" keyProperty="bannerId">
+        insert ignore into cafe_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             banner_title,
             banner_img,
             banner_link,
@@ -113,11 +174,11 @@ insert ignore into cafe_banner
             update_by,
             update_time,
             delete_at,
-</trim>
-values
-<foreach collection="list" item="item" separator=",">
-    (
-    <trim suffixOverrides=",">
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
                 #{item.bannerTitle},
                 #{item.bannerImg},
                 #{item.bannerLink},
@@ -128,64 +189,103 @@ values
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-    </trim>
-    )
-</foreach>
-</insert>
+            </trim>
+            )
+        </foreach>
+    </insert>
 
-<update id="updateCafeBanner" parameterType="CafeBanner">
-update cafe_banner
-<trim prefix="SET" suffixOverrides=",">
-            <if test="bannerTitle != null and bannerTitle != ''">banner_title = #{bannerTitle},</if>
-            <if test="bannerImg != null and bannerImg != ''">banner_img = #{bannerImg},</if>
-            <if test="bannerLink != null and bannerLink != ''">banner_link = #{bannerLink},</if>
-            <if test="bannerDesc != null">banner_desc = #{bannerDesc},</if>
-            <if test="bannerStatus != null">banner_status = #{bannerStatus},</if>
-            <if test="createBy != null">create_by = #{createBy},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="updateBy != null">update_by = #{updateBy},</if>
-            <if test="updateTime != null">update_time = #{updateTime},</if>
-            <if test="deleteAt != null">delete_at = #{deleteAt},</if>
-</trim>
-where banner_id = #{bannerId}
-    and delete_at IS NULL
-</update>
-
-<update id="updateBatchCafeBanner" >
-<foreach collection="list" item="item" separator=";">
-    update cafe_banner
-    <trim prefix="SET" suffixOverrides=",">
-                <if test="item.bannerTitle != null and item.bannerTitle != ''">banner_title = #{item.bannerTitle},</if>
-                <if test="item.bannerImg != null and item.bannerImg != ''">banner_img = #{item.bannerImg},</if>
-                <if test="item.bannerLink != null and item.bannerLink != ''">banner_link = #{item.bannerLink},</if>
-                <if test="item.bannerDesc != null">banner_desc = #{item.bannerDesc},</if>
-                <if test="item.bannerStatus != null">banner_status = #{item.bannerStatus},</if>
-                <if test="item.createBy != null">create_by = #{item.createBy},</if>
-                <if test="item.createTime != null">create_time = #{item.createTime},</if>
-                <if test="item.updateBy != null">update_by = #{item.updateBy},</if>
-                <if test="item.updateTime != null">update_time = #{item.updateTime},</if>
-                <if test="item.deleteAt != null">delete_at = #{item.deleteAt},</if>
-    </trim>
-    where banner_id = #{item.bannerId}
+    <update id="updateCafeBanner" parameterType="CafeBanner">
+        update cafe_banner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bannerTitle != null and bannerTitle != ''">
+                banner_title = #{bannerTitle},
+            </if>
+            <if test="bannerImg != null and bannerImg != ''">
+                banner_img = #{bannerImg},
+            </if>
+            <if test="bannerLink != null and bannerLink != ''">
+                banner_link = #{bannerLink},
+            </if>
+            <if test="bannerDesc != null">
+                banner_desc = #{bannerDesc},
+            </if>
+            <if test="bannerStatus != null">
+                banner_status = #{bannerStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where banner_id = #{bannerId}
         and delete_at IS NULL
-</foreach>
-</update>
+    </update>
 
-<update id="deleteCafeBannerByBannerId" parameterType="Long">
-update cafe_banner
-set delete_at = now()
-where banner_id = #{bannerId}
-and delete_at IS NULL
-</update>
+    <update id="updateBatchCafeBanner">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_banner
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.bannerTitle != null and item.bannerTitle != ''">
+                    banner_title = #{item.bannerTitle},
+                </if>
+                <if test="item.bannerImg != null and item.bannerImg != ''">
+                    banner_img = #{item.bannerImg},
+                </if>
+                <if test="item.bannerLink != null and item.bannerLink != ''">
+                    banner_link = #{item.bannerLink},
+                </if>
+                <if test="item.bannerDesc != null">
+                    banner_desc = #{item.bannerDesc},
+                </if>
+                <if test="item.bannerStatus != null">
+                    banner_status = #{item.bannerStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where banner_id = #{item.bannerId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
 
-<update id="deleteCafeBannerByBannerIds" parameterType="String">
-update cafe_banner
-set delete_at = now()
-where banner_id in
-<foreach item="bannerId" collection="array" open="(" separator="," close=")">
-    #{bannerId}
-</foreach>
-and delete_at IS NULL
-</update>
+    <update id="deleteCafeBannerByBannerId" parameterType="Long">
+        update cafe_banner
+        set delete_at = now()
+        where banner_id = #{bannerId}
+        and delete_at IS NULL
+    </update>
 
+    <update id="deleteCafeBannerByBannerIds" parameterType="String">
+        update cafe_banner
+        set delete_at = now()
+        where banner_id in
+        <foreach item="bannerId" collection="array" open="(" separator="," close=")">
+            #{bannerId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
 </mapper>

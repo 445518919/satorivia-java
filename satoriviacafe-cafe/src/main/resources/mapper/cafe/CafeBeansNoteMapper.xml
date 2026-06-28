@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeBeansNoteMapper">
+    <resultMap type="CafeBeansNote" id="CafeBeansNoteResult">
+        <result property="noteId" column="note_id"/>
+        <result property="noteTitle" column="note_title"/>
+        <result property="noteSubTitle" column="note_sub_title"/>
+        <result property="noteContent" column="note_content"/>
+        <result property="brewTime" column="brew_time"/>
+        <result property="poderQuantity" column="poder_quantity"/>
+        <result property="waterVolume" column="water_volume"/>
+        <result property="waterTemp" column="water_temp"/>
+        <result property="grindDegree" column="grind_degree"/>
+        <result property="targetTime" column="target_time"/>
+        <result property="preparations" column="preparations"/>
+        <result property="brewSteps" column="brew_steps"/>
+        <result property="noteStatus" column="note_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteAt" column="delete_at"/>
+    </resultMap>
+
+    <sql id="selectCafeBeansNoteVo">
+        select note_id,
+               note_title,
+               note_sub_title,
+               note_content,
+               brew_time,
+               poder_quantity,
+               water_volume,
+               water_temp,
+               grind_degree,
+               target_time,
+               preparations,
+               brew_steps,
+               note_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               delete_at
+        from cafe_beans_note
+    </sql>
+
+    <select id="selectCafeBeansNoteList" parameterType="CafeBeansNote" resultMap="CafeBeansNoteResult">
+        <include refid="selectCafeBeansNoteVo"/>
+        <where>
+            <if test="noteTitle != null  and noteTitle != ''">
+                and note_title = #{noteTitle}
+            </if>
+            <if test="noteSubTitle != null  and noteSubTitle != ''">
+                and note_sub_title = #{noteSubTitle}
+            </if>
+            <if test="noteContent != null  and noteContent != ''">
+                and note_content = #{noteContent}
+            </if>
+            <if test="brewTime != null  and brewTime != ''">
+                and brew_time = #{brewTime}
+            </if>
+            <if test="poderQuantity != null  and poderQuantity != ''">
+                and poder_quantity = #{poderQuantity}
+            </if>
+            <if test="waterVolume != null  and waterVolume != ''">
+                and water_volume = #{waterVolume}
+            </if>
+            <if test="waterTemp != null  and waterTemp != ''">
+                and water_temp = #{waterTemp}
+            </if>
+            <if test="grindDegree != null  and grindDegree != ''">
+                and grind_degree = #{grindDegree}
+            </if>
+            <if test="targetTime != null  and targetTime != ''">
+                and target_time = #{targetTime}
+            </if>
+            <if test="preparations != null  and preparations != ''">
+                and preparations = #{preparations}
+            </if>
+            <if test="brewSteps != null  and brewSteps != ''">
+                and brew_steps = #{brewSteps}
+            </if>
+            <if test="noteStatus != null  and noteStatus != ''">
+                and note_status = #{noteStatus}
+            </if>
+            and delete_at IS NULL
+        </where>
+    </select>
+
+    <select id="selectCafeBeansNoteByNoteId" parameterType="Long" resultMap="CafeBeansNoteResult">
+        <include refid="selectCafeBeansNoteVo"/>
+        where note_id = #{noteId}
+        and delete_at IS NULL
+    </select>
+
+    <insert id="insertCafeBeansNote" parameterType="CafeBeansNote" useGeneratedKeys="true" keyProperty="noteId">
+        insert into cafe_beans_note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noteTitle != null and noteTitle != ''">
+                note_title,
+            </if>
+            <if test="noteSubTitle != null and noteSubTitle != ''">
+                note_sub_title,
+            </if>
+            <if test="noteContent != null and noteContent != ''">
+                note_content,
+            </if>
+            <if test="brewTime != null and brewTime != ''">
+                brew_time,
+            </if>
+            <if test="poderQuantity != null and poderQuantity != ''">
+                poder_quantity,
+            </if>
+            <if test="waterVolume != null and waterVolume != ''">
+                water_volume,
+            </if>
+            <if test="waterTemp != null and waterTemp != ''">
+                water_temp,
+            </if>
+            <if test="grindDegree != null and grindDegree != ''">
+                grind_degree,
+            </if>
+            <if test="targetTime != null and targetTime != ''">
+                target_time,
+            </if>
+            <if test="preparations != null and preparations != ''">
+                preparations,
+            </if>
+            <if test="brewSteps != null and brewSteps != ''">
+                brew_steps,
+            </if>
+            <if test="noteStatus != null">
+                note_status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteAt != null">
+                delete_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="noteTitle != null and noteTitle != ''">
+                #{noteTitle},
+            </if>
+            <if test="noteSubTitle != null and noteSubTitle != ''">
+                #{noteSubTitle},
+            </if>
+            <if test="noteContent != null and noteContent != ''">
+                #{noteContent},
+            </if>
+            <if test="brewTime != null and brewTime != ''">
+                #{brewTime},
+            </if>
+            <if test="poderQuantity != null and poderQuantity != ''">
+                #{poderQuantity},
+            </if>
+            <if test="waterVolume != null and waterVolume != ''">
+                #{waterVolume},
+            </if>
+            <if test="waterTemp != null and waterTemp != ''">
+                #{waterTemp},
+            </if>
+            <if test="grindDegree != null and grindDegree != ''">
+                #{grindDegree},
+            </if>
+            <if test="targetTime != null and targetTime != ''">
+                #{targetTime},
+            </if>
+            <if test="preparations != null and preparations != ''">
+                #{preparations},
+            </if>
+            <if test="brewSteps != null and brewSteps != ''">
+                #{brewSteps},
+            </if>
+            <if test="noteStatus != null">
+                #{noteStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                #{deleteAt},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchCafeBeansNote" useGeneratedKeys="true" keyProperty="noteId">
+        insert into cafe_beans_note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            note_title,
+            note_sub_title,
+            note_content,
+            brew_time,
+            poder_quantity,
+            water_volume,
+            water_temp,
+            grind_degree,
+            target_time,
+            preparations,
+            brew_steps,
+            note_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.noteTitle},
+                #{item.noteSubTitle},
+                #{item.noteContent},
+                #{item.brewTime},
+                #{item.poderQuantity},
+                #{item.waterVolume},
+                #{item.waterTemp},
+                #{item.grindDegree},
+                #{item.targetTime},
+                #{item.preparations},
+                #{item.brewSteps},
+                #{item.noteStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchIgnoreCafeBeansNote" useGeneratedKeys="true" keyProperty="noteId">
+        insert ignore into cafe_beans_note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            note_title,
+            note_sub_title,
+            note_content,
+            brew_time,
+            poder_quantity,
+            water_volume,
+            water_temp,
+            grind_degree,
+            target_time,
+            preparations,
+            brew_steps,
+            note_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+        </trim>
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            <trim suffixOverrides=",">
+                #{item.noteTitle},
+                #{item.noteSubTitle},
+                #{item.noteContent},
+                #{item.brewTime},
+                #{item.poderQuantity},
+                #{item.waterVolume},
+                #{item.waterTemp},
+                #{item.grindDegree},
+                #{item.targetTime},
+                #{item.preparations},
+                #{item.brewSteps},
+                #{item.noteStatus},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateCafeBeansNote" parameterType="CafeBeansNote">
+        update cafe_beans_note
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="noteTitle != null and noteTitle != ''">
+                note_title = #{noteTitle},
+            </if>
+            <if test="noteSubTitle != null and noteSubTitle != ''">
+                note_sub_title = #{noteSubTitle},
+            </if>
+            <if test="noteContent != null and noteContent != ''">
+                note_content = #{noteContent},
+            </if>
+            <if test="brewTime != null and brewTime != ''">
+                brew_time = #{brewTime},
+            </if>
+            <if test="poderQuantity != null and poderQuantity != ''">
+                poder_quantity = #{poderQuantity},
+            </if>
+            <if test="waterVolume != null and waterVolume != ''">
+                water_volume = #{waterVolume},
+            </if>
+            <if test="waterTemp != null and waterTemp != ''">
+                water_temp = #{waterTemp},
+            </if>
+            <if test="grindDegree != null and grindDegree != ''">
+                grind_degree = #{grindDegree},
+            </if>
+            <if test="targetTime != null and targetTime != ''">
+                target_time = #{targetTime},
+            </if>
+            <if test="preparations != null and preparations != ''">
+                preparations = #{preparations},
+            </if>
+            <if test="brewSteps != null and brewSteps != ''">
+                brew_steps = #{brewSteps},
+            </if>
+            <if test="noteStatus != null">
+                note_status = #{noteStatus},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteAt != null">
+                delete_at = #{deleteAt},
+            </if>
+        </trim>
+        where note_id = #{noteId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="updateBatchCafeBeansNote">
+        <foreach collection="list" item="item" separator=";">
+            update cafe_beans_note
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.noteTitle != null and item.noteTitle != ''">
+                    note_title = #{item.noteTitle},
+                </if>
+                <if test="item.noteSubTitle != null and item.noteSubTitle != ''">
+                    note_sub_title = #{item.noteSubTitle},
+                </if>
+                <if test="item.noteContent != null and item.noteContent != ''">
+                    note_content = #{item.noteContent},
+                </if>
+                <if test="item.brewTime != null and item.brewTime != ''">
+                    brew_time = #{item.brewTime},
+                </if>
+                <if test="item.poderQuantity != null and item.poderQuantity != ''">
+                    poder_quantity = #{item.poderQuantity},
+                </if>
+                <if test="item.waterVolume != null and item.waterVolume != ''">
+                    water_volume = #{item.waterVolume},
+                </if>
+                <if test="item.waterTemp != null and item.waterTemp != ''">
+                    water_temp = #{item.waterTemp},
+                </if>
+                <if test="item.grindDegree != null and item.grindDegree != ''">
+                    grind_degree = #{item.grindDegree},
+                </if>
+                <if test="item.targetTime != null and item.targetTime != ''">
+                    target_time = #{item.targetTime},
+                </if>
+                <if test="item.preparations != null and item.preparations != ''">
+                    preparations = #{item.preparations},
+                </if>
+                <if test="item.brewSteps != null and item.brewSteps != ''">
+                    brew_steps = #{item.brewSteps},
+                </if>
+                <if test="item.noteStatus != null">
+                    note_status = #{item.noteStatus},
+                </if>
+                <if test="item.createBy != null">
+                    create_by = #{item.createBy},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+                <if test="item.deleteAt != null">
+                    delete_at = #{item.deleteAt},
+                </if>
+            </trim>
+            where note_id = #{item.noteId}
+            and delete_at IS NULL
+        </foreach>
+    </update>
+
+    <update id="deleteCafeBeansNoteByNoteId" parameterType="Long">
+        update cafe_beans_note
+        set delete_at = now()
+        where note_id = #{noteId}
+        and delete_at IS NULL
+    </update>
+
+    <update id="deleteCafeBeansNoteByNoteIds" parameterType="String">
+        update cafe_beans_note
+        set delete_at = now()
+        where note_id in
+        <foreach item="noteId" collection="array" open="(" separator="," close=")">
+            #{noteId}
+        </foreach>
+        and delete_at IS NULL
+    </update>
+</mapper>

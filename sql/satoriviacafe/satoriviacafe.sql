@@ -69,21 +69,47 @@ CREATE TABLE cafe_track_log
 -- ----------------------------
 -- 4、轮播图
 -- ----------------------------
-drop table if exists cafe_banner;
-create table cafe_banner
+DROP TABLE IF EXISTS cafe_banner;
+CREATE TABLE cafe_banner
 (
-    banner_id     bigint(20)   not null auto_increment comment '轮播图id',
-    banner_title  varchar(255) not null comment '轮播图标题',
-    banner_img    varchar(255) not null comment '轮播图图片',
-    banner_link   varchar(255) not null comment '轮播图链接',
-    banner_desc   varchar(255) default '' comment '轮播图描述',
-    banner_status char(1)      default '0' comment '轮播图状态（0正常 1停用）',
-    create_by     varchar(64)  default '' comment '创建者',
-    create_time   datetime comment '创建时间',
-    update_by     varchar(64)  default '' comment '更新者',
-    update_time   datetime comment '更新时间',
-    delete_at     datetime     default NULL comment '删除时间',
+    banner_id     BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '轮播图id',
+    banner_title  VARCHAR(255) NOT NULL COMMENT '轮播图标题',
+    banner_img    VARCHAR(255) NOT NULL COMMENT '轮播图图片',
+    banner_link   VARCHAR(255) NOT NULL COMMENT '轮播图链接',
+    banner_desc   VARCHAR(255) DEFAULT '' COMMENT '轮播图描述',
+    banner_status CHAR(1)      DEFAULT '0' COMMENT '轮播图状态（0正常 1停用）',
+    create_by     VARCHAR(64)  DEFAULT '' COMMENT '创建者',
+    create_time   DATETIME COMMENT '创建时间',
+    update_by     VARCHAR(64)  DEFAULT '' COMMENT '更新者',
+    update_time   DATETIME COMMENT '更新时间',
+    delete_at     DATETIME     DEFAULT NULL COMMENT '删除时间',
     primary key (banner_id)
 ) engine = innodb comment = '轮播图表';
+
+-- ----------------------------
+-- 5、豆子笔记
+-- ----------------------------
+DROP TABLE IF EXISTS cafe_beans_note;
+CREATE TABLE cafe_beans_note
+(
+    note_id        BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '豆子笔记id',
+    note_title     VARCHAR(255) NOT NULL COMMENT '豆子笔记标题',
+    note_sub_title VARCHAR(255) NOT NULL COMMENT '豆子笔记副标题',
+    note_content   TEXT         NOT NULL COMMENT '豆子笔记内容',
+    brew_time      VARCHAR(255) NOT NULL COMMENT '冲泡时间',
+    poder_quantity VARCHAR(255) NOT NULL COMMENT '粉量',
+    water_volume   VARCHAR(255) NOT NULL COMMENT '水量',
+    water_temp     VARCHAR(255) NOT NULL COMMENT '水温',
+    grind_degree   VARCHAR(255) NOT NULL COMMENT '研磨度',
+    target_time    VARCHAR(255) NOT NULL COMMENT '目标总时间',
+    preparations   TEXT         NOT NULL COMMENT '准备工作',
+    brew_steps     TEXT         NOT NULL COMMENT '冲泡步骤',
+    note_status    CHAR(1)     DEFAULT '0' COMMENT '豆子笔记状态（0正常 1停用）',
+    create_by      VARCHAR(64) DEFAULT '' COMMENT '创建者',
+    create_time    DATETIME    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by      VARCHAR(64) DEFAULT '' COMMENT '更新者',
+    update_time    DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    delete_at      DATETIME    DEFAULT NULL COMMENT '删除时间'
+) engine = innodb comment = '豆子笔记表';
 
 

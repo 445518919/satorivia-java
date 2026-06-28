@@ -107,7 +107,7 @@ public class CafeBrandStoryController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:remove')")
     @Log(title = "品牌故事", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{storyIds}")
+    @DeleteMapping("/{storyIds}")
     public AjaxResult remove(@PathVariable Long[] storyIds) {
         return toAjax(cafeBrandStoryService.deleteCafeBrandStoryByStoryIds(storyIds));
     }

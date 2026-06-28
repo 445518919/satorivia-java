@@ -1,7 +1,8 @@
 package com.satoriviacafe.cafe.mapper;
 
-import java.util.List;
 import com.satoriviacafe.cafe.domain.CafeBrandStory;
+
+import java.util.List;
 
 /**
  * 品牌故事Mapper接口

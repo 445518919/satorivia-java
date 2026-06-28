@@ -19,33 +19,51 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CafeProduction extends BaseEntity {
-        @Serial
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    /** 产品id */
+    /**
+     * 产品id
+     */
     private Long prodId;
-    /** 产品名称 */
+    /**
+     * 产品名称
+     */
     @Excel(name = "产品名称")
     private String prodName;
-    /** 产品描述 */
+    /**
+     * 产品描述
+     */
     @Excel(name = "产品描述")
     private String prodDesc;
-    /** 产品图片 */
+    /**
+     * 产品图片
+     */
     @Excel(name = "产品图片")
     private String prodImg;
-    /** 产品价格 */
+    /**
+     * 产品价格
+     */
     @Excel(name = "产品价格")
     private BigDecimal prodPrice;
-    /** 产品详情 */
+    /**
+     * 产品详情
+     */
     @Excel(name = "产品详情")
     private String prodText;
-    /** 显示顺序 */
+    /**
+     * 显示顺序
+     */
     @Excel(name = "显示顺序")
     private Long orderNum;
-    /** 产品状态（0正常 1停用） */
-@Excel(name = "产品状态", readConverterExp = "0=正常,1=停用")
+    /**
+     * 产品状态（0正常 1停用）
+     */
+    @Excel(name = "产品状态", readConverterExp = "0=正常,1=停用")
     private String prodStatus;
-    /** 删除时间 */
+    /**
+     * 删除时间
+     */
     private Date deleteAt;
     /**
      * 商品编码
