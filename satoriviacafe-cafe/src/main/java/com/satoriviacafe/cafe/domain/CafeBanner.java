@@ -51,6 +51,11 @@ public class CafeBanner extends BaseEntity {
     @Excel(name = "轮播图状态", readConverterExp = "0=正常,1=停用")
     private String bannerStatus;
     /**
+     * 商品id
+     */
+    @Excel(name = "商品id")
+    private Long productId;
+    /**
      * 删除时间
      */
     private Date deleteAt;

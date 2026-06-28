@@ -26,6 +26,14 @@
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
+            <el-form-item label="商品id" prop="productId">
+                <el-input
+                    v-model="queryParams.productId"
+                    clearable
+                    placeholder="请输入商品id"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
             <el-form-item>
                 <el-button icon="el-icon-search" size="mini" type="primary" @click="handleQuery">搜索</el-button>
                 <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -94,6 +102,7 @@
             <el-table-column align="center" label="轮播图链接" prop="bannerLink"/>
             <el-table-column align="center" label="轮播图描述" prop="bannerDesc"/>
             <el-table-column align="center" label="轮播图状态" prop="bannerStatus"/>
+            <el-table-column align="center" label="商品id" prop="productId"/>
             <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
                 <template slot-scope="scope">
                     <el-button
@@ -138,6 +147,9 @@
                 </el-form-item>
                 <el-form-item label="轮播图描述" prop="bannerDesc">
                     <el-input v-model="form.bannerDesc" placeholder="请输入轮播图描述"/>
+                </el-form-item>
+                <el-form-item label="商品id" prop="productId">
+                    <el-input v-model="form.productId" placeholder="请输入商品id"/>
                 </el-form-item>
                 <el-form-item label="删除时间" prop="deleteAt">
                     <el-date-picker v-model="form.deleteAt"
@@ -191,6 +203,7 @@ export default {
                 bannerLink: null,
                 bannerDesc: null,
                 bannerStatus: null,
+                productId: null,
             },
             // 表单参数
             form: {},
@@ -235,6 +248,7 @@ export default {
                 bannerLink: null,
                 bannerDesc: null,
                 bannerStatus: null,
+                productId: null,
                 createBy: null,
                 createTime: null,
                 updateBy: null,

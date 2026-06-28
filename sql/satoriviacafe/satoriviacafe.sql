@@ -217,6 +217,7 @@ CREATE TABLE cafe_banner
     banner_link   VARCHAR(255) NOT NULL COMMENT '轮播图链接',
     banner_desc   VARCHAR(255) DEFAULT '' COMMENT '轮播图描述',
     banner_status CHAR(1)      DEFAULT '0' COMMENT '轮播图状态（0正常 1停用）',
+    product_id   BIGINT   DEFAULT NULL COMMENT '商品id',
     create_by     VARCHAR(64)  DEFAULT '' COMMENT '创建者',
     create_time  DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by     VARCHAR(64)  DEFAULT '' COMMENT '更新者',
