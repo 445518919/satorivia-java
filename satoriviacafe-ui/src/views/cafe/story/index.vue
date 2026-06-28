@@ -21,8 +21,8 @@
             <el-form-item label="标题" prop="storyTitle">
                 <el-input
                     v-model="queryParams.storyTitle"
-                    placeholder="请输入标题"
                     clearable
+                    placeholder="请输入标题"
                     @keyup.enter.native="handleQuery"
                 />
             </el-form-item>
@@ -52,46 +52,46 @@
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:add']"
-                    plain
                     icon="el-icon-plus"
+                    plain
                     size="mini"
-                    @click="handleAdd"
                     type="primary"
+                    @click="handleAdd"
                 >新增
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:edit']"
-                    plain
                     :disabled="single"
-                    size="mini"
                     icon="el-icon-edit"
-                    @click="handleUpdate"
+                    plain
+                    size="mini"
                     type="success"
+                    @click="handleUpdate"
                 >修改
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:remove']"
-                    plain
                     :disabled="multiple"
-                    size="mini"
                     icon="el-icon-delete"
-                    @click="handleDelete"
+                    plain
+                    size="mini"
                     type="danger"
+                    @click="handleDelete"
                 >删除
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:export']"
-                    plain
                     icon="el-icon-download"
+                    plain
                     size="mini"
-                    @click="handleExport"
                     type="warning"
+                    @click="handleExport"
                 >导出
                 </el-button>
             </el-col>
@@ -123,19 +123,19 @@
             <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
                 <template slot-scope="scope">
                     <el-button
+                        v-hasPermi="['cafe:story:edit']"
+                        icon="el-icon-edit"
                         size="mini"
                         type="text"
-                        v-hasPermi="['cafe:story:edit']"
                         @click="handleUpdate(scope.row)"
-                        icon="el-icon-edit"
                     >修改
                     </el-button>
                     <el-button
+                        v-hasPermi="['cafe:story:remove']"
+                        icon="el-icon-delete"
                         size="mini"
                         type="text"
-                        v-hasPermi="['cafe:story:remove']"
                         @click="handleDelete(scope.row)"
-                        icon="el-icon-delete"
                     >删除
                     </el-button>
                 </template>
@@ -144,9 +144,9 @@
 
         <pagination
             v-show="total>0"
-            :total="total"
             :limit.sync="queryParams.pageSize"
             :page.sync="queryParams.pageNum"
+            :total="total"
             @pagination="getList"
         />
 
@@ -182,14 +182,6 @@
                                     clearable
                                     placeholder="请选择发布时间"
                                     type="date"
-                                    value-format="yyyy-MM-dd">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="删除时间" prop="deleteAt">
-                    <el-date-picker v-model="form.deleteAt"
-                                    clearable
-                                    type="date"
-                                    placeholder="请选择删除时间"
                                     value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>

@@ -191,14 +191,6 @@
                 <el-form-item label="显示顺序" prop="lineSort">
                     <el-input v-model="form.lineSort" placeholder="请输入显示顺序"/>
                 </el-form-item>
-                <el-form-item label="删除时间" prop="deleteAt">
-                    <el-date-picker v-model="form.deleteAt"
-                                    clearable
-                                    placeholder="请选择删除时间"
-                                    type="date"
-                                    value-format="yyyy-MM-dd">
-                    </el-date-picker>
-                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="submitForm">确 定</el-button>
