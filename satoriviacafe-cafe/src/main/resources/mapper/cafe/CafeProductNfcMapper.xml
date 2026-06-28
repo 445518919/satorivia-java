@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoriviacafe.cafe.mapper.CafeProductNfcMapper">
+    <resultMap type="CafeProductNfc" id="CafeProductNfcResult">
+        <result property="nfcId"    column="nfc_id"/>
+        <result property="nfcCode"    column="nfc_code"/>
+        <result property="skuCode"    column="sku_code"/>
+        <result property="productName"    column="product_name"/>
+        <result property="batchName"    column="batch_name"/>
+        <result property="createBy"    column="create_by"/>
+        <result property="createTime"    column="create_time"/>
+        <result property="updateBy"    column="update_by"/>
+        <result property="updateTime"    column="update_time"/>
+        <result property="deleteAt"    column="delete_at"/>
+        <result property="nfcHash"    column="nfc_hash"/>
+        <result property="nfcUrl"    column="nfc_url"/>
+    </resultMap>
+
+    <sql id="selectCafeProductNfcVo">
+        select nfc_id, nfc_code, sku_code, product_name, batch_name, create_by, create_time, update_by, update_time, delete_at, nfc_hash, nfc_url from cafe_product_nfc
+    </sql>
+
+    <select id="selectCafeProductNfcList" parameterType="CafeProductNfc" resultMap="CafeProductNfcResult">
+        <include refid="selectCafeProductNfcVo"/>
+        <where>
+            <if test="nfcCode != null  and nfcCode != ''"> and nfc_code = #{nfcCode}</if>
+            <if test="skuCode != null "> and sku_code = #{skuCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="batchName != null  and batchName != ''"> and batch_name like concat('%', #{batchName}, '%')</if>
+            <if test="nfcHash != null  and nfcHash != ''"> and nfc_hash = #{nfcHash}</if>
+            <if test="nfcUrl != null  and nfcUrl != ''"> and nfc_url = #{nfcUrl}</if>
+        and delete_at IS NULL
+</where>
+        </select>
+
+<select id="selectCafeProductNfcByNfcId" parameterType="Long" resultMap="CafeProductNfcResult">
+    <include refid="selectCafeProductNfcVo"/>
+    where nfc_id = #{nfcId}
+    and delete_at IS NULL
+</select>
+
+<insert id="insertCafeProductNfc" parameterType="CafeProductNfc" useGeneratedKeys="true" keyProperty="nfcId">
+insert into cafe_product_nfc
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nfcCode != null and nfcCode != ''">nfc_code,</if>
+            <if test="skuCode != null">sku_code,</if>
+            <if test="productName != null and productName != ''">product_name,</if>
+            <if test="batchName != null and batchName != ''">batch_name,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteAt != null">delete_at,</if>
+            <if test="nfcHash != null">nfc_hash,</if>
+            <if test="nfcUrl != null">nfc_url,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nfcCode != null and nfcCode != ''">#{nfcCode},</if>
+            <if test="skuCode != null">#{skuCode},</if>
+            <if test="productName != null and productName != ''">#{productName},</if>
+            <if test="batchName != null and batchName != ''">#{batchName},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteAt != null">#{deleteAt},</if>
+            <if test="nfcHash != null">#{nfcHash},</if>
+            <if test="nfcUrl != null">#{nfcUrl},</if>
+</trim>
+</insert>
+
+<insert id="insertBatchCafeProductNfc"  useGeneratedKeys="true" keyProperty="nfcId">
+insert into cafe_product_nfc
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            nfc_code,
+            sku_code,
+            product_name,
+            batch_name,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+            nfc_hash,
+            nfc_url,
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.nfcCode},
+                #{item.skuCode},
+                #{item.productName},
+                #{item.batchName},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+                #{item.nfcHash},
+                #{item.nfcUrl},
+    </trim>
+    )
+</foreach>
+</insert>
+
+<insert id="insertBatchIgnoreCafeProductNfc"  useGeneratedKeys="true" keyProperty="nfcId">
+insert ignore into cafe_product_nfc
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            nfc_code,
+            sku_code,
+            product_name,
+            batch_name,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            delete_at,
+            nfc_hash,
+            nfc_url,
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.nfcCode},
+                #{item.skuCode},
+                #{item.productName},
+                #{item.batchName},
+                #{item.createBy},
+                #{item.createTime},
+                #{item.updateBy},
+                #{item.updateTime},
+                #{item.deleteAt},
+                #{item.nfcHash},
+                #{item.nfcUrl},
+    </trim>
+    )
+</foreach>
+</insert>
+
+<update id="updateCafeProductNfc" parameterType="CafeProductNfc">
+update cafe_product_nfc
+<trim prefix="SET" suffixOverrides=",">
+            <if test="nfcCode != null and nfcCode != ''">nfc_code = #{nfcCode},</if>
+            <if test="skuCode != null">sku_code = #{skuCode},</if>
+            <if test="productName != null and productName != ''">product_name = #{productName},</if>
+            <if test="batchName != null and batchName != ''">batch_name = #{batchName},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteAt != null">delete_at = #{deleteAt},</if>
+            <if test="nfcHash != null">nfc_hash = #{nfcHash},</if>
+            <if test="nfcUrl != null">nfc_url = #{nfcUrl},</if>
+</trim>
+where nfc_id = #{nfcId}
+    and delete_at IS NULL
+</update>
+
+<update id="updateBatchCafeProductNfc" >
+<foreach collection="list" item="item" separator=";">
+    update cafe_product_nfc
+    <trim prefix="SET" suffixOverrides=",">
+                <if test="item.nfcCode != null and item.nfcCode != ''">nfc_code = #{item.nfcCode},</if>
+                <if test="item.skuCode != null">sku_code = #{item.skuCode},</if>
+                <if test="item.productName != null and item.productName != ''">product_name = #{item.productName},</if>
+                <if test="item.batchName != null and item.batchName != ''">batch_name = #{item.batchName},</if>
+                <if test="item.createBy != null">create_by = #{item.createBy},</if>
+                <if test="item.createTime != null">create_time = #{item.createTime},</if>
+                <if test="item.updateBy != null">update_by = #{item.updateBy},</if>
+                <if test="item.updateTime != null">update_time = #{item.updateTime},</if>
+                <if test="item.deleteAt != null">delete_at = #{item.deleteAt},</if>
+                <if test="item.nfcHash != null">nfc_hash = #{item.nfcHash},</if>
+                <if test="item.nfcUrl != null">nfc_url = #{item.nfcUrl},</if>
+    </trim>
+    where nfc_id = #{item.nfcId}
+        and delete_at IS NULL
+</foreach>
+</update>
+
+<update id="deleteCafeProductNfcByNfcId" parameterType="Long">
+update cafe_product_nfc
+set delete_at = now()
+where nfc_id = #{nfcId}
+and delete_at IS NULL
+</update>
+
+<update id="deleteCafeProductNfcByNfcIds" parameterType="String">
+update cafe_product_nfc
+set delete_at = now()
+where nfc_id in
+<foreach item="nfcId" collection="array" open="(" separator="," close=")">
+    #{nfcId}
+</foreach>
+and delete_at IS NULL
+</update>
+
+</mapper>

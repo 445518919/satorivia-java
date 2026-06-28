@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 品牌故事Controller
+ * 品牌故事主Controller
  *
  * @author satoriviacafe
  * @since 2026-06-28
@@ -29,7 +29,7 @@ public class CafeBrandStoryController extends BaseController {
     private final ICafeBrandStoryService cafeBrandStoryService;
 
     /**
-     * 查询品牌故事列表
+     * 查询品牌故事主列表
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:list')")
     @GetMapping("/list")
@@ -40,19 +40,19 @@ public class CafeBrandStoryController extends BaseController {
     }
 
     /**
-     * 导出品牌故事列表
+     * 导出品牌故事主列表
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:export')")
-    @Log(title = "品牌故事", businessType = BusinessType.EXPORT)
+    @Log(title = "品牌故事主", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CafeBrandStory cafeBrandStory) {
         List<CafeBrandStory> list = cafeBrandStoryService.selectCafeBrandStoryList(cafeBrandStory);
         ExcelUtil<CafeBrandStory> util = new ExcelUtil<>(CafeBrandStory.class);
-        util.exportExcel(response, list, "品牌故事数据");
+        util.exportExcel(response, list, "品牌故事主数据");
     }
 
     /**
-     * 获取品牌故事详细信息
+     * 获取品牌故事主详细信息
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:query')")
     @GetMapping(value = "/{storyId}")
@@ -61,10 +61,10 @@ public class CafeBrandStoryController extends BaseController {
     }
 
     /**
-     * 新增品牌故事
+     * 新增品牌故事主
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:add')")
-    @Log(title = "品牌故事", businessType = BusinessType.INSERT)
+    @Log(title = "品牌故事主", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CafeBrandStory cafeBrandStory) {
         return toAjax(cafeBrandStoryService.insertCafeBrandStory(cafeBrandStory));
@@ -72,10 +72,10 @@ public class CafeBrandStoryController extends BaseController {
 
 
     /**
-     * 新增品牌故事
+     * 新增品牌故事主
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:addBatch')")
-    @Log(title = "品牌故事", businessType = BusinessType.INSERT)
+    @Log(title = "品牌故事主", businessType = BusinessType.INSERT)
     @PostMapping("/batch")
     public AjaxResult addBatch(@RequestBody List<CafeBrandStory> cafeBrandStorys) {
         return toAjax(cafeBrandStoryService.insertBatchCafeBrandStory(cafeBrandStorys));
@@ -83,40 +83,40 @@ public class CafeBrandStoryController extends BaseController {
 
 
     /**
-     * 修改品牌故事
+     * 修改品牌故事主
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:edit')")
-    @Log(title = "品牌故事", businessType = BusinessType.UPDATE)
+    @Log(title = "品牌故事主", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CafeBrandStory cafeBrandStory) {
         return toAjax(cafeBrandStoryService.updateCafeBrandStory(cafeBrandStory));
     }
 
     /**
-     * 修改品牌故事
+     * 修改品牌故事主
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:editBatch')")
-    @Log(title = "品牌故事", businessType = BusinessType.UPDATE)
+    @Log(title = "品牌故事主", businessType = BusinessType.UPDATE)
     @PutMapping("/batch")
     public AjaxResult editBatch(@RequestBody List<CafeBrandStory> cafeBrandStorys) {
         return toAjax(cafeBrandStoryService.updateBatchCafeBrandStory(cafeBrandStorys));
     }
 
     /**
-     * 删除品牌故事
+     * 删除品牌故事主
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:remove')")
-    @Log(title = "品牌故事", businessType = BusinessType.DELETE)
+    @Log(title = "品牌故事主", businessType = BusinessType.DELETE)
     @DeleteMapping("/{storyIds}")
     public AjaxResult remove(@PathVariable Long[] storyIds) {
         return toAjax(cafeBrandStoryService.deleteCafeBrandStoryByStoryIds(storyIds));
     }
 
     /**
-     * 删除品牌故事根據id
+     * 删除品牌故事主根據id
      */
     @PreAuthorize("@ss.hasPermi('cafe:story:remove')")
-    @Log(title = "品牌故事", businessType = BusinessType.DELETE)
+    @Log(title = "品牌故事主", businessType = BusinessType.DELETE)
     @DeleteMapping("/byId/{storyId}")
     public AjaxResult remove(@PathVariable Long storyId) {
         return toAjax(cafeBrandStoryService.deleteCafeBrandStoryByStoryId(storyId));

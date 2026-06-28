@@ -4,267 +4,248 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.satoriviacafe.cafe.mapper.CafeBrandStoryMapper">
     <resultMap type="CafeBrandStory" id="CafeBrandStoryResult">
-        <result property="storyId" column="story_id"/>
-        <result property="storyTitle" column="story_title"/>
-        <result property="storyImage" column="story_image"/>
-        <result property="storyText" column="story_text"/>
-        <result property="storyStatus" column="story_status"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="deleteAt" column="delete_at"/>
+        <result property="storyId"    column="story_id"/>
+        <result property="storyCode"    column="story_code"/>
+        <result property="storyLabel"    column="story_label"/>
+        <result property="storyTitle"    column="story_title"/>
+        <result property="storySubTitle"    column="story_sub_title"/>
+        <result property="storyQuote"    column="story_quote"/>
+        <result property="storySummary"    column="story_summary"/>
+        <result property="coverImage"    column="cover_image"/>
+        <result property="storySort"    column="story_sort"/>
+        <result property="publishStatus"    column="publish_status"/>
+        <result property="storyStatus"    column="story_status"/>
+        <result property="publishTime"    column="publish_time"/>
+        <result property="createBy"    column="create_by"/>
+        <result property="createTime"    column="create_time"/>
+        <result property="updateBy"    column="update_by"/>
+        <result property="updateTime"    column="update_time"/>
+        <result property="deleteAt"    column="delete_at"/>
     </resultMap>
 
     <sql id="selectCafeBrandStoryVo">
-        select story_id,
-               story_title,
-               story_image,
-               story_text,
-               story_status,
-               create_by,
-               create_time,
-               update_by,
-               update_time,
-               delete_at
-        from cafe_brand_story
+        select story_id, story_code, story_label, story_title, story_sub_title, story_quote, story_summary, cover_image, story_sort, publish_status, story_status, publish_time, create_by, create_time, update_by, update_time, delete_at from cafe_brand_story
     </sql>
 
     <select id="selectCafeBrandStoryList" parameterType="CafeBrandStory" resultMap="CafeBrandStoryResult">
         <include refid="selectCafeBrandStoryVo"/>
         <where>
-            <if test="storyTitle != null  and storyTitle != ''">
-                and story_title = #{storyTitle}
-            </if>
-            <if test="storyImage != null  and storyImage != ''">
-                and story_image = #{storyImage}
-            </if>
-            <if test="storyText != null  and storyText != ''">
-                and story_text = #{storyText}
-            </if>
-            <if test="storyStatus != null  and storyStatus != ''">
-                and story_status = #{storyStatus}
-            </if>
-            and delete_at IS NULL
-        </where>
-    </select>
-
-    <select id="selectCafeBrandStoryByStoryId" parameterType="Long" resultMap="CafeBrandStoryResult">
-        <include refid="selectCafeBrandStoryVo"/>
-        where story_id = #{storyId}
+            <if test="storyCode != null  and storyCode != ''"> and story_code = #{storyCode}</if>
+            <if test="storyLabel != null  and storyLabel != ''"> and story_label = #{storyLabel}</if>
+            <if test="storyTitle != null  and storyTitle != ''"> and story_title = #{storyTitle}</if>
+            <if test="storySubTitle != null  and storySubTitle != ''"> and story_sub_title = #{storySubTitle}</if>
+            <if test="storyQuote != null  and storyQuote != ''"> and story_quote = #{storyQuote}</if>
+            <if test="storySummary != null  and storySummary != ''"> and story_summary = #{storySummary}</if>
+            <if test="coverImage != null  and coverImage != ''"> and cover_image = #{coverImage}</if>
+            <if test="storySort != null "> and story_sort = #{storySort}</if>
+            <if test="publishStatus != null  and publishStatus != ''"> and publish_status = #{publishStatus}</if>
+            <if test="storyStatus != null  and storyStatus != ''"> and story_status = #{storyStatus}</if>
+            <if test="publishTime != null "> and publish_time = #{publishTime}</if>
         and delete_at IS NULL
-    </select>
+</where>
+        </select>
 
-    <insert id="insertCafeBrandStory" parameterType="CafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
-        insert into cafe_brand_story
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="storyTitle != null and storyTitle != ''">
-                story_title,
-            </if>
-            <if test="storyImage != null">
-                story_image,
-            </if>
-            <if test="storyText != null">
-                story_text,
-            </if>
-            <if test="storyStatus != null">
-                story_status,
-            </if>
-            <if test="createBy != null">
-                create_by,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="updateBy != null">
-                update_by,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-            <if test="deleteAt != null">
-                delete_at,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="storyTitle != null and storyTitle != ''">
-                #{storyTitle},
-            </if>
-            <if test="storyImage != null">
-                #{storyImage},
-            </if>
-            <if test="storyText != null">
-                #{storyText},
-            </if>
-            <if test="storyStatus != null">
-                #{storyStatus},
-            </if>
-            <if test="createBy != null">
-                #{createBy},
-            </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
-            <if test="updateBy != null">
-                #{updateBy},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
-            </if>
-            <if test="deleteAt != null">
-                #{deleteAt},
-            </if>
-        </trim>
-    </insert>
+<select id="selectCafeBrandStoryByStoryId" parameterType="Long" resultMap="CafeBrandStoryResult">
+    <include refid="selectCafeBrandStoryVo"/>
+    where story_id = #{storyId}
+    and delete_at IS NULL
+</select>
 
-    <insert id="insertBatchCafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
-        insert into cafe_brand_story
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+<insert id="insertCafeBrandStory" parameterType="CafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
+insert into cafe_brand_story
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storyCode != null and storyCode != ''">story_code,</if>
+            <if test="storyLabel != null">story_label,</if>
+            <if test="storyTitle != null and storyTitle != ''">story_title,</if>
+            <if test="storySubTitle != null">story_sub_title,</if>
+            <if test="storyQuote != null">story_quote,</if>
+            <if test="storySummary != null">story_summary,</if>
+            <if test="coverImage != null">cover_image,</if>
+            <if test="storySort != null">story_sort,</if>
+            <if test="publishStatus != null">publish_status,</if>
+            <if test="storyStatus != null">story_status,</if>
+            <if test="publishTime != null">publish_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteAt != null">delete_at,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storyCode != null and storyCode != ''">#{storyCode},</if>
+            <if test="storyLabel != null">#{storyLabel},</if>
+            <if test="storyTitle != null and storyTitle != ''">#{storyTitle},</if>
+            <if test="storySubTitle != null">#{storySubTitle},</if>
+            <if test="storyQuote != null">#{storyQuote},</if>
+            <if test="storySummary != null">#{storySummary},</if>
+            <if test="coverImage != null">#{coverImage},</if>
+            <if test="storySort != null">#{storySort},</if>
+            <if test="publishStatus != null">#{publishStatus},</if>
+            <if test="storyStatus != null">#{storyStatus},</if>
+            <if test="publishTime != null">#{publishTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteAt != null">#{deleteAt},</if>
+</trim>
+</insert>
+
+<insert id="insertBatchCafeBrandStory"  useGeneratedKeys="true" keyProperty="storyId">
+insert into cafe_brand_story
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            story_code,
+            story_label,
             story_title,
-            story_image,
-            story_text,
+            story_sub_title,
+            story_quote,
+            story_summary,
+            cover_image,
+            story_sort,
+            publish_status,
             story_status,
+            publish_time,
             create_by,
             create_time,
             update_by,
             update_time,
             delete_at,
-        </trim>
-        values
-        <foreach collection="list" item="item" separator=",">
-            (
-            <trim suffixOverrides=",">
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.storyCode},
+                #{item.storyLabel},
                 #{item.storyTitle},
-                #{item.storyImage},
-                #{item.storyText},
+                #{item.storySubTitle},
+                #{item.storyQuote},
+                #{item.storySummary},
+                #{item.coverImage},
+                #{item.storySort},
+                #{item.publishStatus},
                 #{item.storyStatus},
+                #{item.publishTime},
                 #{item.createBy},
                 #{item.createTime},
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-            </trim>
-            )
-        </foreach>
-    </insert>
+    </trim>
+    )
+</foreach>
+</insert>
 
-    <insert id="insertBatchIgnoreCafeBrandStory" useGeneratedKeys="true" keyProperty="storyId">
-        insert ignore into cafe_brand_story
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+<insert id="insertBatchIgnoreCafeBrandStory"  useGeneratedKeys="true" keyProperty="storyId">
+insert ignore into cafe_brand_story
+<trim prefix="(" suffix=")" suffixOverrides=",">
+            story_code,
+            story_label,
             story_title,
-            story_image,
-            story_text,
+            story_sub_title,
+            story_quote,
+            story_summary,
+            cover_image,
+            story_sort,
+            publish_status,
             story_status,
+            publish_time,
             create_by,
             create_time,
             update_by,
             update_time,
             delete_at,
-        </trim>
-        values
-        <foreach collection="list" item="item" separator=",">
-            (
-            <trim suffixOverrides=",">
+</trim>
+values
+<foreach collection="list" item="item" separator=",">
+    (
+    <trim suffixOverrides=",">
+                #{item.storyCode},
+                #{item.storyLabel},
                 #{item.storyTitle},
-                #{item.storyImage},
-                #{item.storyText},
+                #{item.storySubTitle},
+                #{item.storyQuote},
+                #{item.storySummary},
+                #{item.coverImage},
+                #{item.storySort},
+                #{item.publishStatus},
                 #{item.storyStatus},
+                #{item.publishTime},
                 #{item.createBy},
                 #{item.createTime},
                 #{item.updateBy},
                 #{item.updateTime},
                 #{item.deleteAt},
-            </trim>
-            )
-        </foreach>
-    </insert>
+    </trim>
+    )
+</foreach>
+</insert>
 
-    <update id="updateCafeBrandStory" parameterType="CafeBrandStory">
-        update cafe_brand_story
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="storyTitle != null and storyTitle != ''">
-                story_title = #{storyTitle},
-            </if>
-            <if test="storyImage != null">
-                story_image = #{storyImage},
-            </if>
-            <if test="storyText != null">
-                story_text = #{storyText},
-            </if>
-            <if test="storyStatus != null">
-                story_status = #{storyStatus},
-            </if>
-            <if test="createBy != null">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateBy != null">
-                update_by = #{updateBy},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-            <if test="deleteAt != null">
-                delete_at = #{deleteAt},
-            </if>
-        </trim>
-        where story_id = #{storyId}
+<update id="updateCafeBrandStory" parameterType="CafeBrandStory">
+update cafe_brand_story
+<trim prefix="SET" suffixOverrides=",">
+            <if test="storyCode != null and storyCode != ''">story_code = #{storyCode},</if>
+            <if test="storyLabel != null">story_label = #{storyLabel},</if>
+            <if test="storyTitle != null and storyTitle != ''">story_title = #{storyTitle},</if>
+            <if test="storySubTitle != null">story_sub_title = #{storySubTitle},</if>
+            <if test="storyQuote != null">story_quote = #{storyQuote},</if>
+            <if test="storySummary != null">story_summary = #{storySummary},</if>
+            <if test="coverImage != null">cover_image = #{coverImage},</if>
+            <if test="storySort != null">story_sort = #{storySort},</if>
+            <if test="publishStatus != null">publish_status = #{publishStatus},</if>
+            <if test="storyStatus != null">story_status = #{storyStatus},</if>
+            <if test="publishTime != null">publish_time = #{publishTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteAt != null">delete_at = #{deleteAt},</if>
+</trim>
+where story_id = #{storyId}
+    and delete_at IS NULL
+</update>
+
+<update id="updateBatchCafeBrandStory" >
+<foreach collection="list" item="item" separator=";">
+    update cafe_brand_story
+    <trim prefix="SET" suffixOverrides=",">
+                <if test="item.storyCode != null and item.storyCode != ''">story_code = #{item.storyCode},</if>
+                <if test="item.storyLabel != null">story_label = #{item.storyLabel},</if>
+                <if test="item.storyTitle != null and item.storyTitle != ''">story_title = #{item.storyTitle},</if>
+                <if test="item.storySubTitle != null">story_sub_title = #{item.storySubTitle},</if>
+                <if test="item.storyQuote != null">story_quote = #{item.storyQuote},</if>
+                <if test="item.storySummary != null">story_summary = #{item.storySummary},</if>
+                <if test="item.coverImage != null">cover_image = #{item.coverImage},</if>
+                <if test="item.storySort != null">story_sort = #{item.storySort},</if>
+                <if test="item.publishStatus != null">publish_status = #{item.publishStatus},</if>
+                <if test="item.storyStatus != null">story_status = #{item.storyStatus},</if>
+                <if test="item.publishTime != null">publish_time = #{item.publishTime},</if>
+                <if test="item.createBy != null">create_by = #{item.createBy},</if>
+                <if test="item.createTime != null">create_time = #{item.createTime},</if>
+                <if test="item.updateBy != null">update_by = #{item.updateBy},</if>
+                <if test="item.updateTime != null">update_time = #{item.updateTime},</if>
+                <if test="item.deleteAt != null">delete_at = #{item.deleteAt},</if>
+    </trim>
+    where story_id = #{item.storyId}
         and delete_at IS NULL
-    </update>
+</foreach>
+</update>
 
-    <update id="updateBatchCafeBrandStory">
-        <foreach collection="list" item="item" separator=";">
-            update cafe_brand_story
-            <trim prefix="SET" suffixOverrides=",">
-                <if test="item.storyTitle != null and item.storyTitle != ''">
-                    story_title = #{item.storyTitle},
-                </if>
-                <if test="item.storyImage != null">
-                    story_image = #{item.storyImage},
-                </if>
-                <if test="item.storyText != null">
-                    story_text = #{item.storyText},
-                </if>
-                <if test="item.storyStatus != null">
-                    story_status = #{item.storyStatus},
-                </if>
-                <if test="item.createBy != null">
-                    create_by = #{item.createBy},
-                </if>
-                <if test="item.createTime != null">
-                    create_time = #{item.createTime},
-                </if>
-                <if test="item.updateBy != null">
-                    update_by = #{item.updateBy},
-                </if>
-                <if test="item.updateTime != null">
-                    update_time = #{item.updateTime},
-                </if>
-                <if test="item.deleteAt != null">
-                    delete_at = #{item.deleteAt},
-                </if>
-            </trim>
-            where story_id = #{item.storyId}
-            and delete_at IS NULL
-        </foreach>
-    </update>
+<update id="deleteCafeBrandStoryByStoryId" parameterType="Long">
+update cafe_brand_story
+set delete_at = now()
+where story_id = #{storyId}
+and delete_at IS NULL
+</update>
 
-    <update id="deleteCafeBrandStoryByStoryId" parameterType="Long">
-        update cafe_brand_story
-        set delete_at = now()
-        where story_id = #{storyId}
-        and delete_at IS NULL
-    </update>
+<update id="deleteCafeBrandStoryByStoryIds" parameterType="String">
+update cafe_brand_story
+set delete_at = now()
+where story_id in
+<foreach item="storyId" collection="array" open="(" separator="," close=")">
+    #{storyId}
+</foreach>
+and delete_at IS NULL
+</update>
 
-    <update id="deleteCafeBrandStoryByStoryIds" parameterType="String">
-        update cafe_brand_story
-        set delete_at = now()
-        where story_id in
-        <foreach item="storyId" collection="array" open="(" separator="," close=")">
-            #{storyId}
-        </foreach>
-        and delete_at IS NULL
-    </update>
 </mapper>

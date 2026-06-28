@@ -2,13 +2,45 @@
     <div class="app-container">
         <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px"
                  size="small">
-            <el-form-item label="品牌故事标题" prop="storyTitle">
+            <el-form-item label="唯一编码" prop="storyCode">
                 <el-input
-                    v-model="queryParams.storyTitle"
+                    v-model="queryParams.storyCode"
                     clearable
-                    placeholder="请输入品牌故事标题"
+                    placeholder="请输入唯一编码"
                     @keyup.enter.native="handleQuery"
                 />
+            </el-form-item>
+            <el-form-item label="英文栏目名" prop="storyLabel">
+                <el-input
+                    v-model="queryParams.storyLabel"
+                    clearable
+                    placeholder="请输入英文栏目名"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="标题" prop="storyTitle">
+                <el-input
+                    v-model="queryParams.storyTitle"
+                    placeholder="请输入标题"
+                    clearable
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="显示顺序" prop="storySort">
+                <el-input
+                    v-model="queryParams.storySort"
+                    clearable
+                    placeholder="请输入显示顺序"
+                    @keyup.enter.native="handleQuery"
+                />
+            </el-form-item>
+            <el-form-item label="发布时间" prop="publishTime">
+                <el-date-picker v-model="queryParams.publishTime"
+                                clearable
+                                placeholder="请选择发布时间"
+                                type="date"
+                                value-format="yyyy-MM-dd">
+                </el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button icon="el-icon-search" size="mini" type="primary" @click="handleQuery">搜索</el-button>
@@ -20,46 +52,46 @@
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:add']"
-                    icon="el-icon-plus"
                     plain
+                    icon="el-icon-plus"
                     size="mini"
-                    type="primary"
                     @click="handleAdd"
+                    type="primary"
                 >新增
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:edit']"
-                    :disabled="single"
-                    icon="el-icon-edit"
                     plain
+                    :disabled="single"
                     size="mini"
-                    type="success"
+                    icon="el-icon-edit"
                     @click="handleUpdate"
+                    type="success"
                 >修改
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:remove']"
-                    :disabled="multiple"
-                    icon="el-icon-delete"
                     plain
+                    :disabled="multiple"
                     size="mini"
-                    type="danger"
+                    icon="el-icon-delete"
                     @click="handleDelete"
+                    type="danger"
                 >删除
                 </el-button>
             </el-col>
             <el-col :span="1.5">
                 <el-button
                     v-hasPermi="['cafe:story:export']"
-                    icon="el-icon-download"
                     plain
+                    icon="el-icon-download"
                     size="mini"
-                    type="warning"
                     @click="handleExport"
+                    type="warning"
                 >导出
                 </el-button>
             </el-col>
@@ -69,30 +101,41 @@
         <el-table v-loading="loading" :data="storyList" @selection-change="handleSelectionChange">
             <el-table-column align="center" type="selection" width="55"/>
             <el-table-column align="center" label="品牌故事id" prop="storyId"/>
-            <el-table-column align="center" label="品牌故事标题" prop="storyTitle"/>
-            <el-table-column align="center" label="品牌故事图片" prop="storyImage" width="100">
+            <el-table-column align="center" label="唯一编码" prop="storyCode"/>
+            <el-table-column align="center" label="英文栏目名" prop="storyLabel"/>
+            <el-table-column align="center" label="标题" prop="storyTitle"/>
+            <el-table-column align="center" label="副标题" prop="storySubTitle"/>
+            <el-table-column align="center" label="品牌引言" prop="storyQuote"/>
+            <el-table-column align="center" label="品牌摘要" prop="storySummary"/>
+            <el-table-column align="center" label="品牌故事封面" prop="coverImage" width="100">
                 <template slot-scope="scope">
-                    <image-preview :height="50" :src="scope.row.storyImage" :width="50"/>
+                    <image-preview :height="50" :src="scope.row.coverImage" :width="50"/>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="品牌故事详情" prop="storyText"/>
-            <el-table-column align="center" label="品牌故事状态" prop="storyStatus"/>
+            <el-table-column align="center" label="显示顺序" prop="storySort"/>
+            <el-table-column align="center" label="发布状态" prop="publishStatus"/>
+            <el-table-column align="center" label="状态" prop="storyStatus"/>
+            <el-table-column align="center" label="发布时间" prop="publishTime" width="180">
+                <template slot-scope="scope">
+                    <span>{{ parseTime(scope.row.publishTime, '{y}-{m}-{d}') }}</span>
+                </template>
+            </el-table-column>
             <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
                 <template slot-scope="scope">
                     <el-button
-                        v-hasPermi="['cafe:story:edit']"
-                        icon="el-icon-edit"
                         size="mini"
                         type="text"
+                        v-hasPermi="['cafe:story:edit']"
                         @click="handleUpdate(scope.row)"
+                        icon="el-icon-edit"
                     >修改
                     </el-button>
                     <el-button
-                        v-hasPermi="['cafe:story:remove']"
-                        icon="el-icon-delete"
                         size="mini"
                         type="text"
+                        v-hasPermi="['cafe:story:remove']"
                         @click="handleDelete(scope.row)"
+                        icon="el-icon-delete"
                     >删除
                     </el-button>
                 </template>
@@ -101,29 +144,52 @@
 
         <pagination
             v-show="total>0"
+            :total="total"
             :limit.sync="queryParams.pageSize"
             :page.sync="queryParams.pageNum"
-            :total="total"
             @pagination="getList"
         />
 
-        <!-- 添加或修改品牌故事对话框 -->
+        <!-- 添加或修改品牌故事主对话框 -->
         <el-dialog :title="title" :visible.sync="open" append-to-body width="500px">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <el-form-item label="品牌故事标题" prop="storyTitle">
-                    <el-input v-model="form.storyTitle" placeholder="请输入品牌故事标题"/>
+                <el-form-item label="唯一编码" prop="storyCode">
+                    <el-input v-model="form.storyCode" placeholder="请输入唯一编码"/>
                 </el-form-item>
-                <el-form-item label="品牌故事图片" prop="storyImage">
-                    <image-upload v-model="form.storyImage"/>
+                <el-form-item label="英文栏目名" prop="storyLabel">
+                    <el-input v-model="form.storyLabel" placeholder="请输入英文栏目名"/>
                 </el-form-item>
-                <el-form-item label="品牌故事详情" prop="storyText">
-                    <el-input v-model="form.storyText" placeholder="请输入内容" type="textarea"/>
+                <el-form-item label="标题" prop="storyTitle">
+                    <el-input v-model="form.storyTitle" placeholder="请输入标题"/>
+                </el-form-item>
+                <el-form-item label="副标题" prop="storySubTitle">
+                    <el-input v-model="form.storySubTitle" placeholder="请输入内容" type="textarea"/>
+                </el-form-item>
+                <el-form-item label="品牌引言" prop="storyQuote">
+                    <el-input v-model="form.storyQuote" placeholder="请输入内容" type="textarea"/>
+                </el-form-item>
+                <el-form-item label="品牌摘要" prop="storySummary">
+                    <el-input v-model="form.storySummary" placeholder="请输入内容" type="textarea"/>
+                </el-form-item>
+                <el-form-item label="品牌故事封面" prop="coverImage">
+                    <image-upload v-model="form.coverImage"/>
+                </el-form-item>
+                <el-form-item label="显示顺序" prop="storySort">
+                    <el-input v-model="form.storySort" placeholder="请输入显示顺序"/>
+                </el-form-item>
+                <el-form-item label="发布时间" prop="publishTime">
+                    <el-date-picker v-model="form.publishTime"
+                                    clearable
+                                    placeholder="请选择发布时间"
+                                    type="date"
+                                    value-format="yyyy-MM-dd">
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="删除时间" prop="deleteAt">
                     <el-date-picker v-model="form.deleteAt"
                                     clearable
-                                    placeholder="请选择删除时间"
                                     type="date"
+                                    placeholder="请选择删除时间"
                                     value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
@@ -156,7 +222,7 @@ export default {
             showSearch: true,
             // 总条数
             total: 0,
-            // 品牌故事表格数据
+            // 品牌故事主表格数据
             storyList: [],
             // 弹出层标题
             title: "",
@@ -166,17 +232,27 @@ export default {
             queryParams: {
                 pageNum: 1,
                 pageSize: 10,
+                storyCode: null,
+                storyLabel: null,
                 storyTitle: null,
-                storyImage: null,
-                storyText: null,
+                storySubTitle: null,
+                storyQuote: null,
+                storySummary: null,
+                coverImage: null,
+                storySort: null,
+                publishStatus: null,
                 storyStatus: null,
+                publishTime: null,
             },
             // 表单参数
             form: {},
             // 表单校验
             rules: {
+                storyCode: [
+                    {required: true, message: "唯一编码不能为空", trigger: "blur"}
+                ],
                 storyTitle: [
-                    {required: true, message: "品牌故事标题不能为空", trigger: "blur"}
+                    {required: true, message: "标题不能为空", trigger: "blur"}
                 ],
             }
         }
@@ -185,7 +261,7 @@ export default {
         this.getList()
     },
     methods: {
-        /** 查询品牌故事列表 */
+        /** 查询品牌故事主列表 */
         getList() {
             this.loading = true
             listStory(this.queryParams).then(response => {
@@ -203,10 +279,17 @@ export default {
         reset() {
             this.form = {
                 storyId: null,
+                storyCode: null,
+                storyLabel: null,
                 storyTitle: null,
-                storyImage: null,
-                storyText: null,
+                storySubTitle: null,
+                storyQuote: null,
+                storySummary: null,
+                coverImage: null,
+                storySort: null,
+                publishStatus: null,
                 storyStatus: null,
+                publishTime: null,
                 createBy: null,
                 createTime: null,
                 updateBy: null,
@@ -235,7 +318,7 @@ export default {
         handleAdd() {
             this.reset()
             this.open = true
-            this.title = "添加品牌故事"
+            this.title = "添加品牌故事主"
         },
         /** 修改按钮操作 */
         handleUpdate(row) {
@@ -244,7 +327,7 @@ export default {
             getStory(storyId).then(response => {
                 this.form = response.data
                 this.open = true
-                this.title = "修改品牌故事"
+                this.title = "修改品牌故事主"
             })
         },
         /** 提交按钮 */
@@ -270,7 +353,7 @@ export default {
         /** 删除按钮操作 */
         handleDelete(row) {
             const storyIds = row.storyId || this.ids
-            this.$modal.confirm('是否确认删除品牌故事编号为"' + storyIds + '"的数据项？').then(function () {
+            this.$modal.confirm('是否确认删除品牌故事主编号为"' + storyIds + '"的数据项？').then(function () {
                 return delStory(storyIds)
             }).then(() => {
                 this.getList()

@@ -5,7 +5,7 @@ import com.satoriviacafe.cafe.domain.CafeBrandStory;
 import java.util.List;
 
 /**
- * 品牌故事Service接口
+ * 品牌故事主Service接口
  *
  * @author satoriviacafe
  * @since 2026-06-28
@@ -13,42 +13,42 @@ import java.util.List;
 public interface ICafeBrandStoryService {
 
     /**
-     * 查询品牌故事
+     * 查询品牌故事主
      *
-     * @param storyId 品牌故事主键
-     * @return 品牌故事
+     * @param storyId 品牌故事主主键
+     * @return 品牌故事主
      */
     CafeBrandStory selectCafeBrandStoryByStoryId(Long storyId);
 
     /**
-     * 查询品牌故事列表
+     * 查询品牌故事主列表
      *
-     * @param cafeBrandStory 品牌故事
-     * @return 品牌故事集合
+     * @param cafeBrandStory 品牌故事主
+     * @return 品牌故事主集合
      */
     List<CafeBrandStory> selectCafeBrandStoryList(CafeBrandStory cafeBrandStory);
 
     /**
-     * 新增品牌故事
+     * 新增品牌故事主
      *
-     * @param cafeBrandStory 品牌故事
+     * @param cafeBrandStory 品牌故事主
      * @return 结果
      */
     int insertCafeBrandStory(CafeBrandStory cafeBrandStory);
 
     /**
-     * 批量新增品牌故事
+     * 批量新增品牌故事主
      *
-     * @param cafeBrandStorys 品牌故事
-     * @param ignorePk        是否忽略主键
+     * @param cafeBrandStorys 品牌故事主
+     * @param ignorePk 是否忽略主键
      * @return 结果
      */
     int insertBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys, boolean ignorePk);
 
     /**
-     * 批量新增品牌故事
+     * 批量新增品牌故事主
      *
-     * @param cafeBrandStorys 品牌故事
+     * @param cafeBrandStorys 品牌故事主
      * @return 结果
      */
     default int insertBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys) {
@@ -57,33 +57,33 @@ public interface ICafeBrandStoryService {
 
 
     /**
-     * 修改品牌故事
+     * 修改品牌故事主
      *
-     * @param cafeBrandStory 品牌故事
+     * @param cafeBrandStory 品牌故事主
      * @return 结果
      */
     int updateCafeBrandStory(CafeBrandStory cafeBrandStory);
 
     /**
-     * 批量修改品牌故事
+     * 批量修改品牌故事主
      *
-     * @param cafeBrandStorys 品牌故事
+     * @param cafeBrandStorys 品牌故事主
      * @return 结果
      */
     int updateBatchCafeBrandStory(List<CafeBrandStory> cafeBrandStorys);
 
     /**
-     * 批量删除品牌故事
+     * 批量删除品牌故事主
      *
-     * @param storyIds 需要删除的品牌故事主键集合
+     * @param storyIds 需要删除的品牌故事主主键集合
      * @return 结果
      */
     int deleteCafeBrandStoryByStoryIds(Long[] storyIds);
 
     /**
-     * 删除品牌故事信息
+     * 删除品牌故事主信息
      *
-     * @param storyId 品牌故事主键
+     * @param storyId 品牌故事主主键
      * @return 结果
      */
     int deleteCafeBrandStoryByStoryId(Long storyId);

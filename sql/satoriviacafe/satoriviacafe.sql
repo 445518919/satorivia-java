@@ -181,20 +181,29 @@ CREATE TABLE cafe_product_brew
 -- ----------------------------
 -- 6、品牌故事表
 -- ----------------------------
-drop table if exists cafe_brand_story;
-create table cafe_brand_story
+DROP TABLE IF EXISTS cafe_brand_story;
+CREATE TABLE cafe_brand_story
 (
-    story_id     BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '品牌故事id',
-    story_title  VARCHAR(255) NOT NULL COMMENT '品牌故事标题',
-    story_image  VARCHAR(255) default '' comment '品牌故事图片',
-    story_text   TEXT COMMENT '品牌故事详情',
-    story_status CHAR(1)      default '0' comment '品牌故事状态（0正常 1停用）',
-    create_by    VARCHAR(64)  default '' comment '创建者',
-    create_time  DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    update_by    VARCHAR(64)  DEFAULT '' COMMENT '更新者',
-    update_time  DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    delete_at    DATETIME     DEFAULT NULL COMMENT '删除时间'
-) engine = innodb comment = '品牌故事表';
+    story_id        BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '品牌故事id',
+    story_code      VARCHAR(64)  NOT NULL COMMENT '唯一编码',
+    story_label     VARCHAR(100) DEFAULT 'Brand Story' COMMENT '英文栏目名',
+    story_title     VARCHAR(255) NOT NULL COMMENT '标题',
+    story_sub_title VARCHAR(500) DEFAULT '' COMMENT '副标题',
+    story_quote     TEXT COMMENT '品牌引言',
+    story_summary   TEXT COMMENT '品牌摘要',
+    cover_image     VARCHAR(500) DEFAULT '' COMMENT '品牌故事封面',
+    story_sort      INT          DEFAULT 0 COMMENT '显示顺序',
+    publish_status  CHAR(1)      DEFAULT '0' COMMENT '发布状态',
+    story_status    CHAR(1)      DEFAULT '0' COMMENT '状态（0正常 1停用）',
+    publish_time    DATETIME     DEFAULT NULL COMMENT '发布时间',
+    create_by       VARCHAR(64)  DEFAULT '' COMMENT '创建者',
+    create_time     DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by       VARCHAR(64)  DEFAULT '' COMMENT '更新者',
+    update_time     DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    delete_at       DATETIME     DEFAULT NULL COMMENT '删除时间',
+    UNIQUE KEY uk_story_code (story_code),
+    KEY idx_story_status (story_status, publish_status, story_sort)
+) ENGINE = InnoDB COMMENT ='品牌故事主表';
 
 -- ----------------------------
 -- 7、轮播图
@@ -242,4 +251,24 @@ CREATE TABLE cafe_beans_note
     delete_at      DATETIME    DEFAULT NULL COMMENT '删除时间'
 ) engine = innodb comment = '豆子笔记表';
 
-
+-- ----------------------------
+-- 9、产品NFC
+-- ----------------------------
+DROP TABLE IF EXISTS cafe_product_nfc;
+CREATE TABLE cafe_product_nfc
+(
+    nfc_id       BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '产品NFCid',
+    nfc_code     VARCHAR(255) NOT NULL COMMENT 'NFC编码',
+    sku_code     BIGINT       NOT NULL COMMENT 'SKU编码',
+    product_name VARCHAR(255) NOT NULL COMMENT '产品名称',
+    batch_name   VARCHAR(255) NOT NULL COMMENT '批次名称',
+    create_by    VARCHAR(64)  DEFAULT '' COMMENT '创建者',
+    create_time  DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by    VARCHAR(64)  DEFAULT '' COMMENT '更新者',
+    update_time  DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    delete_at    DATETIME     DEFAULT NULL COMMENT '删除时间',
+    nfc_hash     VARCHAR(255) DEFAULT '' COMMENT 'NFC哈希值',
+    nfc_url      VARCHAR(255) DEFAULT '' COMMENT 'NFC链接',
+    UNIQUE INDEX idx_nfc_code (nfc_code),
+    KEY idx_nfc_product (sku_code, delete_at)
+) ENGINE = InnoDB COMMENT = '产品NFC表';

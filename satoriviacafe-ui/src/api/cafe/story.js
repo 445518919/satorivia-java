@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询品牌故事列表
+// 查询品牌故事主列表
 export function listStory(query) {
     return request({
         url: '/cafe/story/list',
@@ -9,7 +9,7 @@ export function listStory(query) {
     })
 }
 
-// 查询品牌故事详细
+// 查询品牌故事主详细
 export function getStory(storyId) {
     return request({
         url: '/cafe/story/' + storyId,
@@ -17,7 +17,7 @@ export function getStory(storyId) {
     })
 }
 
-// 新增品牌故事
+// 新增品牌故事主
 export function addStory(data) {
     return request({
         url: '/cafe/story',
@@ -26,7 +26,7 @@ export function addStory(data) {
     })
 }
 
-// 修改品牌故事
+// 修改品牌故事主
 export function updateStory(data) {
     return request({
         url: '/cafe/story',
@@ -35,7 +35,7 @@ export function updateStory(data) {
     })
 }
 
-// 删除品牌故事
+// 删除品牌故事主
 export function delStory(storyId) {
     return request({
         url: '/cafe/story/' + storyId,
